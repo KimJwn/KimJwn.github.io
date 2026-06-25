@@ -195,21 +195,36 @@
       position: relative;
       overflow: hidden;
     }
-    .portrait::before {
-      content: "";
-      position: absolute;
-      inset: 22px;
-      border-radius: 50%;
-      background: url("/images/create-octocat.png") center / cover;
-      opacity: 0.22;
-      filter: grayscale(1) contrast(1.1);
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.96);
     }
-    .portrait strong {
-      position: relative;
-      z-index: 1;
-      font-family: "Raleway", sans-serif;
-      font-size: 72px;
-      line-height: 1;
+    .portrait-link {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%);
+      z-index: 2;
+      min-width: 176px;
+      height: 38px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(8, 8, 8, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      backdrop-filter: blur(8px);
+    }
+    .portrait-link::after {
+      content: ">";
     }
     .clients {
       margin-top: 74px;
@@ -556,8 +571,9 @@
             </div>
           </div>
         </div>
-        <div class="portrait" aria-hidden="true">
-          <strong>JK</strong>
+        <div class="portrait">
+          <img src="/images/profile-illustration.png" alt="Illustrated portrait of Jiwon Kim" />
+          <a class="portrait-link" href="/stickers.html">Sticker lab</a>
         </div>
       </div>
     </section>

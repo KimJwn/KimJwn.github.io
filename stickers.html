@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Sticker Lab | Jiwon Kim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Raleway:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #080808;
+      --ink-2: #1b1b1b;
+      --muted: #9c9c9c;
+      --green: #3f8e00;
+      --green-line: #62ba1b;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: "IBM Plex Mono", "Noto Sans KR", monospace;
+    }
+    .topbar {
+      height: 70px;
+      background: var(--ink-2);
+      display: flex;
+      align-items: center;
+    }
+    .nav {
+      width: min(1110px, calc(100vw - 40px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      font-family: "Raleway", sans-serif;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .back:hover { color: #ffffff; }
+    main {
+      width: min(1110px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 48px 0 70px;
+      display: grid;
+      grid-template-columns: minmax(320px, 560px) minmax(260px, 1fr);
+      gap: 42px;
+      align-items: center;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-family: "Raleway", sans-serif;
+      font-size: clamp(34px, 6vw, 56px);
+      line-height: 1.05;
+    }
+    .intro {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      max-width: 520px;
+    }
+    .stage {
+      width: min(560px, 100%);
+      aspect-ratio: 1;
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+    }
+    .stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .sticker {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .stage.show-ears .ears,
+    .stage.show-glasses .glasses,
+    .stage.show-laptop .laptop {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .ears {
+      left: 20%;
+      top: 2%;
+      width: 60%;
+      height: 27%;
+    }
+    .ear {
+      position: absolute;
+      width: 30%;
+      aspect-ratio: 1;
+      top: 6%;
+      background: #2b211b;
+      border: 5px solid #160f0b;
+      transform: rotate(45deg);
+      border-radius: 6px 60% 8px 60%;
+    }
+    .ear::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      background: #f5b9a6;
+      border-radius: inherit;
+    }
+    .ear.left { left: 7%; transform: rotate(28deg); }
+    .ear.right { right: 7%; transform: rotate(62deg); }
+    .glasses {
+      left: 29%;
+      top: 36%;
+      width: 43%;
+      height: 12%;
+    }
+    .lens {
+      position: absolute;
+      top: 0;
+      width: 42%;
+      height: 100%;
+      border-radius: 999px;
+      background: rgba(9, 9, 9, 0.82);
+      border: 4px solid #111111;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+    }
+    .lens.left { left: 0; }
+    .lens.right { right: 0; }
+    .bridge {
+      position: absolute;
+      left: 39%;
+      top: 43%;
+      width: 22%;
+      height: 5px;
+      background: #111111;
+      border-radius: 999px;
+    }
+    .laptop {
+      left: 21%;
+      bottom: 1%;
+      width: 58%;
+      height: 25%;
+    }
+    .screen {
+      position: absolute;
+      left: 9%;
+      top: 0;
+      width: 82%;
+      height: 72%;
+      background: linear-gradient(180deg, #1f2937, #111827);
+      border: 5px solid #0f172a;
+      border-radius: 10px 10px 4px 4px;
+    }
+    .screen::after {
+      content: "JK";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--green-line);
+      font-family: "Raleway", sans-serif;
+      font-weight: 800;
+      font-size: 28px;
+    }
+    .base {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 30%;
+      background: linear-gradient(180deg, #d1d5db, #9ca3af);
+      border-radius: 0 0 20px 20px;
+      border: 4px solid #6b7280;
+    }
+    .panel {
+      display: grid;
+      gap: 14px;
+    }
+    .toggle {
+      min-height: 52px;
+      border: 1px solid #363636;
+      border-radius: 4px;
+      background: #111111;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 16px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toggle[aria-pressed="true"] {
+      color: #ffffff;
+      background: var(--green);
+      border-color: var(--green-line);
+      box-shadow: 0 8px 30px rgba(63, 142, 0, 0.22);
+    }
+    .toggle span:last-child {
+      color: currentColor;
+      opacity: 0.78;
+    }
+    @media (max-width: 860px) {
+      main {
+        grid-template-columns: 1fr;
+        padding-top: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav">
+      <a class="brand" href="/">Jiwon Kim</a>
+      <a class="back" href="/">Back home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Sticker Lab</h1>
+      <p class="intro">A tiny playful page for testing profile-image decorations without changing the main CV page.</p>
+      <div id="stage" class="stage show-ears show-glasses">
+        <img src="/images/profile-illustration.png" alt="Illustrated portrait of Jiwon Kim" />
+        <div class="sticker ears" aria-hidden="true">
+          <div class="ear left"></div>
+          <div class="ear right"></div>
+        </div>
+        <div class="sticker glasses" aria-hidden="true">
+          <div class="lens left"></div>
+          <div class="bridge"></div>
+          <div class="lens right"></div>
+        </div>
+        <div class="sticker laptop" aria-hidden="true">
+          <div class="screen"></div>
+          <div class="base"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Sticker controls">
+      <button class="toggle" type="button" data-sticker="ears" aria-pressed="true">
+        <span>Cat ears</span>
+        <span>on</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="glasses" aria-pressed="true">
+        <span>Sunglasses</span>
+        <span>on</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="laptop" aria-pressed="false">
+        <span>MacBook</span>
+        <span>off</span>
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const stage = document.getElementById('stage');
+    document.querySelectorAll('[data-sticker]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const sticker = button.dataset.sticker;
+        const className = `show-${sticker}`;
+        const next = !stage.classList.contains(className);
+        stage.classList.toggle(className, next);
+        button.setAttribute('aria-pressed', String(next));
+        button.querySelector('span:last-child').textContent = next ? 'on' : 'off';
+      });
+    });
+  </script>
+</body>
+</html>
