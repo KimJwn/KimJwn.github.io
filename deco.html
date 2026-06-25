@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Deco | Jiwon Kim</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Raleway:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #080808;
+      --ink-2: #1b1b1b;
+      --muted: #9c9c9c;
+      --green: #3f8e00;
+      --green-line: #62ba1b;
+      --paper: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--sky-a, #080808), var(--sky-b, #161616) 48%, var(--sky-c, #050505));
+      color: var(--paper);
+      font-family: "IBM Plex Mono", "Noto Sans KR", monospace;
+      transition: background 0.35s ease;
+    }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    body::before {
+      z-index: 0;
+      background:
+        radial-gradient(circle at var(--glow-x, 16%) 18%, var(--glow-a, rgba(63, 142, 0, 0.2)), transparent 34%),
+        radial-gradient(circle at var(--glow-y, 82%) 8%, var(--glow-b, rgba(0, 125, 180, 0.16)), transparent 32%);
+    }
+    body::after {
+      z-index: 0;
+      opacity: 0.52;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 34%), var(--city-mark);
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: 100% 44%;
+    }
+    body[data-city="busan"] {
+      --sky-a: #061219;
+      --sky-b: #102c35;
+      --sky-c: #050708;
+      --glow-a: rgba(28, 175, 214, 0.22);
+      --glow-b: rgba(255, 165, 76, 0.18);
+      --glow-x: 18%;
+      --glow-y: 84%;
+      --city-mark:
+        linear-gradient(115deg, transparent 0 31%, rgba(255,255,255,0.16) 31.3% 31.7%, transparent 32%),
+        linear-gradient(to top, rgba(13, 36, 45, 0.9) 0 22%, transparent 22%),
+        repeating-linear-gradient(90deg, rgba(5, 10, 12, 0.92) 0 42px, rgba(17, 38, 47, 0.92) 42px 72px, transparent 72px 96px);
+    }
+    body[data-city="seoul"] {
+      --sky-a: #100f18;
+      --sky-b: #2b263b;
+      --sky-c: #07070b;
+      --glow-a: rgba(168, 118, 255, 0.17);
+      --glow-b: rgba(255, 227, 126, 0.15);
+      --glow-x: 74%;
+      --glow-y: 18%;
+      --city-mark:
+        radial-gradient(ellipse at 50% 64%, transparent 0 7%, rgba(255,255,255,0.12) 7.2% 7.8%, transparent 8%),
+        linear-gradient(to top, rgba(13, 13, 22, 0.96) 0 31%, transparent 31%),
+        repeating-linear-gradient(90deg, rgba(7, 7, 12, 0.94) 0 28px, rgba(24, 22, 37, 0.94) 28px 52px, transparent 52px 64px);
+    }
+    body[data-city="suwon"] {
+      --sky-a: #11140c;
+      --sky-b: #29351d;
+      --sky-c: #050604;
+      --glow-a: rgba(98, 186, 27, 0.18);
+      --glow-b: rgba(244, 176, 92, 0.15);
+      --glow-x: 24%;
+      --glow-y: 72%;
+      --city-mark:
+        linear-gradient(to top, rgba(53, 42, 24, 0.92) 0 12%, transparent 12%),
+        repeating-linear-gradient(90deg, transparent 0 38px, rgba(218, 188, 120, 0.16) 38px 44px, transparent 44px 92px),
+        linear-gradient(to top, rgba(8, 15, 8, 0.92) 0 25%, transparent 25%);
+    }
+    body[data-city="sydney"] {
+      --sky-a: #03131f;
+      --sky-b: #123c55;
+      --sky-c: #05070a;
+      --glow-a: rgba(104, 213, 255, 0.22);
+      --glow-b: rgba(255, 255, 255, 0.17);
+      --glow-x: 80%;
+      --glow-y: 28%;
+      --city-mark:
+        radial-gradient(ellipse at 38% 76%, transparent 0 11%, rgba(255,255,255,0.16) 11.2% 11.7%, transparent 12%),
+        radial-gradient(ellipse at 45% 72%, transparent 0 9%, rgba(255,255,255,0.13) 9.2% 9.7%, transparent 10%),
+        linear-gradient(105deg, transparent 0 54%, rgba(255,255,255,0.2) 54.2% 54.8%, transparent 55%),
+        linear-gradient(to top, rgba(4, 18, 30, 0.94) 0 24%, transparent 24%);
+    }
+    .topbar {
+      height: 70px;
+      background: var(--ink-2);
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .nav {
+      width: min(1110px, calc(100vw - 40px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      font-family: "Raleway", sans-serif;
+      font-weight: 800;
+      color: #ffffff;
+      text-decoration: none;
+    }
+    .back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .back:hover { color: #ffffff; }
+    main {
+      width: min(1110px, calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 48px 0 70px;
+      display: grid;
+      grid-template-columns: minmax(320px, 560px) minmax(260px, 1fr);
+      gap: 42px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-family: "Raleway", sans-serif;
+      font-size: clamp(34px, 6vw, 56px);
+      line-height: 1.05;
+    }
+    .intro {
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      max-width: 520px;
+    }
+    .stage {
+      width: min(560px, 100%);
+      aspect-ratio: 1;
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+    }
+    .stage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .sticker {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .stage.show-glasses .glasses,
+    .stage.show-laptop .laptop,
+    .stage.show-rocket .rocket,
+    .stage.show-face-id .face-id,
+    .stage.show-headset .headset {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .glasses {
+      left: 33%;
+      top: 36.5%;
+      width: 35%;
+      height: 10%;
+    }
+    .lens {
+      position: absolute;
+      top: 0;
+      width: 42%;
+      height: 100%;
+      border-radius: 999px;
+      background: rgba(9, 9, 9, 0.82);
+      border: 4px solid #111111;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+    }
+    .lens.left { left: 0; }
+    .lens.right { right: 0; }
+    .bridge {
+      position: absolute;
+      left: 39%;
+      top: 43%;
+      width: 22%;
+      height: 5px;
+      background: #111111;
+      border-radius: 999px;
+    }
+    .laptop {
+      left: 23.5%;
+      bottom: -1%;
+      width: 53%;
+      height: 34%;
+      filter: drop-shadow(0 22px 18px rgba(29, 35, 41, 0.32));
+    }
+    .screen {
+      position: absolute;
+      left: 7%;
+      top: 4%;
+      width: 86%;
+      height: 82%;
+      z-index: 2;
+      background:
+        radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.75), transparent 26%),
+        linear-gradient(135deg, #f6f3ef 0%, #dedbd7 48%, #bfc3c8 100%);
+      border: 3px solid rgba(80, 83, 90, 0.42);
+      border-radius: 18px 18px 14px 14px;
+      box-shadow:
+        inset 10px 0 22px rgba(255, 255, 255, 0.48),
+        inset -10px -8px 18px rgba(91, 97, 106, 0.15),
+        0 10px 0 rgba(79, 82, 88, 0.72);
+      transform: perspective(520px) rotateX(1deg) rotateZ(-1.8deg);
+    }
+    .screen::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 48%;
+      width: 10%;
+      aspect-ratio: 0.86;
+      background: #101011;
+      border-radius: 48% 48% 42% 42% / 55% 55% 42% 42%;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        0 1px 2px rgba(255, 255, 255, 0.12),
+        0.9em -0.14em 0 -0.48em #dedbd7;
+    }
+    .screen::before {
+      content: "";
+      position: absolute;
+      left: 54%;
+      top: 36%;
+      width: 4.6%;
+      height: 10%;
+      z-index: 1;
+      background: #101011;
+      border-radius: 80% 0 80% 0;
+      transform: translate(-50%, -50%) rotate(32deg);
+    }
+    .base {
+      position: absolute;
+      left: 0;
+      bottom: 2%;
+      width: 62%;
+      height: 26%;
+      z-index: 1;
+      background:
+        repeating-linear-gradient(90deg, rgba(17, 20, 24, 0.85) 0 7px, rgba(42, 47, 54, 0.9) 7px 13px),
+        linear-gradient(135deg, #7c8793, #343b44);
+      border: 3px solid rgba(38, 44, 52, 0.72);
+      border-radius: 20px 0 8px 18px;
+      transform: perspective(220px) rotateX(62deg) rotateZ(-5deg) skewX(-12deg);
+      transform-origin: left bottom;
+    }
+    .rocket {
+      left: 4%;
+      top: 50%;
+      width: 22%;
+      height: 20%;
+      transform: translate(-18px, 14px) rotate(-22deg) scale(0.96);
+    }
+    .stage.show-rocket .rocket {
+      transform: translate(0, 0) rotate(-22deg) scale(1);
+    }
+    .rocket-body {
+      position: absolute;
+      left: 34%;
+      top: 16%;
+      width: 32%;
+      height: 58%;
+      background: linear-gradient(135deg, #ffffff, #cbd5e1);
+      border: 3px solid #111111;
+      border-radius: 55% 55% 38% 38%;
+    }
+    .rocket-body::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -24%;
+      width: 84%;
+      height: 38%;
+      background: #ef4444;
+      border: 3px solid #111111;
+      border-bottom: 0;
+      border-radius: 90% 90% 20% 20%;
+      transform: translateX(-50%);
+    }
+    .rocket-body::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 29%;
+      width: 34%;
+      aspect-ratio: 1;
+      background: #8bd3ff;
+      border: 3px solid #111111;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+    .rocket-fin {
+      position: absolute;
+      top: 54%;
+      width: 24%;
+      height: 24%;
+      background: #2563eb;
+      border: 3px solid #111111;
+    }
+    .rocket-fin.left {
+      left: 22%;
+      border-radius: 65% 16% 40% 30%;
+      transform: rotate(-18deg);
+    }
+    .rocket-fin.right {
+      right: 22%;
+      border-radius: 16% 65% 30% 40%;
+      transform: rotate(18deg);
+    }
+    .flame {
+      position: absolute;
+      left: 44%;
+      top: 72%;
+      width: 12%;
+      height: 30%;
+      background: linear-gradient(#facc15, #ef4444);
+      border: 3px solid #111111;
+      border-radius: 0 0 999px 999px;
+      transform: rotate(2deg);
+    }
+    .face-id {
+      right: 5%;
+      top: 43%;
+      width: 22%;
+      height: 25%;
+    }
+    .scanner {
+      position: absolute;
+      inset: 8% 12%;
+      background: linear-gradient(160deg, #e7f7ff, #9fd9ef);
+      border: 4px solid #111111;
+      border-radius: 18px;
+      box-shadow: 8px 9px 0 rgba(17, 17, 17, 0.16);
+    }
+    .scanner::before,
+    .scanner::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border: 3px solid #111111;
+      border-radius: 10px;
+    }
+    .scanner::after {
+      inset: 42% 18%;
+      height: 4px;
+      border: 0;
+      background: var(--green);
+      box-shadow: 0 -24px 0 rgba(63, 142, 0, 0.7), 0 24px 0 rgba(63, 142, 0, 0.7);
+    }
+    .scan-face {
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      width: 38%;
+      height: 48%;
+      border: 3px solid #111111;
+      border-radius: 44% 44% 48% 48%;
+      transform: translate(-50%, -50%);
+    }
+    .scan-face::before {
+      content: "";
+      position: absolute;
+      left: 23%;
+      top: 35%;
+      width: 8%;
+      aspect-ratio: 1;
+      background: #111111;
+      border-radius: 50%;
+      box-shadow: 22px 0 0 #111111;
+    }
+    .scan-face::after {
+      content: "";
+      position: absolute;
+      left: 35%;
+      bottom: 22%;
+      width: 30%;
+      height: 3px;
+      background: #111111;
+      border-radius: 999px;
+    }
+    .headset {
+      left: 14%;
+      top: 4%;
+      width: 72%;
+      height: 60%;
+      filter: drop-shadow(0 12px 18px rgba(27, 31, 35, 0.22));
+    }
+    .headband {
+      position: absolute;
+      left: 8%;
+      top: 0;
+      width: 84%;
+      height: 82%;
+      border: 18px solid #f3f1eb;
+      border-bottom: 0;
+      border-radius: 999px 999px 0 0;
+      filter: drop-shadow(0 0 0 rgba(25, 25, 25, 0.34));
+    }
+    .headband::after {
+      content: "";
+      position: absolute;
+      left: -7px;
+      right: -7px;
+      top: -11px;
+      height: 78%;
+      border-top: 2px solid rgba(77, 77, 72, 0.28);
+      border-radius: 999px 999px 0 0;
+    }
+    .earpad {
+      position: absolute;
+      top: 48%;
+      width: 25%;
+      height: 46%;
+      background:
+        radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.96), transparent 34%),
+        linear-gradient(120deg, rgba(255, 255, 255, 0.94), rgba(218, 216, 209, 0.96) 52%, rgba(247, 245, 239, 0.92));
+      border: 3px solid rgba(35, 35, 33, 0.36);
+      border-radius: 999px;
+      box-shadow:
+        inset 10px 0 18px rgba(255, 255, 255, 0.5),
+        inset -9px -6px 16px rgba(91, 91, 84, 0.16),
+        0 12px 18px rgba(0, 0, 0, 0.16);
+    }
+    .earpad::before {
+      content: "";
+      position: absolute;
+      inset: 11% 18%;
+      background:
+        radial-gradient(circle at 45% 22%, rgba(255, 255, 255, 0.75), transparent 28%),
+        linear-gradient(135deg, #eeece6, #c9c8c0);
+      border-radius: 999px;
+      box-shadow: inset 0 0 0 2px rgba(88, 88, 82, 0.16);
+    }
+    .earpad::after {
+      content: "";
+      position: absolute;
+      top: 18%;
+      width: 9%;
+      height: 38%;
+      background:
+        repeating-linear-gradient(0deg, #191919 0 2px, #6e6e68 2px 3px);
+      border-radius: 999px;
+      box-shadow: 0 0 0 2px rgba(55, 55, 52, 0.24);
+    }
+    .earpad.left {
+      left: 4%;
+      transform: rotate(-10deg);
+    }
+    .earpad.left::after {
+      left: 19%;
+    }
+    .earpad.right {
+      right: 4%;
+      transform: rotate(10deg);
+    }
+    .earpad.right::after {
+      right: 19%;
+    }
+    .mic {
+      display: none;
+    }
+    .panel {
+      display: grid;
+      gap: 14px;
+    }
+    .toggle {
+      min-height: 52px;
+      border: 1px solid #363636;
+      border-radius: 4px;
+      background: #111111;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 16px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toggle[aria-pressed="true"] {
+      color: #ffffff;
+      background: var(--green);
+      border-color: var(--green-line);
+      box-shadow: 0 8px 30px rgba(63, 142, 0, 0.22);
+    }
+    .toggle span:last-child {
+      color: currentColor;
+      opacity: 0.78;
+    }
+    @media (max-width: 860px) {
+      main {
+        grid-template-columns: 1fr;
+        padding-top: 34px;
+      }
+    }
+  </style>
+</head>
+<body data-city="busan">
+  <header class="topbar">
+    <nav class="nav">
+      <a class="brand" href="/">Jiwon Kim</a>
+      <a class="back" href="/">Back home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h1>Deco</h1>
+      <p class="intro">A tiny playful page for trying profile-image decorations without changing the main CV page.</p>
+      <div id="stage" class="stage">
+        <img src="/images/profile-illustration.png" alt="Illustrated portrait of Jiwon Kim" />
+        <div class="sticker glasses" aria-hidden="true">
+          <div class="lens left"></div>
+          <div class="bridge"></div>
+          <div class="lens right"></div>
+        </div>
+        <div class="sticker laptop" aria-hidden="true">
+          <div class="screen"></div>
+          <div class="base"></div>
+        </div>
+        <div class="sticker rocket" aria-hidden="true">
+          <div class="rocket-body"></div>
+          <div class="rocket-fin left"></div>
+          <div class="rocket-fin right"></div>
+          <div class="flame"></div>
+        </div>
+        <div class="sticker face-id" aria-hidden="true">
+          <div class="scanner">
+            <div class="scan-face"></div>
+          </div>
+        </div>
+        <div class="sticker headset" aria-hidden="true">
+          <div class="headband"></div>
+          <div class="earpad left"></div>
+          <div class="earpad right"></div>
+          <div class="mic"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Style controls">
+      <button class="toggle" type="button" data-city-button="busan" aria-pressed="true">
+        <span>Busan</span>
+        <span>home</span>
+      </button>
+      <button class="toggle" type="button" data-city-button="seoul" aria-pressed="false">
+        <span>Seoul</span>
+        <span>city</span>
+      </button>
+      <button class="toggle" type="button" data-city-button="suwon" aria-pressed="false">
+        <span>Suwon</span>
+        <span>lab</span>
+      </button>
+      <button class="toggle" type="button" data-city-button="sydney" aria-pressed="false">
+        <span>Sydney</span>
+        <span>away</span>
+      </button>
+
+      <button class="toggle" type="button" data-sticker="glasses" aria-pressed="false">
+        <span>Sunglasses</span>
+        <span>off</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="laptop" aria-pressed="false">
+        <span>MacBook</span>
+        <span>off</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="rocket" aria-pressed="false">
+        <span>Rocket</span>
+        <span>off</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="face-id" aria-pressed="false">
+        <span>Face ID</span>
+        <span>off</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="headset" aria-pressed="false">
+        <span>Headset</span>
+        <span>off</span>
+      </button>
+    </section>
+  </main>
+
+  <script>
+    const stage = document.getElementById('stage');
+    const cityButtons = document.querySelectorAll('[data-city-button]');
+
+    function setCity(city) {
+      document.body.dataset.city = city;
+      cityButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.cityButton === city));
+      });
+    }
+
+    cityButtons.forEach((button) => {
+      button.addEventListener('click', () => setCity(button.dataset.cityButton));
+    });
+
+    document.querySelectorAll('[data-sticker]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const sticker = button.dataset.sticker;
+        const className = `show-${sticker}`;
+        const next = !stage.classList.contains(className);
+        stage.classList.toggle(className, next);
+        button.setAttribute('aria-pressed', String(next));
+        button.querySelector('span:last-child').textContent = next ? 'on' : 'off';
+      });
+    });
+  </script>
+</body>
+</html>
