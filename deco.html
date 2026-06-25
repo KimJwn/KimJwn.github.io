@@ -495,6 +495,41 @@
       display: grid;
       gap: 14px;
     }
+    .place-switch {
+      display: grid;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid #363636;
+      background: rgba(17, 17, 17, 0.84);
+    }
+    .place-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+    .place-button {
+      min-height: 38px;
+      border: 1px solid #363636;
+      border-radius: 4px;
+      background: #0b0b0b;
+      color: var(--muted);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .place-button[aria-pressed="true"] {
+      color: #ffffff;
+      background: var(--green);
+      border-color: var(--green-line);
+      box-shadow: 0 8px 30px rgba(63, 142, 0, 0.18);
+    }
+    .place-note {
+      min-height: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
     .toggle {
       min-height: 52px;
       border: 1px solid #363636;
@@ -525,6 +560,9 @@
       main {
         grid-template-columns: 1fr;
         padding-top: 34px;
+      }
+      .place-bar {
+        grid-template-columns: repeat(2, 1fr);
       }
     }
   </style>
@@ -573,22 +611,15 @@
     </section>
 
     <section class="panel" aria-label="Style controls">
-      <button class="toggle" type="button" data-city-button="busan" aria-pressed="true">
-        <span>Busan</span>
-        <span>home</span>
-      </button>
-      <button class="toggle" type="button" data-city-button="seoul" aria-pressed="false">
-        <span>Seoul</span>
-        <span>city</span>
-      </button>
-      <button class="toggle" type="button" data-city-button="suwon" aria-pressed="false">
-        <span>Suwon</span>
-        <span>lab</span>
-      </button>
-      <button class="toggle" type="button" data-city-button="sydney" aria-pressed="false">
-        <span>Sydney</span>
-        <span>away</span>
-      </button>
+      <div class="place-switch" aria-label="Place background">
+        <div class="place-bar">
+          <button class="place-button" type="button" data-city-button="busan" aria-pressed="true">Busan</button>
+          <button class="place-button" type="button" data-city-button="seoul" aria-pressed="false">Seoul</button>
+          <button class="place-button" type="button" data-city-button="suwon" aria-pressed="false">Suwon</button>
+          <button class="place-button" type="button" data-city-button="sydney" aria-pressed="false">Sydney</button>
+        </div>
+        <div class="place-note" data-place-note>Hometown</div>
+      </div>
 
       <button class="toggle" type="button" data-sticker="glasses" aria-pressed="false">
         <span>Sunglasses</span>
@@ -616,12 +647,20 @@
   <script>
     const stage = document.getElementById('stage');
     const cityButtons = document.querySelectorAll('[data-city-button]');
+    const placeNote = document.querySelector('[data-place-note]');
+    const placeNotes = {
+      busan: 'Hometown',
+      seoul: 'Home / Korea Aerospace University (KAU)',
+      suwon: 'DASH Lab / Sungkyunkwan University (SKKU)',
+      sydney: 'Visiting Researcher / CSIRO',
+    };
 
     function setCity(city) {
       document.body.dataset.city = city;
       cityButtons.forEach((button) => {
         button.setAttribute('aria-pressed', String(button.dataset.cityButton === city));
       });
+      placeNote.textContent = placeNotes[city];
     }
 
     cityButtons.forEach((button) => {
