@@ -11,510 +11,593 @@
   <meta property="og:description" content="Personal CV and portfolio website for Kim Jwn." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kimjwn.github.io/" />
-  <link rel="stylesheet" href="/assets/palette.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Raleway:wght@700;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --ink: #080808;
+      --ink-2: #1b1b1b;
+      --paper: #ffffff;
+      --muted: #9c9c9c;
+      --body: #6f6f6f;
+      --line: #e6e6e6;
+      --green: #3f8e00;
+      --green-line: #62ba1b;
+      --green-soft: #e0f3d0;
+      --blue-soft: #d0e6ff;
+      --amber-soft: #fff6d7;
+      --max: 1110px;
+    }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Poppins", "Noto Sans KR", "Segoe UI", sans-serif;
-      color: #172033;
-      background:
-        linear-gradient(90deg, rgba(15, 94, 234, 0.08) 0 1px, transparent 1px),
-        linear-gradient(180deg, #fbfcff 0%, #f5f8fb 46%, #ffffff 100%);
-      background-size: 72px 72px, auto;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "IBM Plex Mono", "Noto Sans KR", monospace;
     }
     a { color: inherit; }
-    .site {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 260px minmax(0, 1fr);
-    }
-    .rail {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      padding: 28px 22px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      border-right: 1px solid #d9e2ef;
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(14px);
-    }
-    .mark {
-      display: grid;
-      gap: 14px;
-    }
-    .avatar {
-      width: 72px;
-      height: 72px;
-      border-radius: 18px;
-      display: grid;
-      place-items: center;
-      background: #172033;
-      color: #ffffff;
-      font-size: 24px;
-      font-weight: 800;
-      letter-spacing: 0;
-      box-shadow: 0 14px 30px rgba(23, 32, 51, 0.18);
-    }
-    .name {
-      margin: 0;
-      font-size: 22px;
-      line-height: 1.12;
-      letter-spacing: 0;
-    }
-    .tagline {
-      margin: 0;
-      color: #637083;
-      font-size: 13px;
-      line-height: 1.55;
+    .topbar {
+      height: 70px;
+      background: var(--ink-2);
+      color: var(--muted);
     }
     .nav {
-      display: grid;
-      gap: 8px;
-      margin-top: 30px;
+      width: min(var(--max), calc(100vw - 40px));
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
     }
-    .nav a {
-      text-decoration: none;
-      color: #4e5b6f;
-      font-size: 13px;
-      font-weight: 700;
-      padding: 9px 0;
-      border-bottom: 1px solid transparent;
-    }
-    .nav a:hover {
-      color: #0f5eea;
-      border-bottom-color: #b7ccff;
-    }
-    .rail-foot {
-      display: grid;
-      gap: 8px;
-      color: #637083;
-      font-size: 12px;
-      line-height: 1.5;
-    }
-    .rail-foot a {
-      color: #0f5eea;
-      font-weight: 700;
+    .brand {
+      color: #ffffff;
+      font-family: "Raleway", sans-serif;
+      font-size: 17px;
+      font-weight: 800;
       text-decoration: none;
     }
-    main {
-      min-width: 0;
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 4vw, 70px);
     }
+    .navlinks a {
+      color: var(--muted);
+      font-size: 14px;
+      text-decoration: none;
+      line-height: 1;
+    }
+    .navlinks a:hover { color: #ffffff; }
     .hero {
-      min-height: 82vh;
+      background: var(--ink);
+      color: #ffffff;
+      min-height: calc(100vh - 70px);
       display: grid;
       align-items: center;
-      padding: 64px clamp(28px, 7vw, 96px) 52px;
-      border-bottom: 1px solid #d9e2ef;
-      position: relative;
       overflow: hidden;
     }
-    .hero::after {
-      content: "";
-      position: absolute;
-      right: clamp(24px, 8vw, 120px);
-      top: 50%;
-      width: min(34vw, 360px);
-      aspect-ratio: 1;
-      transform: translateY(-50%);
-      border-radius: 34px;
-      background:
-        linear-gradient(135deg, rgba(15, 94, 234, 0.16), rgba(201, 228, 216, 0.48)),
-        url("/images/create-octocat.png") center / cover;
-      opacity: 0.16;
-      filter: saturate(0.7);
-      pointer-events: none;
-    }
-    .hero-copy {
-      max-width: 760px;
-      position: relative;
-      z-index: 1;
+    .hero-inner {
+      width: min(var(--max), calc(100vw - 40px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 350px;
+      gap: clamp(36px, 8vw, 96px);
+      align-items: center;
+      padding: 76px 0 86px;
     }
     .kicker {
-      margin: 0 0 18px;
-      color: #0f5eea;
+      margin: 0 0 20px;
+      color: var(--green-line);
       font-size: 13px;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      font-family: "Raleway", sans-serif;
+      letter-spacing: 0;
     }
     h1 {
       margin: 0;
-      color: #111827;
-      font-size: clamp(52px, 9vw, 104px);
-      line-height: 0.95;
-      letter-spacing: 0;
+      font-size: clamp(46px, 8vw, 72px);
+      line-height: 1.05;
+      font-weight: 800;
     }
-    .hero-subtitle {
+    .hero-copy {
       margin: 22px 0 0;
-      max-width: 620px;
-      color: #334155;
-      font-size: clamp(18px, 2vw, 24px);
-      line-height: 1.5;
-      font-weight: 650;
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      letter-spacing: 0.01em;
     }
-    .hero-text {
-      margin: 18px 0 0;
-      max-width: 640px;
-      color: #5b6778;
-      font-size: 16px;
-      line-height: 1.8;
-    }
-    .actions {
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 30px;
+      gap: 14px;
+      margin-top: 32px;
     }
     .btn {
+      min-width: 190px;
+      height: 50px;
+      padding: 0 24px;
+      border-radius: 4px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 10px 16px;
-      border-radius: 8px;
+      gap: 10px;
       text-decoration: none;
       font-size: 14px;
-      font-weight: 800;
-      border: 1px solid #d3ddea;
-      background: #ffffff;
-      color: #172033;
+      font-weight: 700;
+      border: 1px solid #363636;
+      color: #ffffff;
+      background: transparent;
     }
     .btn.primary {
-      background: #172033;
+      background: var(--green);
+      border-color: var(--green-line);
+      box-shadow: 0 8px 30px rgba(63, 142, 0, 0.3);
+    }
+    .btn::after {
+      content: ">";
+      font-weight: 700;
+    }
+    .portrait {
+      width: 350px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        linear-gradient(135deg, rgba(63, 142, 0, 0.2), rgba(255, 255, 255, 0.04)),
+        #141414;
+      border: 1px solid #2a2a2a;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .portrait::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 50%;
+      background: url("/images/create-octocat.png") center / cover;
+      opacity: 0.22;
+      filter: grayscale(1) contrast(1.1);
+    }
+    .portrait strong {
+      position: relative;
+      z-index: 1;
+      font-family: "Raleway", sans-serif;
+      font-size: 72px;
+      line-height: 1;
+    }
+    .clients {
+      margin-top: 74px;
+    }
+    .clients-label {
+      margin: 0 0 20px;
       color: #ffffff;
-      border-color: #172033;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .client-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 30px;
+      max-width: 920px;
+    }
+    .client {
+      height: 60px;
+      border: 1px solid #1b1b1b;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      color: #6f6f6f;
+      font-size: 13px;
+      font-weight: 600;
     }
     .section {
-      padding: 58px clamp(28px, 7vw, 96px);
-      border-bottom: 1px solid #d9e2ef;
+      width: min(var(--max), calc(100vw - 40px));
+      margin: 0 auto;
+      padding: 80px 0;
     }
-    .section-head {
-      display: grid;
-      grid-template-columns: 180px minmax(0, 1fr);
-      gap: 28px;
-      align-items: start;
-      margin-bottom: 28px;
+    .section.center {
+      text-align: center;
     }
-    .section-label {
+    .section h2 {
       margin: 0;
-      color: #0f5eea;
+      font-size: 34px;
+      line-height: 1.18;
+      font-weight: 800;
+    }
+    .section-lead {
+      margin: 12px auto 0;
+      max-width: 570px;
+      color: var(--body);
+      font-size: 14px;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+    }
+    .case-list {
+      display: grid;
+      gap: 80px;
+      margin-top: 60px;
+    }
+    .case {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 445px;
+      gap: 36px;
+      align-items: center;
+    }
+    .case:nth-child(even) {
+      grid-template-columns: 445px minmax(0, 1fr);
+    }
+    .case:nth-child(even) .case-copy {
+      order: 2;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 10px;
+      border-radius: 60px;
       font-size: 12px;
-      font-weight: 850;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 18px;
     }
-    .section-title {
+    .tag.green { background: var(--green-soft); color: var(--green); }
+    .tag.blue { background: var(--blue-soft); color: #0051a3; }
+    .tag.amber { background: var(--amber-soft); color: #a66f00; }
+    .case h3 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+    .case p {
       margin: 0;
-      color: #111827;
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.12;
-      letter-spacing: 0;
+      color: var(--body);
+      font-size: 14px;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
     }
-    .lead {
-      margin: 14px 0 0;
-      color: #5b6778;
-      font-size: 16px;
-      line-height: 1.8;
-      max-width: 780px;
+    .mini-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 38px;
+      min-width: 150px;
+      padding: 0 18px;
+      margin-top: 22px;
+      border-radius: 4px;
+      background: var(--green);
+      color: #ffffff;
+      border: 1px solid var(--green-line);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
     }
-    .cv-list {
+    .mini-cta::after { content: ">"; }
+    .visual {
+      min-height: 300px;
+      border-radius: 6px;
+      background:
+        linear-gradient(135deg, rgba(63, 142, 0, 0.12), transparent 42%),
+        linear-gradient(180deg, #f5f5f5, #e9e9e9);
+      border: 1px solid var(--line);
+      padding: 28px;
       display: grid;
-      gap: 14px;
+      align-content: end;
+      color: #1b1b1b;
+    }
+    .visual.dark {
+      background: #1b1b1b;
+      border-color: #2b2b2b;
+      color: #ffffff;
+    }
+    .visual-title {
+      margin: 0 0 8px;
+      font-family: "Raleway", sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+    }
+    .visual-text {
+      margin: 0;
+      max-width: 320px;
+      color: currentColor;
+      opacity: 0.72;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .cv-band {
+      background: #f8f8f8;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .cv-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .cv-block {
+      border-top: 1px solid #d8d8d8;
+      padding-top: 22px;
+      text-align: left;
+    }
+    .cv-block h3 {
+      margin: 0 0 14px;
+      font-size: 22px;
     }
     .entry {
-      display: grid;
-      grid-template-columns: minmax(130px, 0.24fr) minmax(0, 1fr);
-      gap: 24px;
-      padding: 20px 0;
-      border-top: 1px solid #d9e2ef;
+      padding: 18px 0;
+      border-top: 1px solid #e3e3e3;
     }
-    .entry:first-child {
-      border-top: 0;
-    }
+    .entry:first-of-type { border-top: 0; padding-top: 0; }
     .period {
-      margin: 0;
-      color: #637083;
-      font-size: 13px;
-      font-weight: 800;
+      margin: 0 0 8px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
     }
-    .entry-title {
+    .entry h4 {
       margin: 0 0 6px;
-      color: #111827;
-      font-size: 19px;
+      font-family: "Raleway", sans-serif;
+      font-size: 17px;
       line-height: 1.35;
     }
-    .entry-meta {
-      margin: 0 0 8px;
-      color: #0f5eea;
-      font-size: 14px;
-      font-weight: 800;
-    }
-    .entry-text {
+    .entry p {
       margin: 0;
-      color: #5b6778;
-      font-size: 14px;
-      line-height: 1.75;
-      max-width: 760px;
+      color: var(--body);
+      font-size: 13px;
+      line-height: 1.65;
     }
     .skills {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      margin-top: 26px;
     }
     .skill {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 8px 11px;
-      border-radius: 8px;
+      border: 1px solid #d8d8d8;
+      border-radius: 4px;
+      padding: 8px 12px;
+      color: #4a4a4a;
       background: #ffffff;
-      border: 1px solid #d3ddea;
-      color: #334155;
       font-size: 13px;
-      font-weight: 750;
+      font-weight: 600;
     }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
+    .contact {
+      background: var(--ink);
+      color: #ffffff;
+      padding: 80px 0;
     }
-    .contact-link {
-      min-height: 96px;
-      padding: 16px;
-      border: 1px solid #d3ddea;
-      border-radius: 8px;
-      background: #ffffff;
-      text-decoration: none;
-      display: grid;
-      align-content: center;
-      gap: 6px;
+    .contact-inner {
+      width: min(570px, calc(100vw - 40px));
+      margin: 0 auto;
+      text-align: center;
     }
-    .contact-link span {
-      color: #637083;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+    .contact h2 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.18;
     }
-    .contact-link strong {
-      color: #172033;
-      font-size: 15px;
-      overflow-wrap: anywhere;
-    }
-    .private-note {
-      padding: 28px clamp(28px, 7vw, 96px) 44px;
-      color: #637083;
-      font-size: 13px;
+    .contact p {
+      margin: 12px 0 30px;
+      color: var(--muted);
+      font-size: 14px;
       line-height: 1.7;
     }
-    @media (max-width: 880px) {
-      .site {
-        display: block;
-      }
-      .rail {
-        position: relative;
-        height: auto;
-        padding: 18px 20px;
-        border-right: 0;
-        border-bottom: 1px solid #d9e2ef;
-      }
-      .mark {
-        grid-template-columns: 56px minmax(0, 1fr);
-        align-items: center;
-      }
-      .avatar {
-        width: 56px;
-        height: 56px;
-        border-radius: 14px;
-        font-size: 18px;
-      }
+    .contact-links {
+      display: grid;
+      gap: 12px;
+    }
+    .contact-link {
+      min-height: 50px;
+      border-radius: 4px;
+      background: #f8f8f8;
+      border: 1px solid #d8d8d8;
+      color: #757575;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      text-decoration: none;
+      font-size: 13px;
+      text-align: left;
+    }
+    .contact-link strong {
+      color: #1b1b1b;
+      font-weight: 700;
+    }
+    footer {
+      height: 70px;
+      background: var(--ink-2);
+      color: var(--muted);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+    }
+    @media (max-width: 860px) {
+      .topbar { height: auto; }
       .nav {
-        display: flex;
+        min-height: 70px;
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        padding: 18px 0;
+      }
+      .navlinks {
+        gap: 16px;
         flex-wrap: wrap;
-        gap: 14px;
-        margin-top: 16px;
       }
-      .rail-foot {
-        display: none;
-      }
-      .hero {
-        min-height: 72vh;
-        padding: 48px 22px 38px;
-      }
-      .hero::after {
-        width: 220px;
-        right: -40px;
-        top: 20%;
-      }
-      .section {
-        padding: 42px 22px;
-      }
-      .section-head,
-      .entry,
-      .contact-grid {
+      .hero-inner,
+      .case,
+      .case:nth-child(even),
+      .cv-grid {
         grid-template-columns: 1fr;
       }
-      .entry {
-        gap: 8px;
+      .hero-inner {
+        padding: 56px 0 68px;
+      }
+      .portrait {
+        width: min(280px, 82vw);
+        justify-self: center;
+      }
+      .case:nth-child(even) .case-copy {
+        order: initial;
+      }
+      .client-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
 </head>
 <body>
-  <div class="site">
-    <aside class="rail">
-      <div>
-        <div class="mark">
-          <div class="avatar" aria-hidden="true">KJ</div>
-          <div>
-            <h2 class="name">Kim Jwn</h2>
-            <p class="tagline">CV, research profile, and selected work.</p>
-          </div>
-        </div>
-        <nav class="nav" aria-label="Profile sections">
-          <a href="#profile">Profile</a>
-          <a href="#experience">Experience</a>
-          <a href="#education">Education</a>
-          <a href="#work">Work</a>
-          <a href="#contact">Contact</a>
-        </nav>
+  <header class="topbar">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#top">Kim Jwn</a>
+      <div class="navlinks">
+        <a href="#profile">Profile</a>
+        <a href="#cv">CV</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
       </div>
-      <div class="rail-foot">
-        <span>Personal website</span>
-        <a href="https://github.com/KimJwn">github.com/KimJwn</a>
-      </div>
-    </aside>
+    </nav>
+  </header>
 
-    <main>
-      <section class="hero" id="top">
-        <div class="hero-copy">
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
           <p class="kicker">Personal CV Website</p>
           <h1>Kim Jwn</h1>
-          <p class="hero-subtitle">Researcher and developer working across AI, policy analysis, and web-based knowledge systems.</p>
-          <p class="hero-text">
-            This site is the public profile hub for my CV, research interests, experience, education, and selected projects.
-            The current page is intentionally CV-first, so visitors can understand my background before exploring individual work.
+          <p class="hero-copy">
+            Researcher and developer working across AI, policy analysis, and web-based knowledge systems.
+            This public profile is CV-first, with selected work kept separate until each project is ready to share.
           </p>
-          <div class="actions">
-            <a class="btn primary" href="#experience">View CV</a>
-            <a class="btn" href="#contact">Contact</a>
+          <div class="hero-actions">
+            <a class="btn primary" href="#cv">View CV</a>
+            <a class="btn" href="#contact">Get in touch</a>
+          </div>
+          <div class="clients" aria-label="Focus areas">
+            <p class="clients-label">Focus areas</p>
+            <div class="client-row">
+              <div class="client">AI Policy</div>
+              <div class="client">Research</div>
+              <div class="client">Web Tools</div>
+              <div class="client">Writing</div>
+            </div>
           </div>
         </div>
-      </section>
+        <div class="portrait" aria-hidden="true">
+          <strong>KJ</strong>
+        </div>
+      </div>
+    </section>
 
-      <section class="section" id="profile">
-        <div class="section-head">
-          <p class="section-label">Profile</p>
-          <div>
-            <h2 class="section-title">A concise research profile with room to grow.</h2>
-            <p class="lead">
-              Add your formal affiliation, research topic, and academic focus here. This section should read like the opening
-              paragraph of a CV: direct, specific, and easy for a professor, recruiter, or collaborator to scan.
+    <section class="section center" id="profile">
+      <h2>Profile</h2>
+      <p class="section-lead">
+        Add a concise professional summary here: current affiliation, research area, technical strengths,
+        and the collaborations or opportunities this homepage should support.
+      </p>
+      <div class="skills">
+        <span class="skill">Research Design</span>
+        <span class="skill">Legal Informatics</span>
+        <span class="skill">Policy Analysis</span>
+        <span class="skill">Data Workflows</span>
+        <span class="skill">Frontend Development</span>
+        <span class="skill">Technical Writing</span>
+      </div>
+    </section>
+
+    <section class="cv-band" id="cv">
+      <div class="section center">
+        <h2>CV</h2>
+        <p class="section-lead">
+          A structured overview of experience and education. Replace the placeholders with your actual CV details.
+        </p>
+        <div class="cv-grid">
+          <div class="cv-block">
+            <h3>Experience</h3>
+            <div class="entry">
+              <p class="period">YYYY - Present</p>
+              <h4>Role / Position</h4>
+              <p>Institution, lab, or organization. Add your responsibilities and one concrete outcome.</p>
+            </div>
+            <div class="entry">
+              <p class="period">YYYY - YYYY</p>
+              <h4>Previous Role</h4>
+              <p>Institution or team. Add a short description of the work and skills developed.</p>
+            </div>
+          </div>
+          <div class="cv-block">
+            <h3>Education</h3>
+            <div class="entry">
+              <p class="period">YYYY</p>
+              <h4>Degree / Program</h4>
+              <p>University / Department. Add thesis topic, advisor, or specialization if useful.</p>
+            </div>
+            <div class="entry">
+              <p class="period">YYYY</p>
+              <h4>Degree / Program</h4>
+              <p>University / Department. Add earlier academic background.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section center" id="work">
+      <h2>Selected Work</h2>
+      <p class="section-lead">
+        Keep this short and selective. The homepage should stay focused on your identity and CV.
+      </p>
+      <div class="case-list">
+        <article class="case">
+          <div class="case-copy">
+            <span class="tag green">Research</span>
+            <h3>Project / Paper / System</h3>
+            <p>
+              Add one memorable project, publication, or research system here. Use this slot for work that strengthens
+              the profile visitors see first.
             </p>
+            <a class="mini-cta" href="#contact">Discuss work</a>
           </div>
-        </div>
-        <div class="skills">
-          <span class="skill">AI Policy</span>
-          <span class="skill">Legal Informatics</span>
-          <span class="skill">Research Design</span>
-          <span class="skill">Data Workflows</span>
-          <span class="skill">Web Development</span>
-          <span class="skill">Technical Writing</span>
-        </div>
-      </section>
-
-      <section class="section" id="experience">
-        <div class="section-head">
-          <p class="section-label">Experience</p>
-          <div>
-            <h2 class="section-title">Roles, projects, and research practice.</h2>
+          <div class="visual">
+            <p class="visual-title">Research workflow</p>
+            <p class="visual-text">Evidence, synthesis, and publication-ready analysis.</p>
           </div>
-        </div>
-        <div class="cv-list">
-          <article class="entry">
-            <p class="period">YYYY - Present</p>
-            <div>
-              <h3 class="entry-title">Role / Position</h3>
-              <p class="entry-meta">Institution, lab, or organization</p>
-              <p class="entry-text">
-                Replace this with your current role, research responsibilities, and one concrete outcome or project.
-              </p>
-            </div>
-          </article>
-          <article class="entry">
-            <p class="period">YYYY - YYYY</p>
-            <div>
-              <h3 class="entry-title">Previous Role</h3>
-              <p class="entry-meta">Institution, team, or project group</p>
-              <p class="entry-text">
-                Add a short description that explains what changed in your skills, research direction, or technical work.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="education">
-        <div class="section-head">
-          <p class="section-label">Education</p>
-          <div>
-            <h2 class="section-title">Academic background.</h2>
-          </div>
-        </div>
-        <div class="cv-list">
-          <article class="entry">
-            <p class="period">YYYY</p>
-            <div>
-              <h3 class="entry-title">Degree / Program</h3>
-              <p class="entry-meta">University / Department</p>
-              <p class="entry-text">Add your degree, thesis area, advisor, or specialization.</p>
-            </div>
-          </article>
-          <article class="entry">
-            <p class="period">YYYY</p>
-            <div>
-              <h3 class="entry-title">Degree / Program</h3>
-              <p class="entry-meta">University / Department</p>
-              <p class="entry-text">Add earlier academic background if it helps explain your current research path.</p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="work">
-        <div class="section-head">
-          <p class="section-label">Selected Work</p>
-          <div>
-            <h2 class="section-title">A small set of work worth opening.</h2>
-            <p class="lead">
-              Keep this section selective. The hidden deepfake-policy path is intentionally not linked from this public profile yet.
+        </article>
+        <article class="case">
+          <div class="case-copy">
+            <span class="tag blue">Development</span>
+            <h3>Web-based knowledge tools</h3>
+            <p>
+              Add a concise description of software or data tools you want associated with your portfolio.
             </p>
+            <a class="mini-cta" href="#contact">Know more</a>
           </div>
-        </div>
-        <div class="cv-list">
-          <article class="entry">
-            <p class="period">Recent</p>
-            <div>
-              <h3 class="entry-title">Project / Paper / System</h3>
-              <p class="entry-meta">Short category or venue</p>
-              <p class="entry-text">Add the project you most want visitors to remember from the homepage.</p>
-            </div>
-          </article>
-        </div>
-      </section>
+          <div class="visual dark">
+            <p class="visual-title">Portfolio system</p>
+            <p class="visual-text">A home for CV content, selected work, and future project pages.</p>
+          </div>
+        </article>
+      </div>
+    </section>
 
-      <section class="section" id="contact">
-        <div class="section-head">
-          <p class="section-label">Contact</p>
-          <div>
-            <h2 class="section-title">Links and contact points.</h2>
-          </div>
-        </div>
-        <div class="contact-grid">
+    <section class="contact" id="contact">
+      <div class="contact-inner">
+        <h2>Get In Touch</h2>
+        <p>
+          Add your preferred contact details here. For now, the GitHub profile is linked and the other entries are placeholders.
+        </p>
+        <div class="contact-links">
           <a class="contact-link" href="https://github.com/KimJwn">
             <span>GitHub</span>
             <strong>github.com/KimJwn</strong>
@@ -528,13 +611,12 @@
             <strong>Add downloadable CV</strong>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  </main>
 
-      <p class="private-note">
-        This homepage is designed as the public profile entry point. Project pages can be published later under separate paths
-        once their content is ready for public viewing.
-      </p>
-    </main>
-  </div>
+  <footer>
+    <span>Kim Jwn | Personal CV Website</span>
+  </footer>
 </body>
 </html>
