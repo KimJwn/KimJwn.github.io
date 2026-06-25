@@ -21,15 +21,92 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--ink);
+      background: linear-gradient(135deg, var(--sky-a, #080808), var(--sky-b, #161616) 48%, var(--sky-c, #050505));
       color: var(--paper);
       font-family: "IBM Plex Mono", "Noto Sans KR", monospace;
+      transition: background 0.35s ease;
+    }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+    body::before {
+      z-index: 0;
+      background:
+        radial-gradient(circle at var(--glow-x, 16%) 18%, var(--glow-a, rgba(63, 142, 0, 0.2)), transparent 34%),
+        radial-gradient(circle at var(--glow-y, 82%) 8%, var(--glow-b, rgba(0, 125, 180, 0.16)), transparent 32%);
+    }
+    body::after {
+      z-index: 0;
+      opacity: 0.52;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 34%), var(--city-mark);
+      background-repeat: no-repeat;
+      background-position: bottom center;
+      background-size: 100% 44%;
+    }
+    body[data-city="busan"] {
+      --sky-a: #061219;
+      --sky-b: #102c35;
+      --sky-c: #050708;
+      --glow-a: rgba(28, 175, 214, 0.22);
+      --glow-b: rgba(255, 165, 76, 0.18);
+      --glow-x: 18%;
+      --glow-y: 84%;
+      --city-mark:
+        linear-gradient(115deg, transparent 0 31%, rgba(255,255,255,0.16) 31.3% 31.7%, transparent 32%),
+        linear-gradient(to top, rgba(13, 36, 45, 0.9) 0 22%, transparent 22%),
+        repeating-linear-gradient(90deg, rgba(5, 10, 12, 0.92) 0 42px, rgba(17, 38, 47, 0.92) 42px 72px, transparent 72px 96px);
+    }
+    body[data-city="seoul"] {
+      --sky-a: #100f18;
+      --sky-b: #2b263b;
+      --sky-c: #07070b;
+      --glow-a: rgba(168, 118, 255, 0.17);
+      --glow-b: rgba(255, 227, 126, 0.15);
+      --glow-x: 74%;
+      --glow-y: 18%;
+      --city-mark:
+        radial-gradient(ellipse at 50% 64%, transparent 0 7%, rgba(255,255,255,0.12) 7.2% 7.8%, transparent 8%),
+        linear-gradient(to top, rgba(13, 13, 22, 0.96) 0 31%, transparent 31%),
+        repeating-linear-gradient(90deg, rgba(7, 7, 12, 0.94) 0 28px, rgba(24, 22, 37, 0.94) 28px 52px, transparent 52px 64px);
+    }
+    body[data-city="suwon"] {
+      --sky-a: #11140c;
+      --sky-b: #29351d;
+      --sky-c: #050604;
+      --glow-a: rgba(98, 186, 27, 0.18);
+      --glow-b: rgba(244, 176, 92, 0.15);
+      --glow-x: 24%;
+      --glow-y: 72%;
+      --city-mark:
+        linear-gradient(to top, rgba(53, 42, 24, 0.92) 0 12%, transparent 12%),
+        repeating-linear-gradient(90deg, transparent 0 38px, rgba(218, 188, 120, 0.16) 38px 44px, transparent 44px 92px),
+        linear-gradient(to top, rgba(8, 15, 8, 0.92) 0 25%, transparent 25%);
+    }
+    body[data-city="sydney"] {
+      --sky-a: #03131f;
+      --sky-b: #123c55;
+      --sky-c: #05070a;
+      --glow-a: rgba(104, 213, 255, 0.22);
+      --glow-b: rgba(255, 255, 255, 0.17);
+      --glow-x: 80%;
+      --glow-y: 28%;
+      --city-mark:
+        radial-gradient(ellipse at 38% 76%, transparent 0 11%, rgba(255,255,255,0.16) 11.2% 11.7%, transparent 12%),
+        radial-gradient(ellipse at 45% 72%, transparent 0 9%, rgba(255,255,255,0.13) 9.2% 9.7%, transparent 10%),
+        linear-gradient(105deg, transparent 0 54%, rgba(255,255,255,0.2) 54.2% 54.8%, transparent 55%),
+        linear-gradient(to top, rgba(4, 18, 30, 0.94) 0 24%, transparent 24%);
     }
     .topbar {
       height: 70px;
       background: var(--ink-2);
       display: flex;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
     .nav {
       width: min(1110px, calc(100vw - 40px));
@@ -59,6 +136,8 @@
       grid-template-columns: minmax(320px, 560px) minmax(260px, 1fr);
       gap: 42px;
       align-items: center;
+      position: relative;
+      z-index: 1;
     }
     h1 {
       margin: 0 0 12px;
@@ -72,6 +151,45 @@
       font-size: 14px;
       line-height: 1.75;
       max-width: 520px;
+    }
+    .route {
+      display: grid;
+      gap: 12px;
+      margin: 0 0 24px;
+      padding: 14px;
+      border: 1px solid #2a2a2a;
+      background: rgba(8, 8, 8, 0.72);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+    }
+    .route-title {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .route-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .route-button {
+      min-height: 34px;
+      border: 1px solid #343434;
+      background: #111111;
+      color: var(--muted);
+      padding: 0 12px;
+      font: 700 12px "IBM Plex Mono", monospace;
+      cursor: pointer;
+    }
+    .route-button[aria-pressed="true"] {
+      color: #ffffff;
+      background: var(--green);
+      border-color: var(--green-line);
+    }
+    .route-next {
+      width: max-content;
+      max-width: 100%;
+      border-color: rgba(255, 255, 255, 0.34);
     }
     .stage {
       width: min(560px, 100%);
@@ -418,7 +536,7 @@
     }
   </style>
 </head>
-<body>
+<body data-city="busan">
   <header class="topbar">
     <nav class="nav">
       <a class="brand" href="/">Jiwon Kim</a>
@@ -430,6 +548,16 @@
     <section>
       <h1>Style Studio</h1>
       <p class="intro">A tiny playful page for trying profile-image decorations without changing the main CV page.</p>
+      <div class="route" aria-label="Background route">
+        <div class="route-title">Background route</div>
+        <div class="route-buttons">
+          <button class="route-button" type="button" data-city-button="busan" aria-pressed="true">Busan</button>
+          <button class="route-button" type="button" data-city-button="seoul" aria-pressed="false">Seoul</button>
+          <button class="route-button" type="button" data-city-button="suwon" aria-pressed="false">Suwon</button>
+          <button class="route-button" type="button" data-city-button="sydney" aria-pressed="false">Sydney</button>
+        </div>
+        <button class="route-button route-next" type="button" data-city-next>Next: Busan -> Seoul -> Suwon -> Sydney -> Busan</button>
+      </div>
       <div id="stage" class="stage">
         <img src="/images/profile-illustration.png" alt="Illustrated portrait of Jiwon Kim" />
         <div class="sticker glasses" aria-hidden="true">
@@ -487,6 +615,27 @@
 
   <script>
     const stage = document.getElementById('stage');
+    const route = ['busan', 'seoul', 'suwon', 'sydney'];
+    const cityButtons = document.querySelectorAll('[data-city-button]');
+    const nextCityButton = document.querySelector('[data-city-next]');
+
+    function setCity(city) {
+      document.body.dataset.city = city;
+      cityButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.cityButton === city));
+      });
+    }
+
+    cityButtons.forEach((button) => {
+      button.addEventListener('click', () => setCity(button.dataset.cityButton));
+    });
+
+    nextCityButton.addEventListener('click', () => {
+      const current = document.body.dataset.city || route[0];
+      const next = route[(route.indexOf(current) + 1) % route.length];
+      setCity(next);
+    });
+
     document.querySelectorAll('[data-sticker]').forEach((button) => {
       button.addEventListener('click', () => {
         const sticker = button.dataset.sticker;
