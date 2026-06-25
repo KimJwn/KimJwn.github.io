@@ -96,42 +96,19 @@
       transform: scale(0.96);
       transition: opacity 0.18s ease, transform 0.18s ease;
     }
-    .stage.show-ears .ears,
     .stage.show-glasses .glasses,
-    .stage.show-laptop .laptop {
+    .stage.show-laptop .laptop,
+    .stage.show-rocket .rocket,
+    .stage.show-face-id .face-id,
+    .stage.show-headset .headset {
       opacity: 1;
       transform: scale(1);
     }
-    .ears {
-      left: 20%;
-      top: 2%;
-      width: 60%;
-      height: 27%;
-    }
-    .ear {
-      position: absolute;
-      width: 30%;
-      aspect-ratio: 1;
-      top: 6%;
-      background: #2b211b;
-      border: 5px solid #160f0b;
-      transform: rotate(45deg);
-      border-radius: 6px 60% 8px 60%;
-    }
-    .ear::after {
-      content: "";
-      position: absolute;
-      inset: 18%;
-      background: #f5b9a6;
-      border-radius: inherit;
-    }
-    .ear.left { left: 7%; transform: rotate(28deg); }
-    .ear.right { right: 7%; transform: rotate(62deg); }
     .glasses {
-      left: 29%;
-      top: 36%;
-      width: 43%;
-      height: 12%;
+      left: 33%;
+      top: 36.5%;
+      width: 35%;
+      height: 10%;
     }
     .lens {
       position: absolute;
@@ -155,9 +132,9 @@
       border-radius: 999px;
     }
     .laptop {
-      left: 10%;
+      left: 23.5%;
       bottom: -1%;
-      width: 80%;
+      width: 53%;
       height: 34%;
       filter: drop-shadow(0 22px 18px rgba(29, 35, 41, 0.32));
     }
@@ -220,6 +197,189 @@
       transform: perspective(220px) rotateX(62deg) rotateZ(-5deg) skewX(-12deg);
       transform-origin: left bottom;
     }
+    .rocket {
+      left: 4%;
+      top: 50%;
+      width: 22%;
+      height: 20%;
+      transform: translate(-18px, 14px) rotate(-22deg) scale(0.96);
+    }
+    .stage.show-rocket .rocket {
+      transform: translate(0, 0) rotate(-22deg) scale(1);
+    }
+    .rocket-body {
+      position: absolute;
+      left: 34%;
+      top: 16%;
+      width: 32%;
+      height: 58%;
+      background: linear-gradient(135deg, #ffffff, #cbd5e1);
+      border: 3px solid #111111;
+      border-radius: 55% 55% 38% 38%;
+    }
+    .rocket-body::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -24%;
+      width: 84%;
+      height: 38%;
+      background: #ef4444;
+      border: 3px solid #111111;
+      border-bottom: 0;
+      border-radius: 90% 90% 20% 20%;
+      transform: translateX(-50%);
+    }
+    .rocket-body::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 29%;
+      width: 34%;
+      aspect-ratio: 1;
+      background: #8bd3ff;
+      border: 3px solid #111111;
+      border-radius: 50%;
+      transform: translateX(-50%);
+    }
+    .rocket-fin {
+      position: absolute;
+      top: 54%;
+      width: 24%;
+      height: 24%;
+      background: #2563eb;
+      border: 3px solid #111111;
+    }
+    .rocket-fin.left {
+      left: 22%;
+      border-radius: 65% 16% 40% 30%;
+      transform: rotate(-18deg);
+    }
+    .rocket-fin.right {
+      right: 22%;
+      border-radius: 16% 65% 30% 40%;
+      transform: rotate(18deg);
+    }
+    .flame {
+      position: absolute;
+      left: 44%;
+      top: 72%;
+      width: 12%;
+      height: 30%;
+      background: linear-gradient(#facc15, #ef4444);
+      border: 3px solid #111111;
+      border-radius: 0 0 999px 999px;
+      transform: rotate(2deg);
+    }
+    .face-id {
+      right: 5%;
+      top: 43%;
+      width: 22%;
+      height: 25%;
+    }
+    .scanner {
+      position: absolute;
+      inset: 8% 12%;
+      background: linear-gradient(160deg, #e7f7ff, #9fd9ef);
+      border: 4px solid #111111;
+      border-radius: 18px;
+      box-shadow: 8px 9px 0 rgba(17, 17, 17, 0.16);
+    }
+    .scanner::before,
+    .scanner::after {
+      content: "";
+      position: absolute;
+      inset: 18%;
+      border: 3px solid #111111;
+      border-radius: 10px;
+    }
+    .scanner::after {
+      inset: 42% 18%;
+      height: 4px;
+      border: 0;
+      background: var(--green);
+      box-shadow: 0 -24px 0 rgba(63, 142, 0, 0.7), 0 24px 0 rgba(63, 142, 0, 0.7);
+    }
+    .scan-face {
+      position: absolute;
+      left: 50%;
+      top: 54%;
+      width: 38%;
+      height: 48%;
+      border: 3px solid #111111;
+      border-radius: 44% 44% 48% 48%;
+      transform: translate(-50%, -50%);
+    }
+    .scan-face::before {
+      content: "";
+      position: absolute;
+      left: 23%;
+      top: 35%;
+      width: 8%;
+      aspect-ratio: 1;
+      background: #111111;
+      border-radius: 50%;
+      box-shadow: 22px 0 0 #111111;
+    }
+    .scan-face::after {
+      content: "";
+      position: absolute;
+      left: 35%;
+      bottom: 22%;
+      width: 30%;
+      height: 3px;
+      background: #111111;
+      border-radius: 999px;
+    }
+    .headset {
+      left: 25%;
+      top: 24%;
+      width: 50%;
+      height: 35%;
+    }
+    .headband {
+      position: absolute;
+      left: 12%;
+      top: 0;
+      width: 76%;
+      height: 72%;
+      border: 7px solid #111111;
+      border-bottom: 0;
+      border-radius: 999px 999px 0 0;
+    }
+    .earpad {
+      position: absolute;
+      top: 44%;
+      width: 14%;
+      height: 27%;
+      background: #1f2937;
+      border: 4px solid #111111;
+      border-radius: 999px;
+    }
+    .earpad.left { left: 7%; }
+    .earpad.right { right: 7%; }
+    .mic {
+      position: absolute;
+      right: 12%;
+      top: 64%;
+      width: 28%;
+      height: 5px;
+      background: #111111;
+      border-radius: 999px;
+      transform: rotate(18deg);
+      transform-origin: right center;
+    }
+    .mic::after {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: -4px;
+      width: 12px;
+      height: 12px;
+      background: var(--green);
+      border: 3px solid #111111;
+      border-radius: 50%;
+    }
     .panel {
       display: grid;
       gap: 14px;
@@ -272,10 +432,6 @@
       <p class="intro">A tiny playful page for trying profile-image decorations without changing the main CV page.</p>
       <div id="stage" class="stage">
         <img src="/images/profile-illustration.png" alt="Illustrated portrait of Jiwon Kim" />
-        <div class="sticker ears" aria-hidden="true">
-          <div class="ear left"></div>
-          <div class="ear right"></div>
-        </div>
         <div class="sticker glasses" aria-hidden="true">
           <div class="lens left"></div>
           <div class="bridge"></div>
@@ -285,20 +441,45 @@
           <div class="screen"></div>
           <div class="base"></div>
         </div>
+        <div class="sticker rocket" aria-hidden="true">
+          <div class="rocket-body"></div>
+          <div class="rocket-fin left"></div>
+          <div class="rocket-fin right"></div>
+          <div class="flame"></div>
+        </div>
+        <div class="sticker face-id" aria-hidden="true">
+          <div class="scanner">
+            <div class="scan-face"></div>
+          </div>
+        </div>
+        <div class="sticker headset" aria-hidden="true">
+          <div class="headband"></div>
+          <div class="earpad left"></div>
+          <div class="earpad right"></div>
+          <div class="mic"></div>
+        </div>
       </div>
     </section>
 
     <section class="panel" aria-label="Style controls">
-      <button class="toggle" type="button" data-sticker="ears" aria-pressed="false">
-        <span>Cat ears</span>
-        <span>off</span>
-      </button>
       <button class="toggle" type="button" data-sticker="glasses" aria-pressed="false">
         <span>Sunglasses</span>
         <span>off</span>
       </button>
       <button class="toggle" type="button" data-sticker="laptop" aria-pressed="false">
         <span>MacBook</span>
+        <span>off</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="rocket" aria-pressed="false">
+        <span>Rocket</span>
+        <span>off</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="face-id" aria-pressed="false">
+        <span>Face ID</span>
+        <span>off</span>
+      </button>
+      <button class="toggle" type="button" data-sticker="headset" aria-pressed="false">
+        <span>Headset</span>
         <span>off</span>
       </button>
     </section>
