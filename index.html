@@ -1,18 +1,414 @@
-<!DOCTYPE html>
-
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <title>my-first-website</title>
-  <LINK href="styles.css" rel="stylesheet" type="text/css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kim Jwn | CV</title>
+  <link rel="stylesheet" href="/assets/palette.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Poppins", "Noto Sans KR", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(15, 94, 234, 0.12), transparent 26%),
+        radial-gradient(circle at 88% 18%, rgba(148, 163, 184, 0.16), transparent 24%),
+        linear-gradient(180deg, #f8fbff 0%, #f7fafc 45%, #ffffff 100%);
+    }
+    .wrap {
+      width: min(1120px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+    .panel {
+      background: linear-gradient(180deg, var(--card-strong) 0%, var(--card) 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow-strong);
+    }
+    .hero-main {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(15, 94, 234, 0.05) 0%, rgba(15, 94, 234, 0) 38%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.35) 100%);
+      pointer-events: none;
+    }
+    .hero-main > * {
+      position: relative;
+      z-index: 1;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-line);
+      color: var(--accent-strong);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 16px 0 10px;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      color: var(--ink-strong);
+    }
+    .role {
+      margin: 0 0 18px;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--sub);
+    }
+    .summary {
+      margin: 0;
+      max-width: 42ch;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--ink-soft);
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: transform 0.16s ease, box-shadow 0.16s ease;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: linear-gradient(180deg, #2d75f0 0%, var(--accent) 100%);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(15, 94, 234, 0.24);
+    }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+    .hero-side {
+      padding: 24px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+    .meta-card {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .meta-label {
+      margin: 0 0 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--sub-soft);
+    }
+    .meta-value {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink-soft);
+      word-break: break-word;
+    }
+    .meta-value a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .meta-value a:hover {
+      text-decoration: underline;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+    .section {
+      padding: 22px 22px 18px;
+    }
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent-strong);
+    }
+    .timeline {
+      display: grid;
+      gap: 14px;
+    }
+    .item {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+    .item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+    .item-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink-strong);
+    }
+    .item-period {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sub-soft);
+    }
+    .item-subtitle {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: var(--sub);
+    }
+    .item-text {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-soft);
+    }
+    .skill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      border: 1px solid var(--accent-line);
+      color: var(--accent-strong);
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .note {
+      margin-top: 18px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      border: 1px dashed var(--line);
+      background: rgba(255, 255, 255, 0.75);
+      color: var(--sub);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    @media (max-width: 900px) {
+      .wrap {
+        width: min(100vw - 20px, 1120px);
+        padding-top: 18px;
+      }
+      .hero,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-main,
+      .hero-side,
+      .section {
+        padding: 20px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <main class="wrap">
+    <section class="hero">
+      <article class="panel hero-main">
+        <div class="eyebrow">Curriculum Vitae</div>
+        <h1>Kim Jwn</h1>
+        <p class="role">Researcher / Developer</p>
+        <p class="summary">
+          I work at the intersection of research, technology, and policy-focused analysis.
+          This page is structured as a CV-first profile so visitors immediately see who I am,
+          what I work on, and where my current work is heading.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#experience">View Experience</a>
+          <a class="btn btn-secondary" href="#contact">Contact</a>
+        </div>
+      </article>
 
-<img src="https://octodex.github.com/images/daftpunktocat-thomas.gif" id="octocat" alt="octocat-gif" />
+      <aside class="panel hero-side">
+        <div class="meta-card">
+          <p class="meta-label">Focus</p>
+          <p class="meta-value">AI, policy analysis, research workflows, and web-based knowledge tools</p>
+        </div>
+        <div class="meta-card">
+          <p class="meta-label">Location</p>
+          <p class="meta-value">Seoul, South Korea</p>
+        </div>
+        <div class="meta-card">
+          <p class="meta-label">GitHub</p>
+          <p class="meta-value"><a href="https://github.com/KimJwn">github.com/KimJwn</a></p>
+        </div>
+        <div class="meta-card" id="contact">
+          <p class="meta-label">Contact</p>
+          <p class="meta-value">Add your preferred email, CV PDF, or academic profile here.</p>
+        </div>
+      </aside>
+    </section>
 
-<!-- Change this code here by copy and pasting your template on line 15 -->
-<p>Welcome to your first GitHub Pages website!</p>
+    <section class="grid">
+      <article class="panel section">
+        <h2 class="section-title">Profile</h2>
+        <div class="timeline">
+          <div class="item">
+            <p class="item-text">
+              Replace this paragraph with a concise professional summary: your research area,
+              technical strengths, current affiliation, and the kind of opportunities or collaborations
+              you want this homepage to support.
+            </p>
+          </div>
+        </div>
+      </article>
 
+      <article class="panel section">
+        <h2 class="section-title">Core Skills</h2>
+        <div class="skill-list">
+          <span class="pill">Research Design</span>
+          <span class="pill">Policy Analysis</span>
+          <span class="pill">Data Workflows</span>
+          <span class="pill">Web Development</span>
+          <span class="pill">Technical Writing</span>
+          <span class="pill">AI Tooling</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid" id="experience" style="margin-top: 18px;">
+      <article class="panel section">
+        <h2 class="section-title">Experience</h2>
+        <div class="timeline">
+          <div class="item">
+            <div class="item-head">
+              <h3 class="item-title">Role / Position</h3>
+              <span class="item-period">YYYY - Present</span>
+            </div>
+            <p class="item-subtitle">Institution / Lab / Company</p>
+            <p class="item-text">
+              Add your main responsibilities, research themes, shipped systems, or representative outcomes here.
+            </p>
+          </div>
+          <div class="item">
+            <div class="item-head">
+              <h3 class="item-title">Previous Role</h3>
+              <span class="item-period">YYYY - YYYY</span>
+            </div>
+            <p class="item-subtitle">Institution / Team</p>
+            <p class="item-text">
+              Add one or two high-signal lines that help visitors understand your trajectory.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel section">
+        <h2 class="section-title">Education</h2>
+        <div class="timeline">
+          <div class="item">
+            <div class="item-head">
+              <h3 class="item-title">Degree</h3>
+              <span class="item-period">YYYY</span>
+            </div>
+            <p class="item-subtitle">University / Department</p>
+            <p class="item-text">Add thesis topic, specialization, advisor, or research emphasis if useful.</p>
+          </div>
+          <div class="item">
+            <div class="item-head">
+              <h3 class="item-title">Degree</h3>
+              <span class="item-period">YYYY</span>
+            </div>
+            <p class="item-subtitle">University / Department</p>
+            <p class="item-text">Add the background that best supports your current profile.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid" style="margin-top: 18px;">
+      <article class="panel section">
+        <h2 class="section-title">Selected Work</h2>
+        <div class="timeline">
+          <div class="item">
+            <div class="item-head">
+              <h3 class="item-title">Project / Paper / System</h3>
+              <span class="item-period">Recent</span>
+            </div>
+            <p class="item-text">
+              Add one short description for the work you most want people to remember from this page.
+            </p>
+          </div>
+          <div class="item">
+            <div class="item-head">
+              <h3 class="item-title">Project / Publication</h3>
+              <span class="item-period">Recent</span>
+            </div>
+            <p class="item-text">
+              Keep this section selective so the homepage stays profile-first instead of turning into a project dump.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel section">
+        <h2 class="section-title">Notes</h2>
+        <div class="timeline">
+          <div class="item">
+            <p class="item-text">
+              This homepage intentionally prioritizes CV content. Project-specific pages can be added later under separate paths,
+              but they should not compete with the main introduction.
+            </p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <div class="note">
+      This page currently avoids linking the hidden deepfake-policy project path.
+      If you want, we can next tailor this with your real education, affiliations, CV PDF link, and contact details.
+    </div>
+  </main>
 </body>
 </html>
