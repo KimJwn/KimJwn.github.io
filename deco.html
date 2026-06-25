@@ -236,7 +236,7 @@
       box-shadow:
         inset 10px 0 22px rgba(255, 255, 255, 0.48),
         inset -10px -8px 18px rgba(91, 97, 106, 0.15),
-        0 6px 0 rgba(79, 82, 88, 0.65);
+        0 8px 0 rgba(79, 82, 88, 0.62);
       transform: perspective(520px) rotateX(1deg) rotateZ(-0.8deg);
     }
     .screen::after {
@@ -267,18 +267,19 @@
     }
     .base {
       position: absolute;
-      left: 3%;
-      bottom: 8%;
-      width: 36%;
-      height: 16%;
-      z-index: 1;
+      left: -2%;
+      bottom: 2%;
+      width: 104%;
+      height: 22%;
+      z-index: 0;
       background:
-        repeating-linear-gradient(90deg, rgba(17, 20, 24, 0.75) 0 5px, rgba(42, 47, 54, 0.82) 5px 9px),
-        linear-gradient(135deg, #7c8793, #343b44);
+        linear-gradient(100deg, transparent 0 7%, rgba(17, 20, 24, 0.84) 7% 34%, transparent 34%),
+        repeating-linear-gradient(90deg, rgba(17, 20, 24, 0.74) 0 5px, rgba(45, 50, 58, 0.82) 5px 9px),
+        linear-gradient(135deg, #8a939d, #434b54);
       border: 2px solid rgba(38, 44, 52, 0.58);
-      border-radius: 12px 0 6px 12px;
-      transform: perspective(220px) rotateX(62deg) rotateZ(-5deg) skewX(-12deg);
-      transform-origin: left bottom;
+      border-radius: 10px 10px 18px 18px;
+      transform: perspective(260px) rotateX(66deg) translateY(2px);
+      transform-origin: center bottom;
     }
     .rocket {
       left: 6%;
@@ -294,25 +295,26 @@
     .rocket-body {
       position: absolute;
       left: 32%;
-      top: 12%;
+      top: 18%;
       width: 36%;
-      height: 62%;
+      height: 58%;
       background: linear-gradient(135deg, #f8fbff, #a9d7f5);
       border: 3px solid #2e2a58;
-      border-radius: 55% 55% 32% 32% / 66% 66% 28% 28%;
+      border-radius: 48% 48% 30% 30% / 72% 72% 24% 24%;
     }
     .rocket-body::before {
       content: "";
       position: absolute;
       left: 50%;
-      top: -30%;
-      width: 92%;
-      height: 42%;
+      top: -43%;
+      width: 84%;
+      height: 54%;
       background: #ff6b5f;
       border: 3px solid #2e2a58;
       border-bottom: 0;
-      border-radius: 90% 90% 12% 12%;
+      border-radius: 80% 80% 6% 6%;
       transform: translateX(-50%);
+      clip-path: polygon(50% 0, 100% 100%, 0 100%);
     }
     .rocket-body::after {
       content: "";
@@ -328,7 +330,7 @@
     }
     .rocket-fin {
       position: absolute;
-      top: 58%;
+      top: 62%;
       width: 28%;
       height: 25%;
       background: #2f7ec8;
@@ -346,13 +348,15 @@
     }
     .flame {
       position: absolute;
-      left: 38%;
-      top: 74%;
+      left: 35%;
+      top: 75%;
       width: 24%;
       height: 24%;
+      z-index: 5;
       background: linear-gradient(#ffe08a, #ff755f);
       border: 3px solid #2e2a58;
-      border-radius: 0 0 80% 80%;
+      border-radius: 75% 75% 90% 90%;
+      transform: rotate(10deg);
     }
     .face-id {
       right: 4%;
@@ -399,13 +403,13 @@
     .scan-face::before {
       content: "";
       position: absolute;
-      left: 23%;
+      left: 21%;
       top: 35%;
       width: 8%;
       aspect-ratio: 1;
       background: #d8f5ff;
       border-radius: 50%;
-      box-shadow: 14px 0 0 #d8f5ff;
+      box-shadow: 16px 0 0 #d8f5ff;
     }
     .scan-face::after {
       content: "";
@@ -487,14 +491,16 @@
       transform: rotate(-10deg);
     }
     .earpad.left::after {
-      left: 19%;
+      left: 46%;
+      transform: translateX(-50%);
     }
     .earpad.right {
       right: 2%;
       transform: rotate(10deg);
     }
     .earpad.right::after {
-      right: 19%;
+      right: 46%;
+      transform: translateX(50%);
     }
     .mic {
       display: none;
