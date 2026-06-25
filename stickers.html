@@ -155,41 +155,70 @@
       border-radius: 999px;
     }
     .laptop {
-      left: 21%;
-      bottom: 1%;
-      width: 58%;
-      height: 25%;
+      left: 10%;
+      bottom: -1%;
+      width: 80%;
+      height: 34%;
+      filter: drop-shadow(0 22px 18px rgba(29, 35, 41, 0.32));
     }
     .screen {
       position: absolute;
-      left: 9%;
-      top: 0;
-      width: 82%;
-      height: 72%;
-      background: linear-gradient(180deg, #1f2937, #111827);
-      border: 5px solid #0f172a;
-      border-radius: 10px 10px 4px 4px;
+      left: 7%;
+      top: 4%;
+      width: 86%;
+      height: 82%;
+      z-index: 2;
+      background:
+        radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.75), transparent 26%),
+        linear-gradient(135deg, #f6f3ef 0%, #dedbd7 48%, #bfc3c8 100%);
+      border: 3px solid rgba(80, 83, 90, 0.42);
+      border-radius: 18px 18px 14px 14px;
+      box-shadow:
+        inset 10px 0 22px rgba(255, 255, 255, 0.48),
+        inset -10px -8px 18px rgba(91, 97, 106, 0.15),
+        0 10px 0 rgba(79, 82, 88, 0.72);
+      transform: perspective(520px) rotateX(1deg) rotateZ(-1.8deg);
     }
     .screen::after {
-      content: "JK";
+      content: "";
       position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: var(--green-line);
-      font-family: "Raleway", sans-serif;
-      font-weight: 800;
-      font-size: 28px;
+      left: 50%;
+      top: 48%;
+      width: 10%;
+      aspect-ratio: 0.86;
+      background: #101011;
+      border-radius: 48% 48% 42% 42% / 55% 55% 42% 42%;
+      transform: translate(-50%, -50%);
+      box-shadow:
+        0 1px 2px rgba(255, 255, 255, 0.12),
+        0.9em -0.14em 0 -0.48em #dedbd7;
+    }
+    .screen::before {
+      content: "";
+      position: absolute;
+      left: 54%;
+      top: 36%;
+      width: 4.6%;
+      height: 10%;
+      z-index: 1;
+      background: #101011;
+      border-radius: 80% 0 80% 0;
+      transform: translate(-50%, -50%) rotate(32deg);
     }
     .base {
       position: absolute;
       left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 30%;
-      background: linear-gradient(180deg, #d1d5db, #9ca3af);
-      border-radius: 0 0 20px 20px;
-      border: 4px solid #6b7280;
+      bottom: 2%;
+      width: 62%;
+      height: 26%;
+      z-index: 1;
+      background:
+        repeating-linear-gradient(90deg, rgba(17, 20, 24, 0.85) 0 7px, rgba(42, 47, 54, 0.9) 7px 13px),
+        linear-gradient(135deg, #7c8793, #343b44);
+      border: 3px solid rgba(38, 44, 52, 0.72);
+      border-radius: 20px 0 8px 18px;
+      transform: perspective(220px) rotateX(62deg) rotateZ(-5deg) skewX(-12deg);
+      transform-origin: left bottom;
     }
     .panel {
       display: grid;
