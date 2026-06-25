@@ -184,63 +184,67 @@
       transform: scale(1);
     }
     .glasses {
-      left: 33%;
-      top: 36.5%;
-      width: 35%;
-      height: 10%;
+      left: 36%;
+      top: 38%;
+      width: 28%;
+      height: 7.8%;
+      z-index: 8;
     }
     .lens {
       position: absolute;
       top: 0;
-      width: 42%;
+      width: 40%;
       height: 100%;
       border-radius: 999px;
-      background: rgba(9, 9, 9, 0.82);
-      border: 4px solid #111111;
-      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+      background: linear-gradient(145deg, rgba(20, 20, 20, 0.88), rgba(5, 5, 5, 0.94));
+      border: 3px solid #141414;
+      box-shadow:
+        inset 0 0 0 2px rgba(255, 255, 255, 0.06),
+        inset 12px -8px 14px rgba(255, 255, 255, 0.04);
     }
     .lens.left { left: 0; }
     .lens.right { right: 0; }
     .bridge {
       position: absolute;
-      left: 39%;
-      top: 43%;
+      left: 38%;
+      top: 45%;
       width: 22%;
-      height: 5px;
-      background: #111111;
+      height: 4px;
+      background: #141414;
       border-radius: 999px;
     }
     .laptop {
-      left: 23.5%;
-      bottom: -1%;
-      width: 53%;
-      height: 34%;
-      filter: drop-shadow(0 22px 18px rgba(29, 35, 41, 0.32));
+      left: 27%;
+      bottom: -2%;
+      width: 46%;
+      height: 29%;
+      z-index: 7;
+      filter: drop-shadow(0 18px 15px rgba(29, 35, 41, 0.26));
     }
     .screen {
       position: absolute;
-      left: 7%;
-      top: 4%;
-      width: 86%;
-      height: 82%;
+      left: 4%;
+      top: 7%;
+      width: 92%;
+      height: 76%;
       z-index: 2;
       background:
-        radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.75), transparent 26%),
-        linear-gradient(135deg, #f6f3ef 0%, #dedbd7 48%, #bfc3c8 100%);
-      border: 3px solid rgba(80, 83, 90, 0.42);
-      border-radius: 18px 18px 14px 14px;
+        radial-gradient(circle at 52% 39%, rgba(255, 255, 255, 0.62), transparent 26%),
+        linear-gradient(135deg, #f1efea 0%, #d9d7d2 52%, #b9bec3 100%);
+      border: 2px solid rgba(80, 83, 90, 0.38);
+      border-radius: 14px;
       box-shadow:
         inset 10px 0 22px rgba(255, 255, 255, 0.48),
         inset -10px -8px 18px rgba(91, 97, 106, 0.15),
-        0 10px 0 rgba(79, 82, 88, 0.72);
-      transform: perspective(520px) rotateX(1deg) rotateZ(-1.8deg);
+        0 6px 0 rgba(79, 82, 88, 0.65);
+      transform: perspective(520px) rotateX(1deg) rotateZ(-0.8deg);
     }
     .screen::after {
       content: "";
       position: absolute;
       left: 50%;
-      top: 48%;
-      width: 10%;
+      top: 49%;
+      width: 7%;
       aspect-ratio: 0.86;
       background: #101011;
       border-radius: 48% 48% 42% 42% / 55% 55% 42% 42%;
@@ -252,10 +256,10 @@
     .screen::before {
       content: "";
       position: absolute;
-      left: 54%;
-      top: 36%;
-      width: 4.6%;
-      height: 10%;
+      left: 53.4%;
+      top: 39%;
+      width: 3.4%;
+      height: 7.5%;
       z-index: 1;
       background: #101011;
       border-radius: 80% 0 80% 0;
@@ -263,129 +267,132 @@
     }
     .base {
       position: absolute;
-      left: 0;
-      bottom: 2%;
-      width: 62%;
-      height: 26%;
+      left: 3%;
+      bottom: 8%;
+      width: 36%;
+      height: 16%;
       z-index: 1;
       background:
-        repeating-linear-gradient(90deg, rgba(17, 20, 24, 0.85) 0 7px, rgba(42, 47, 54, 0.9) 7px 13px),
+        repeating-linear-gradient(90deg, rgba(17, 20, 24, 0.75) 0 5px, rgba(42, 47, 54, 0.82) 5px 9px),
         linear-gradient(135deg, #7c8793, #343b44);
-      border: 3px solid rgba(38, 44, 52, 0.72);
-      border-radius: 20px 0 8px 18px;
+      border: 2px solid rgba(38, 44, 52, 0.58);
+      border-radius: 12px 0 6px 12px;
       transform: perspective(220px) rotateX(62deg) rotateZ(-5deg) skewX(-12deg);
       transform-origin: left bottom;
     }
     .rocket {
-      left: 4%;
-      top: 50%;
-      width: 22%;
-      height: 20%;
-      transform: translate(-18px, 14px) rotate(-22deg) scale(0.96);
+      left: 6%;
+      top: 55%;
+      width: 16%;
+      height: 23%;
+      z-index: 3;
+      transform: translate(-14px, 14px) rotate(-32deg) scale(0.96);
     }
     .stage.show-rocket .rocket {
-      transform: translate(0, 0) rotate(-22deg) scale(1);
+      transform: translate(0, 0) rotate(-32deg) scale(1);
     }
     .rocket-body {
       position: absolute;
-      left: 34%;
-      top: 16%;
-      width: 32%;
-      height: 58%;
-      background: linear-gradient(135deg, #ffffff, #cbd5e1);
-      border: 3px solid #111111;
-      border-radius: 55% 55% 38% 38%;
+      left: 32%;
+      top: 12%;
+      width: 36%;
+      height: 62%;
+      background: linear-gradient(135deg, #f8fbff, #a9d7f5);
+      border: 3px solid #2e2a58;
+      border-radius: 55% 55% 32% 32% / 66% 66% 28% 28%;
     }
     .rocket-body::before {
       content: "";
       position: absolute;
       left: 50%;
-      top: -24%;
-      width: 84%;
-      height: 38%;
-      background: #ef4444;
-      border: 3px solid #111111;
+      top: -30%;
+      width: 92%;
+      height: 42%;
+      background: #ff6b5f;
+      border: 3px solid #2e2a58;
       border-bottom: 0;
-      border-radius: 90% 90% 20% 20%;
+      border-radius: 90% 90% 12% 12%;
       transform: translateX(-50%);
     }
     .rocket-body::after {
       content: "";
       position: absolute;
       left: 50%;
-      top: 29%;
-      width: 34%;
+      top: 27%;
+      width: 38%;
       aspect-ratio: 1;
-      background: #8bd3ff;
-      border: 3px solid #111111;
+      background: #7fd5ff;
+      border: 3px solid #2e2a58;
       border-radius: 50%;
       transform: translateX(-50%);
     }
     .rocket-fin {
       position: absolute;
-      top: 54%;
-      width: 24%;
-      height: 24%;
-      background: #2563eb;
-      border: 3px solid #111111;
+      top: 58%;
+      width: 28%;
+      height: 25%;
+      background: #2f7ec8;
+      border: 3px solid #2e2a58;
     }
     .rocket-fin.left {
-      left: 22%;
+      left: 17%;
       border-radius: 65% 16% 40% 30%;
       transform: rotate(-18deg);
     }
     .rocket-fin.right {
-      right: 22%;
+      right: 17%;
       border-radius: 16% 65% 30% 40%;
       transform: rotate(18deg);
     }
     .flame {
       position: absolute;
-      left: 44%;
-      top: 72%;
-      width: 12%;
-      height: 30%;
-      background: linear-gradient(#facc15, #ef4444);
-      border: 3px solid #111111;
-      border-radius: 0 0 999px 999px;
-      transform: rotate(2deg);
+      left: 38%;
+      top: 74%;
+      width: 24%;
+      height: 24%;
+      background: linear-gradient(#ffe08a, #ff755f);
+      border: 3px solid #2e2a58;
+      border-radius: 0 0 80% 80%;
     }
     .face-id {
-      right: 5%;
-      top: 43%;
-      width: 22%;
-      height: 25%;
+      right: 4%;
+      top: 51%;
+      width: 18%;
+      height: 22%;
+      z-index: 3;
     }
     .scanner {
       position: absolute;
-      inset: 8% 12%;
-      background: linear-gradient(160deg, #e7f7ff, #9fd9ef);
-      border: 4px solid #111111;
-      border-radius: 18px;
-      box-shadow: 8px 9px 0 rgba(17, 17, 17, 0.16);
+      inset: 5% 8%;
+      background: linear-gradient(160deg, #18232d, #0c1116);
+      border: 3px solid #9cc8d8;
+      border-radius: 16px;
+      box-shadow: 6px 7px 0 rgba(17, 17, 17, 0.14);
     }
     .scanner::before,
     .scanner::after {
       content: "";
       position: absolute;
-      inset: 18%;
-      border: 3px solid #111111;
+      inset: 16%;
+      border: 3px solid #7ed8ff;
       border-radius: 10px;
+      clip-path: polygon(0 0, 28% 0, 28% 10%, 10% 10%, 10% 28%, 0 28%, 0 0, 100% 0, 100% 28%, 90% 28%, 90% 10%, 72% 10%, 72% 0, 100% 0, 100% 100%, 72% 100%, 72% 90%, 90% 90%, 90% 72%, 100% 72%, 100% 100%, 0 100%, 0 72%, 10% 72%, 10% 90%, 28% 90%, 28% 100%, 0 100%);
     }
     .scanner::after {
-      inset: 42% 18%;
-      height: 4px;
+      inset: 47% 14%;
+      height: 3px;
       border: 0;
-      background: var(--green);
-      box-shadow: 0 -24px 0 rgba(63, 142, 0, 0.7), 0 24px 0 rgba(63, 142, 0, 0.7);
+      background: #62ba1b;
+      box-shadow: 0 -20px 0 rgba(98, 186, 27, 0.35), 0 20px 0 rgba(98, 186, 27, 0.35);
+      clip-path: none;
     }
     .scan-face {
       position: absolute;
       left: 50%;
-      top: 54%;
-      width: 38%;
-      height: 48%;
-      border: 3px solid #111111;
+      top: 45%;
+      width: 30%;
+      height: 34%;
+      border: 2px solid #d8f5ff;
       border-radius: 44% 44% 48% 48%;
       transform: translate(-50%, -50%);
     }
@@ -396,25 +403,26 @@
       top: 35%;
       width: 8%;
       aspect-ratio: 1;
-      background: #111111;
+      background: #d8f5ff;
       border-radius: 50%;
-      box-shadow: 22px 0 0 #111111;
+      box-shadow: 14px 0 0 #d8f5ff;
     }
     .scan-face::after {
       content: "";
       position: absolute;
       left: 35%;
-      bottom: 22%;
-      width: 30%;
-      height: 3px;
-      background: #111111;
+      bottom: 20%;
+      width: 32%;
+      height: 2px;
+      background: #d8f5ff;
       border-radius: 999px;
     }
     .headset {
-      left: 14%;
-      top: 4%;
-      width: 72%;
-      height: 60%;
+      left: 21%;
+      top: 7%;
+      width: 58%;
+      height: 52%;
+      z-index: 4;
       filter: drop-shadow(0 12px 18px rgba(27, 31, 35, 0.22));
     }
     .headband {
@@ -423,7 +431,7 @@
       top: 0;
       width: 84%;
       height: 82%;
-      border: 18px solid #f3f1eb;
+      border: 13px solid #f3f1eb;
       border-bottom: 0;
       border-radius: 999px 999px 0 0;
       filter: drop-shadow(0 0 0 rgba(25, 25, 25, 0.34));
@@ -440,9 +448,9 @@
     }
     .earpad {
       position: absolute;
-      top: 48%;
-      width: 25%;
-      height: 46%;
+      top: 50%;
+      width: 24%;
+      height: 43%;
       background:
         radial-gradient(circle at 42% 34%, rgba(255, 255, 255, 0.96), transparent 34%),
         linear-gradient(120deg, rgba(255, 255, 255, 0.94), rgba(218, 216, 209, 0.96) 52%, rgba(247, 245, 239, 0.92));
@@ -475,14 +483,14 @@
       box-shadow: 0 0 0 2px rgba(55, 55, 52, 0.24);
     }
     .earpad.left {
-      left: 4%;
+      left: 2%;
       transform: rotate(-10deg);
     }
     .earpad.left::after {
       left: 19%;
     }
     .earpad.right {
-      right: 4%;
+      right: 2%;
       transform: rotate(10deg);
     }
     .earpad.right::after {
