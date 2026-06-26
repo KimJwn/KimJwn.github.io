@@ -1,86 +1,698 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
-  <title>Private Project</title>
+  <title>Deepfake Policy Research</title>
   <link rel="stylesheet" href="../assets/palette.css" />
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
-      font-family: "Poppins", "Noto Sans KR", "Segoe UI", sans-serif;
-      color: var(--ink);
+      font-family: "Poppins","Noto Sans KR","Segoe UI",sans-serif;
+      color: #0f172a;
       background:
-        radial-gradient(circle at top left, rgba(15, 94, 234, 0.12), transparent 28%),
-        radial-gradient(circle at 85% 20%, rgba(148, 163, 184, 0.18), transparent 22%),
+        radial-gradient(circle at top left, rgba(15,94,234,0.12), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(148,163,184,0.18), transparent 22%),
         linear-gradient(180deg, #f8fbff 0%, #f8fafc 44%, #ffffff 100%);
     }
-    .card {
-      width: min(680px, 100%);
-      background: linear-gradient(180deg, var(--card-strong) 0%, var(--card) 100%);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: var(--shadow-strong);
+    .wrap {
+      min-height: 100vh;
+      max-width: var(--layout-page-max-width);
+      margin: 0 auto;
+      padding: var(--layout-page-padding-top) var(--layout-page-padding-x) var(--layout-page-padding-bottom);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: grid;
+      gap: 4px;
+    }
+    .brand-kicker {
+      margin: 0;
+      color: #0f5eea;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .brand-title {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+    .langbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #d6deea;
+      background: rgba(255,255,255,0.82);
+    }
+    .langbox label { font-size: 13px; color: #475569; }
+    .langbox select {
+      border: 0;
+      background: transparent;
+      color: #0f172a;
+      font-size: 13px;
+      font-weight: 700;
+      outline: none;
+    }
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      gap: 22px;
+      align-items: center;
+      padding: 30px 24px;
+      border: 1px solid #d9e3f2;
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.80) 48%, rgba(244,248,255,0.92) 100%);
+      box-shadow: 0 22px 60px rgba(15,23,42,0.08);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.5) 100%);
+      pointer-events: none;
+    }
+    .hero > * { position: relative; z-index: 1; }
+    .bg-quotes {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-quote {
+      position: absolute;
+      max-width: 240px;
+      font: 600 11px/1.6 "IBM Plex Mono","Consolas",monospace;
+      color: rgba(15,23,42,0.10);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      user-select: none;
+    }
+    .copy {
+      display: grid;
+      gap: 16px;
+      max-width: 430px;
     }
     .eyebrow {
       display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid var(--accent-line);
-      background: var(--accent-soft);
-      color: var(--accent-strong);
+      background: #eef4ff;
+      border: 1px solid #c9d8fa;
+      color: #17407d;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before {
+      content: '§';
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #0f5eea;
+      color: #fff;
+      font-size: 11px;
+    }
+    .copy h1 {
+      margin: 0;
+      font-size: 44px;
+      line-height: 1.05;
+      letter-spacing: -.05em;
+    }
+    .copy h1 .accent { color: #0f5eea; }
+    .copy p {
+      margin: 0;
+      color: #475569;
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 38ch;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn, .btn-subtle, .portal {
+      text-decoration: none;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #2d75f0 0%, #0f5eea 100%);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(15,94,234,.22);
+    }
+    .btn-subtle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border-radius: 12px;
+      border: 1px solid #d6deea;
+      background: rgba(255,255,255,0.86);
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .quote-stage {
+      display: grid;
+      gap: 10px;
+    }
+    .quote-card {
+      position: relative;
+      padding: 18px 18px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(207,217,236,0.96);
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 18px 48px rgba(15,23,42,0.10);
+      backdrop-filter: blur(8px);
+      transition: opacity .42s ease, transform .42s ease;
+    }
+    .quote-card.is-fading {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    .quote-card::before {
+      content: '"';
+      position: absolute;
+      left: 18px;
+      top: -14px;
+      color: rgba(15,94,234,0.14);
+      font-size: 72px;
+      line-height: 1;
+      font-family: "Times New Roman",serif;
+    }
+    .quote-meta, .quote-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .quote-meta { margin-bottom: 12px; }
+    .indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #17407d;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+    .source {
+      color: #64748b;
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.02em;
     }
-    h1 {
-      margin: 14px 0 10px;
-      font-size: 30px;
-      line-height: 1.1;
-      color: var(--ink-strong);
+    .quote {
+      margin: 0;
+      padding-left: 14px;
+      color: #0f172a;
+      font: 500 15px/1.72 "IBM Plex Mono","Consolas",monospace;
+      white-space: pre-line;
     }
-    p {
-      margin: 0 0 10px;
-      line-height: 1.6;
-      color: var(--sub);
-      font-size: 15px;
+    .quote-footer {
+      margin-top: 14px;
+      color: #64748b;
+      font-size: 12px;
     }
-    .note {
-      margin-top: 18px;
-      padding: 14px 16px;
-      border-radius: 14px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      color: var(--ink-soft);
-      font-size: 14px;
+    .quote-footer strong {
+      color: #0f172a;
+      font-size: 13px;
     }
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 700;
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
     }
-    a:hover {
-      text-decoration: underline;
+    .dot {
+      width: 8px;
+      height: 8px;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(100,116,139,0.24);
+      cursor: pointer;
+      transition: width .22s ease, background-color .22s ease;
+    }
+    .dot.active {
+      width: 28px;
+      background: #0f5eea;
+    }
+    .portal-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .portal {
+      display: grid;
+      gap: 8px;
+      padding: 16px 14px;
+      border-radius: 16px;
+      border: 1px solid #d9e3f2;
+      background: rgba(255,255,255,0.82);
+      color: inherit;
+      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+    }
+    .portal-kicker {
+      color: #0f5eea;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .portal-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+    .portal-copy {
+      margin: 0;
+      color: #64748b;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .footer-note {
+      color: #64748b;
+      font-size: 12px;
+      text-align: center;
+    }
+    @media (max-width: 960px) {
+      .hero { grid-template-columns: 1fr; }
+      .portal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .copy h1 { font-size: 38px; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 14px 12px 22px; }
+      .hero { padding: 18px 14px; border-radius: 20px; }
+      .copy h1 { font-size: 31px; }
+      .copy p { font-size: 15px; }
+      .quote { font-size: 13px; line-height: 1.68; }
+      .portal-grid { grid-template-columns: 1fr; }
+      .bg-quote:nth-child(n+5) { display: none; }
     }
   </style>
 </head>
 <body>
-  <main class="card">
-    <div class="eyebrow">Private Preview</div>
-    <h1>This project is not publicly listed.</h1>
-    <p>This page is intentionally hidden from the public profile site for now.</p>
-    <p>If access is needed, I will share the working version directly after review and permission.</p>
-    <div class="note">
-      Return to the main profile site:
-      <a href="/">kimjwn.github.io</a>
-    </div>
+  <main class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <p class="brand-kicker">Deepfake Policy Observatory</p>
+        <h1 class="brand-title" id="siteTitle"></h1>
+      </div>
+      <div class="langbox">
+        <label for="uiLang" id="langLabel"></label>
+        <select id="uiLang">
+          <option value="ko">한국어</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="homeTitle">
+      <div class="bg-quotes" id="bgQuotes" aria-hidden="true"></div>
+      <div class="copy">
+        <span class="eyebrow" id="eyebrow"></span>
+        <div>
+          <h2 id="homeTitle"></h2>
+          <p id="homeDesc"></p>
+        </div>
+        <div class="actions">
+          <a class="btn" href="../countries.html" id="primaryCta"></a>
+          <a class="btn-subtle" href="../status.html" id="secondaryCta"></a>
+        </div>
+      </div>
+
+      <div class="quote-stage">
+        <article class="quote-card" id="quoteCard">
+          <div class="quote-meta">
+            <span class="indicator" id="quoteIndicator"></span>
+            <span class="source" id="quoteSource"></span>
+          </div>
+          <p class="quote" id="quoteBody"></p>
+          <div class="quote-footer">
+            <strong id="quoteCountry"></strong>
+            <span id="quoteLaw"></span>
+          </div>
+        </article>
+        <div class="dots" id="quoteDots"></div>
+      </div>
+    </section>
+
+    <section class="portal-grid">
+      <a class="portal" href="../countries.html">
+        <span class="portal-kicker" id="portal1Kick"></span>
+        <p class="portal-title" id="portal1Title"></p>
+        <p class="portal-copy" id="portal1Copy"></p>
+      </a>
+      <a class="portal" href="../status.html">
+        <span class="portal-kicker" id="portal2Kick"></span>
+        <p class="portal-title" id="portal2Title"></p>
+        <p class="portal-copy" id="portal2Copy"></p>
+      </a>
+      <a class="portal" href="../penalties.html">
+        <span class="portal-kicker" id="portal3Kick"></span>
+        <p class="portal-title" id="portal3Title"></p>
+        <p class="portal-copy" id="portal3Copy"></p>
+      </a>
+      <a class="portal" href="../rq.html">
+        <span class="portal-kicker" id="portal4Kick"></span>
+        <p class="portal-title" id="portal4Title"></p>
+        <p class="portal-copy" id="portal4Copy"></p>
+      </a>
+      <a class="portal" href="../coding.html">
+        <span class="portal-kicker" id="portal5Kick"></span>
+        <p class="portal-title" id="portal5Title"></p>
+        <p class="portal-copy" id="portal5Copy"></p>
+      </a>
+      <a class="portal" href="../workflow.html">
+        <span class="portal-kicker" id="portal6Kick"></span>
+        <p class="portal-title" id="portal6Title"></p>
+        <p class="portal-copy" id="portal6Copy"></p>
+      </a>
+    </section>
+
+    <p class="footer-note" id="footerNote"></p>
   </main>
+
+  <script>
+    const T = {
+      ko: {
+        siteTitle: '딥페이크 법제 비교',
+        lang: '언어',
+        eyebrow: 'Legal Provisions',
+        title: '실제 법률 조문으로 읽는\n딥페이크 규제',
+        accent: '실제 법률 조문',
+        desc: '첫 화면은 요약 대시보드가 아니라 입구용 홈으로 분리했습니다. 상단 조문 카드에서 각국 법률 문구를 먼저 읽고, 그다음 국가별 비교와 세부 페이지로 들어갈 수 있습니다.',
+        primary: '국가별 대시보드 열기',
+        secondary: '비교 테이블 보기',
+        indicator: '조문',
+        portal1Kick: 'Directory',
+        portal1Title: 'Countries',
+        portal1Copy: '국가별 카드와 차원별 수준을 보며 상세 페이지로 이동합니다.',
+        portal2Kick: 'Compare',
+        portal2Title: 'Status Table',
+        portal2Copy: '라벨링, 선거, 비동의, 플랫폼 책임, 처벌을 한 번에 비교합니다.',
+        portal3Kick: 'Sanctions',
+        portal3Title: 'Penalties',
+        portal3Copy: '제재 유형과 법적 근거를 중심으로 처벌 구조를 비교합니다.',
+        portal4Kick: 'Research',
+        portal4Title: 'RQ',
+        portal4Copy: '연구 질문과 해석 프레임을 정리한 페이지로 이동합니다.',
+        portal5Kick: 'Coding',
+        portal5Title: 'Clause-based Coding',
+        portal5Copy: '세그먼트 원문은 숨기고 policy dimension, risk, life cycle, defense layer 같은 코딩 결과만 보여줍니다.',
+        portal6Kick: 'Method',
+        portal6Title: 'Workflow',
+        portal6Copy: '문서 분류, 텍스트 추출, 정규화, 조항 코딩 순서를 설명하는 방법론 페이지입니다.',
+        footer: '메인 홈은 조문 중심 진입 화면이고, 비교 기능은 각 하위 페이지에서 유지됩니다.',
+      },
+      en: {
+        siteTitle: 'Deepfake Law Comparison',
+        lang: 'Language',
+        eyebrow: 'Legal Provisions',
+        title: 'Read Deepfake Regulation\nThrough Actual Legal Text',
+        accent: 'Actual Legal Text',
+        desc: 'The first page is now a separate home screen rather than the dashboard itself. Users can start from rotating statutory language, then move into country comparison and detail pages.',
+        primary: 'Open country dashboard',
+        secondary: 'Open comparison table',
+        indicator: 'Provision',
+        portal1Kick: 'Directory',
+        portal1Title: 'Countries',
+        portal1Copy: 'Browse country cards and dimension levels, then open the detail page.',
+        portal2Kick: 'Compare',
+        portal2Title: 'Status Table',
+        portal2Copy: 'Compare labeling, election, non-consensual harms, platform liability, and penalties.',
+        portal3Kick: 'Sanctions',
+        portal3Title: 'Penalties',
+        portal3Copy: 'Review sanction structures with normalized offense and legal-basis views.',
+        portal4Kick: 'Research',
+        portal4Title: 'RQ',
+        portal4Copy: 'Open the page that frames the core research questions and interpretation logic.',
+        portal5Kick: 'Coding',
+        portal5Title: 'Clause-based Coding',
+        portal5Copy: 'Open coded outputs only, without exposing raw segment text.',
+        portal6Kick: 'Method',
+        portal6Title: 'Workflow',
+        portal6Copy: 'Open the methodology page for corpus classification, text extraction, normalization, and clause coding order.',
+        footer: 'The home page is now a legal-text entry point; comparison functions remain in the subpages.',
+      },
+    };
+
+    const QUOTES = [
+      {
+        country: { ko: '한국', en: 'Korea' },
+        law: { ko: '인공지능기본법 제31조', en: 'AI Basic Act, Article 31' },
+        source: { ko: 'Korean original', en: 'Official Korean text' },
+        provision: {
+          ko: `제31조(인공지능 투명성 확보 의무)\n① 인공지능사업자는 고영향 인공지능이나 생성형 인공지능을 이용한 제품 또는 서비스를 제공하려는 경우 제품 또는 서비스가 해당 인공지능에 기반하여 운용된다는 사실을 이용자에게 사전에 고지하여야 한다.\n② 인공지능사업자는 생성형 인공지능 또는 이를 이용한 제품 또는 서비스를 제공하는 경우 그 결과물이 생성형 인공지능에 의하여 생성되었다는 사실을 표시하여야 한다.`,
+          en: `Article 31 (Transparency obligations)\n(1) Where an AI business operator intends to provide a product or service using high-impact AI or generative AI, the operator shall notify users in advance that the product or service is operated on that AI basis.\n(2) Where an operator provides generative AI or a product or service using it, the operator shall indicate that the output was generated by generative AI.`,
+        },
+      },
+      {
+        country: { ko: '한국', en: 'Korea' },
+        law: { ko: '인공지능기본법 제31조', en: 'AI Basic Act, Article 31' },
+        source: { ko: 'Korean original', en: 'Official Korean text' },
+        provision: {
+          ko: `제31조(인공지능 투명성 확보 의무)\n③ 인공지능사업자는 인공지능시스템을 이용하여 실제와 구분하기 어려운 가상의 음향, 이미지 또는 영상 등의 결과물을 제공하는 경우 해당 결과물이 인공지능시스템에 의하여 생성되었다는 사실을 이용자가 명확하게 인식할 수 있는 방식으로 고지 또는 표시하여야 한다.`,
+          en: `Article 31 (3) Where an operator provides virtual audio, images, video, or similar outputs that are difficult to distinguish from reality, the operator shall notify or label in a manner that allows users to clearly recognize that the output was generated by an AI system.`,
+        },
+      },
+      {
+        country: { ko: '한국', en: 'Korea' },
+        law: { ko: '표시광고법 제4조·제7조', en: 'Fair Labeling and Advertising Act, Articles 4 and 7' },
+        source: { ko: 'Korean original', en: 'Official Korean text' },
+        provision: {
+          ko: `제4조(중요정보의 고시 및 통합공고)\n⑤ 사업자등은 표시ㆍ광고 행위를 하는 경우에는 제1항에 따라 고시된 중요정보를 표시ㆍ광고하여야 한다.\n\n제7조(시정조치)\n① 공정거래위원회는 사업자등이 제3조제1항을 위반하여 부당한 표시ㆍ광고 행위를 하는 경우에는 그 사업자등에 대하여 그 시정을 위한 조치를 명할 수 있다.`,
+          en: `Article 4(5)\nWhen engaging in labeling or advertising, business entities shall include the important information publicly notified under paragraph (1).\n\nArticle 7(1)\nWhere a business entity engages in unfair labeling or advertising in violation of Article 3(1), the Fair Trade Commission may order corrective measures.`,
+        },
+      },
+      {
+        country: { ko: '한국', en: 'Korea' },
+        law: { ko: '공직선거관리규칙 [별표 1의3]', en: 'Public Official Election Management Rules, Annex 1-3' },
+        source: { ko: 'Korean original', en: 'Official Korean text' },
+        provision: {
+          ko: `딥페이크영상등 표시사항 및 표시방법\n\n이 이미지는 실제가 아닌 인공지능 기술 등을 이용하여 만든 가상의 정보입니다.\n\n누구든지 쉽게 인식할 수 있도록 전체크기의 100분의 10 이상의 테두리 안에 배경과 구분되도록 표시한다.`,
+          en: `For image content, the notice states: "This image is virtual information produced using artificial intelligence technology and is not real." It must be displayed so that anyone can easily recognize it, within a border occupying at least 10 percent of the full size and clearly distinguished from the background.`,
+        },
+      },
+      {
+        country: { ko: '한국', en: 'Korea' },
+        law: { ko: '공직선거관리규칙 [별표 1의3]', en: 'Public Official Election Management Rules, Annex 1-3' },
+        source: { ko: 'Korean original', en: 'Official Korean text' },
+        provision: {
+          ko: `딥페이크영상등 표시사항 및 표시방법\n\n이 영상은 실제가 아닌 인공지능 기술 등을 이용하여 만든 가상의 정보입니다.\n\n누구든지 쉽게 인식할 수 있도록 전체크기의 100분의 10 이상의 테두리 안에 배경과 구분되도록 상시 표시한다.`,
+          en: `For video content, the notice states: "This video is virtual information produced using artificial intelligence technology and is not real." It must be displayed at all times so that anyone can easily recognize it, within a border occupying at least 10 percent of the full size and clearly distinguished from the background.`,
+        },
+      },
+      {
+        country: { ko: '중국', en: 'China' },
+        law: { ko: '인터넷정보서비스 딥페이크 관리 규정 제16조', en: 'Deep Synthesis Provisions, Article 16' },
+        source: { ko: 'Korean translation file', en: 'Korean translation file' },
+        provision: {
+          ko: `제16조\n딥페이크서비스 제공자는 해당 서비스를 사용해 생성하거나 편집한 정보 내용에 대해 기술적 조치를 하여 고용주의 사용에 영향을 미치지 않는 표시를 추가하고 법률, 행정법규 및 관련 국가 규정에 따라 로그 정보를 보관하여야 한다.`,
+          en: `Article 16\nDeep synthesis service providers shall add identifiers, through technical measures that do not affect user use, to information content generated or edited through their services, and shall preserve log information in accordance with law and relevant state provisions.`,
+        },
+      },
+      {
+        country: { ko: '중국', en: 'China' },
+        law: { ko: '인터넷정보서비스 딥페이크 관리 규정 제17조', en: 'Deep Synthesis Provisions, Article 17' },
+        source: { ko: 'Korean translation file', en: 'Korean translation file' },
+        provision: {
+          ko: `제17조\n딥페이크서비스 제공자가 다음과 같은 딥페이크서비스를 제공하여 대중의 혼동 또는 착각을 유발할 수 있는 경우, 생성 또는 편집된 정보 내용의 합리적인 위치나 영역에 명시하여 대중에게 딥페이크 상황임을 알려야 한다.\n\n딥페이크서비스 제공자가 위 문단의 규정 이외의 딥페이크서비스를 제공하는 경우, 눈에 띄는 식별 기능을 제공하고 딥페이크서비스 고용주가 눈에 띄는 표시를 할 수 있음을 안내하여야 한다.`,
+          en: `Article 17\nWhere a deep synthesis service may cause public confusion or misidentification, the provider shall place a conspicuous identifier in an appropriate position or area of the generated or edited content to alert the public that the content is deep-synthesised.\n\nFor other deep synthesis services, providers shall offer a conspicuous labeling function and inform users that they may apply such visible labeling.`,
+        },
+      },
+      {
+        country: { ko: 'EU', en: 'EU' },
+        law: { ko: 'EU AI Act 제50조', en: 'EU AI Act, Article 50' },
+        source: { ko: null, en: 'Official text' },
+        provision: {
+          ko: null,
+          en: `Article 50 (2) Providers of AI systems generating synthetic audio, image, video or text content shall ensure that the outputs are marked in a machine-readable format and detectable as artificially generated or manipulated.`,
+        },
+      },
+      {
+        country: { ko: 'EU', en: 'EU' },
+        law: { ko: 'EU AI Act 제50조', en: 'EU AI Act, Article 50' },
+        source: { ko: null, en: 'Official text' },
+        provision: {
+          ko: null,
+          en: `Article 50 (4) Deployers of an AI system that generates or manipulates image, audio or video content constituting a deep fake shall disclose that the content has been artificially generated or manipulated.`,
+        },
+      },
+    ];
+
+    const uiLang = document.getElementById('uiLang');
+    const siteTitleEl = document.getElementById('siteTitle');
+    const langLabelEl = document.getElementById('langLabel');
+    const eyebrowEl = document.getElementById('eyebrow');
+    const homeTitleEl = document.getElementById('homeTitle');
+    const homeDescEl = document.getElementById('homeDesc');
+    const primaryCtaEl = document.getElementById('primaryCta');
+    const secondaryCtaEl = document.getElementById('secondaryCta');
+    const quoteCardEl = document.getElementById('quoteCard');
+    const quoteIndicatorEl = document.getElementById('quoteIndicator');
+    const quoteSourceEl = document.getElementById('quoteSource');
+    const quoteBodyEl = document.getElementById('quoteBody');
+    const quoteCountryEl = document.getElementById('quoteCountry');
+    const quoteLawEl = document.getElementById('quoteLaw');
+    const quoteDotsEl = document.getElementById('quoteDots');
+    const bgQuotesEl = document.getElementById('bgQuotes');
+    const footerNoteEl = document.getElementById('footerNote');
+
+    let currentIndex = 0;
+    let rotateTimer = null;
+    let fadeTimer = null;
+
+    function lang() {
+      return uiLang.value === 'en' ? 'en' : 'ko';
+    }
+    function text() {
+      return T[lang()];
+    }
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+    function quotes() {
+      return QUOTES
+        .map((q) => ({
+          country: q.country[lang()] || q.country.en,
+          law: q.law[lang()] || q.law.en,
+          source: q.source[lang()] || q.source.en,
+          provision: q.provision[lang()] || null,
+        }))
+        .filter((q) => q.provision);
+    }
+    function renderBgQuotes() {
+      const positions = [
+        { top: '10%', left: '4%', rotate: '-5deg' },
+        { top: '22%', right: '6%', rotate: '4deg' },
+        { top: '42%', left: '7%', rotate: '-2deg' },
+        { top: '58%', right: '8%', rotate: '3deg' },
+        { top: '76%', left: '13%', rotate: '-4deg' },
+        { top: '84%', right: '4%', rotate: '2deg' },
+      ];
+      bgQuotesEl.innerHTML = quotes().slice(0, 6).map((q, idx) => {
+        const pos = positions[idx];
+        const side = pos.left ? `left:${pos.left};` : `right:${pos.right};`;
+        return `<span class="bg-quote" style="top:${pos.top};${side}transform:rotate(${pos.rotate});">${escapeHtml(q.provision.replace(/\s+/g, ' '))}</span>`;
+      }).join('');
+    }
+    function renderQuote() {
+      const q = quotes()[currentIndex];
+      const t = text();
+      quoteIndicatorEl.textContent = `${t.indicator} ${currentIndex + 1} / ${quotes().length}`;
+      quoteSourceEl.textContent = q.source;
+      quoteBodyEl.textContent = q.provision;
+      quoteCountryEl.textContent = q.country;
+      quoteLawEl.textContent = q.law;
+      quoteDotsEl.innerHTML = quotes().map((_, idx) => `<button class="dot${idx === currentIndex ? ' active' : ''}" type="button" data-idx="${idx}" aria-label="${escapeHtml(`${t.indicator} ${idx + 1}`)}"></button>`).join('');
+      quoteDotsEl.querySelectorAll('.dot').forEach((btn) => {
+        btn.addEventListener('click', () => setQuote(Number(btn.getAttribute('data-idx')), true));
+      });
+    }
+    function scheduleRotation() {
+      clearInterval(rotateTimer);
+      rotateTimer = setInterval(() => {
+        setQuote((currentIndex + 1) % quotes().length, true);
+      }, 5200);
+    }
+    function setQuote(nextIndex, animate) {
+      currentIndex = ((nextIndex % quotes().length) + quotes().length) % quotes().length;
+      clearTimeout(fadeTimer);
+      if (animate) {
+        quoteCardEl.classList.add('is-fading');
+        fadeTimer = setTimeout(() => {
+          renderQuote();
+          quoteCardEl.classList.remove('is-fading');
+        }, 220);
+      } else {
+        quoteCardEl.classList.remove('is-fading');
+        renderQuote();
+      }
+      scheduleRotation();
+    }
+    function renderText() {
+      const t = text();
+      document.documentElement.lang = lang();
+      siteTitleEl.textContent = t.siteTitle;
+      langLabelEl.textContent = `${t.lang}:`;
+      eyebrowEl.textContent = t.eyebrow;
+      const accent = escapeHtml(t.accent);
+      homeTitleEl.innerHTML = escapeHtml(t.title).replace(accent, `<span class="accent">${accent}</span>`).replace(/\n/g, '<br />');
+      homeDescEl.textContent = t.desc;
+      primaryCtaEl.textContent = t.primary;
+      secondaryCtaEl.textContent = t.secondary;
+      document.getElementById('portal1Kick').textContent = t.portal1Kick;
+      document.getElementById('portal1Title').textContent = t.portal1Title;
+      document.getElementById('portal1Copy').textContent = t.portal1Copy;
+      document.getElementById('portal2Kick').textContent = t.portal2Kick;
+      document.getElementById('portal2Title').textContent = t.portal2Title;
+      document.getElementById('portal2Copy').textContent = t.portal2Copy;
+      document.getElementById('portal3Kick').textContent = t.portal3Kick;
+      document.getElementById('portal3Title').textContent = t.portal3Title;
+      document.getElementById('portal3Copy').textContent = t.portal3Copy;
+      document.getElementById('portal4Kick').textContent = t.portal4Kick;
+      document.getElementById('portal4Title').textContent = t.portal4Title;
+      document.getElementById('portal4Copy').textContent = t.portal4Copy;
+      document.getElementById('portal5Kick').textContent = t.portal5Kick;
+      document.getElementById('portal5Title').textContent = t.portal5Title;
+      document.getElementById('portal5Copy').textContent = t.portal5Copy;
+      document.getElementById('portal6Kick').textContent = t.portal6Kick;
+      document.getElementById('portal6Title').textContent = t.portal6Title;
+      document.getElementById('portal6Copy').textContent = t.portal6Copy;
+      footerNoteEl.textContent = t.footer;
+      renderBgQuotes();
+      setQuote(currentIndex, false);
+    }
+
+    uiLang.addEventListener('change', renderText);
+    renderText();
+  </script>
 </body>
 </html>
