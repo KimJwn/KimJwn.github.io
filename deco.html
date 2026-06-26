@@ -21,7 +21,7 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--sky-a, #080808), var(--sky-b, #161616) 48%, var(--sky-c, #050505));
+      background: #080808;
       color: var(--paper);
       font-family: "IBM Plex Mono", "Noto Sans KR", monospace;
       transition: background 0.35s ease;
@@ -34,18 +34,21 @@
       pointer-events: none;
     }
     body::before {
-      z-index: 0;
+      z-index: 1;
       background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.48) 44%, rgba(0, 0, 0, 0.66) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.22) 42%, rgba(0, 0, 0, 0.78) 100%),
         radial-gradient(circle at var(--glow-x, 16%) 18%, var(--glow-a, rgba(63, 142, 0, 0.2)), transparent 34%),
         radial-gradient(circle at var(--glow-y, 82%) 8%, var(--glow-b, rgba(0, 125, 180, 0.16)), transparent 32%);
     }
     body::after {
       z-index: 0;
-      opacity: 0.52;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 34%), var(--city-mark);
+      opacity: 0.72;
+      background: var(--city-mark);
       background-repeat: no-repeat;
-      background-position: bottom center;
-      background-size: 100% 44%, var(--city-size, 100% 44%);
+      background-position: var(--city-position, center center);
+      background-size: cover;
+      transform: scale(1.02);
     }
     body[data-city="busan"] {
       --sky-a: #061219;
@@ -56,7 +59,7 @@
       --glow-x: 18%;
       --glow-y: 84%;
       --city-mark: url("/images/busan.jpg");
-      --city-size: 100% 62%;
+      --city-position: center center;
     }
     body[data-city="seoul"] {
       --sky-a: #100f18;
@@ -67,7 +70,7 @@
       --glow-x: 74%;
       --glow-y: 18%;
       --city-mark: url("/images/seoul.jpg");
-      --city-size: 100% 62%;
+      --city-position: center center;
     }
     body[data-city="suwon"] {
       --sky-a: #11140c;
@@ -78,7 +81,7 @@
       --glow-x: 24%;
       --glow-y: 72%;
       --city-mark: url("/images/suwon.jpg");
-      --city-size: 100% 62%;
+      --city-position: center center;
     }
     body[data-city="sydney"] {
       --sky-a: #03131f;
@@ -89,7 +92,7 @@
       --glow-x: 80%;
       --glow-y: 28%;
       --city-mark: url("/images/sydney.jpg");
-      --city-size: 100% 62%;
+      --city-position: center center;
     }
     .topbar {
       height: 70px;
@@ -97,7 +100,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     .nav {
       width: min(1110px, calc(100vw - 40px));
@@ -128,7 +131,7 @@
       gap: 42px;
       align-items: center;
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
     h1 {
       margin: 0 0 12px;
