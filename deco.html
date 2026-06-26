@@ -174,6 +174,8 @@
       opacity: 0;
       transform: scale(0.96);
       transition: opacity 0.18s ease, transform 0.18s ease;
+      touch-action: none;
+      user-select: none;
     }
     .stage.show-glasses .glasses,
     .stage.show-laptop .laptop,
@@ -182,6 +184,12 @@
     .stage.show-headset .headset {
       opacity: 1;
       transform: scale(1);
+      pointer-events: auto;
+      cursor: grab;
+    }
+    .sticker.is-dragging {
+      cursor: grabbing;
+      transition: none;
     }
     .glasses {
       left: 36%;
@@ -524,6 +532,15 @@
       color: currentColor;
       opacity: 0.78;
     }
+    .reset {
+      color: var(--muted);
+      background: transparent;
+      border-style: dashed;
+    }
+    .reset:hover {
+      color: #ffffff;
+      border-color: var(--green-line);
+    }
     @media (max-width: 860px) {
       main {
         grid-template-columns: 1fr;
@@ -607,11 +624,29 @@
         <span>Headset</span>
         <span>off</span>
       </button>
+      <button class="toggle reset" type="button" data-reset-positions>
+        <span>Reset positions</span>
+        <span>default</span>
+      </button>
     </section>
   </main>
 
   <script>
     const stage = document.getElementById('stage');
+    const stickers = {
+      glasses: document.querySelector('.glasses'),
+      laptop: document.querySelector('.laptop'),
+      rocket: document.querySelector('.rocket'),
+      'face-id': document.querySelector('.face-id'),
+      headset: document.querySelector('.headset'),
+    };
+    const defaultStickerPositions = {
+      glasses: { left: '36%', top: '38%' },
+      laptop: { left: '27%', top: null, bottom: '-2%' },
+      rocket: { left: '6%', top: '55%' },
+      'face-id': { right: '4%', left: null, top: '51%' },
+      headset: { left: '21%', top: '7%' },
+    };
     const cityButtons = document.querySelectorAll('[data-city-button]');
     const placeNote = document.querySelector('[data-place-note]');
     const placeNotes = {
@@ -641,6 +676,56 @@
         stage.classList.toggle(className, next);
         button.setAttribute('aria-pressed', String(next));
         button.querySelector('span:last-child').textContent = next ? 'on' : 'off';
+      });
+    });
+
+    Object.entries(stickers).forEach(([name, sticker]) => {
+      let dragOffset = { x: 0, y: 0 };
+
+      sticker.addEventListener('pointerdown', (event) => {
+        if (!stage.classList.contains(`show-${name}`)) return;
+        const stickerBox = sticker.getBoundingClientRect();
+        dragOffset = {
+          x: event.clientX - stickerBox.left,
+          y: event.clientY - stickerBox.top,
+        };
+        sticker.classList.add('is-dragging');
+        sticker.setPointerCapture(event.pointerId);
+      });
+
+      sticker.addEventListener('pointermove', (event) => {
+        if (!sticker.classList.contains('is-dragging')) return;
+        const stageBox = stage.getBoundingClientRect();
+        const x = event.clientX - stageBox.left - dragOffset.x;
+        const y = event.clientY - stageBox.top - dragOffset.y;
+        const left = Math.max(0, Math.min(x, stageBox.width - sticker.offsetWidth));
+        const top = Math.max(0, Math.min(y, stageBox.height - sticker.offsetHeight));
+
+        sticker.style.left = `${(left / stageBox.width) * 100}%`;
+        sticker.style.top = `${(top / stageBox.height) * 100}%`;
+        sticker.style.right = 'auto';
+        sticker.style.bottom = 'auto';
+      });
+
+      sticker.addEventListener('pointerup', (event) => {
+        sticker.classList.remove('is-dragging');
+        if (sticker.hasPointerCapture(event.pointerId)) {
+          sticker.releasePointerCapture(event.pointerId);
+        }
+      });
+
+      sticker.addEventListener('pointercancel', () => {
+        sticker.classList.remove('is-dragging');
+      });
+    });
+
+    document.querySelector('[data-reset-positions]').addEventListener('click', () => {
+      Object.entries(defaultStickerPositions).forEach(([name, position]) => {
+        const sticker = stickers[name];
+        sticker.style.left = position.left || '';
+        sticker.style.top = position.top || '';
+        sticker.style.right = position.right || '';
+        sticker.style.bottom = position.bottom || '';
       });
     });
   </script>
