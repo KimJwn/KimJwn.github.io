@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Centered face authentication glyph">
+  <defs>
+    <linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7ed8ff"/>
+      <stop offset="1" stop-color="#62ba1b"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 26H18V38" stroke="#7ed8ff" stroke-width="6"/>
+    <path d="M92 26H102V38" stroke="#7ed8ff" stroke-width="6"/>
+    <path d="M28 94H18V82" stroke="#7ed8ff" stroke-width="6"/>
+    <path d="M92 94H102V82" stroke="#7ed8ff" stroke-width="6"/>
+    <path d="M60 34C46 34 38 45 38 60C38 76 47 88 60 88C73 88 82 76 82 60C82 45 74 34 60 34Z" stroke="#d8f5ff" stroke-width="4"/>
+    <path d="M52 56V56.2" stroke="#d8f5ff" stroke-width="7"/>
+    <path d="M68 56V56.2" stroke="#d8f5ff" stroke-width="7"/>
+    <path d="M53 72C57 75 63 75 67 72" stroke="#d8f5ff" stroke-width="4"/>
+    <path d="M20 60H100" stroke="url(#scan)" stroke-width="5"/>
+  </g>
+</svg>

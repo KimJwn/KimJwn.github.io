@@ -374,8 +374,7 @@
       border-radius: 16px;
       box-shadow: 6px 7px 0 rgba(17, 17, 17, 0.14);
     }
-    .scanner::before,
-    .scanner::after {
+    .scanner::before {
       content: "";
       position: absolute;
       inset: 16%;
@@ -383,44 +382,13 @@
       border-radius: 10px;
       clip-path: polygon(0 0, 28% 0, 28% 10%, 10% 10%, 10% 28%, 0 28%, 0 0, 100% 0, 100% 28%, 90% 28%, 90% 10%, 72% 10%, 72% 0, 100% 0, 100% 100%, 72% 100%, 72% 90%, 90% 90%, 90% 72%, 100% 72%, 100% 100%, 0 100%, 0 72%, 10% 72%, 10% 90%, 28% 90%, 28% 100%, 0 100%);
     }
-    .scanner::after {
-      inset: 47% 14%;
-      height: 3px;
-      border: 0;
-      background: #62ba1b;
-      box-shadow: 0 -20px 0 rgba(98, 186, 27, 0.35), 0 20px 0 rgba(98, 186, 27, 0.35);
-      clip-path: none;
-    }
-    .scan-face {
+    .scanner-glyph {
       position: absolute;
-      left: 50%;
-      top: 45%;
-      width: 30%;
-      height: 34%;
-      border: 2px solid #d8f5ff;
-      border-radius: 44% 44% 48% 48%;
-      transform: translate(-50%, -50%);
-    }
-    .scan-face::before {
-      content: "";
-      position: absolute;
-      left: 28%;
-      top: 35%;
-      width: 7%;
-      aspect-ratio: 1;
-      background: #d8f5ff;
-      border-radius: 50%;
-      box-shadow: 11px 0 0 #d8f5ff;
-    }
-    .scan-face::after {
-      content: "";
-      position: absolute;
-      left: 35%;
-      bottom: 20%;
-      width: 32%;
-      height: 2px;
-      background: #d8f5ff;
-      border-radius: 999px;
+      inset: 12%;
+      width: 76%;
+      height: 76%;
+      object-fit: contain;
+      display: block;
     }
     .headset {
       left: 21%;
@@ -613,7 +581,7 @@
         </div>
         <div class="sticker face-id" aria-hidden="true">
           <div class="scanner">
-            <div class="scan-face"></div>
+            <img class="scanner-glyph" src="/images/face-auth-glyph.svg" alt="" />
           </div>
         </div>
         <div class="sticker headset" aria-hidden="true">
