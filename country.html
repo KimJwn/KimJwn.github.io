@@ -1,0 +1,3816 @@
+﻿<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>국가 상세 페이지</title>
+  <link rel="stylesheet" href="/assets/palette.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Poppins", "Noto Sans KR", "Segoe UI", "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+      color: #0f172a;
+      overflow-y: scroll;
+      background:
+        radial-gradient(circle at top left, rgba(15,94,234,0.12), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(148,163,184,0.18), transparent 22%),
+        linear-gradient(180deg, #f8fbff 0%, #f8fafc 44%, #ffffff 100%);
+    }
+    .wrap { max-width: var(--layout-page-max-width); margin: 0 auto; padding: var(--layout-page-padding-top) var(--layout-page-padding-x) var(--layout-page-padding-bottom); }
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.84) 100%);
+      border: 1px solid #d9e3f2;
+      border-radius: 24px;
+      padding: var(--layout-card-padding);
+      box-shadow: 0 22px 60px rgba(15,23,42,0.08);
+      overflow: hidden;
+      position: relative;
+    }
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 0 0 14px;
+      padding: 0;
+      position: relative;
+    }
+    .head-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      width: auto;
+      justify-content: flex-start;
+      position: relative;
+    }
+    .title-stack {
+      display: grid;
+      gap: 4px;
+    }
+    .page-kicker {
+      margin: 0;
+      color: #0f5eea;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .page-subtitle {
+      margin: 0;
+      color: #475569;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    h1 { margin: 0; font-size: 28px; line-height: 1.06; letter-spacing: -.04em; text-align: left; color: #0f172a; }
+    .langbox {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #d6deea;
+      background: rgba(255,255,255,0.82);
+    }
+    .detail-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 0 0 12px;
+      padding: 0 0 2px;
+    }
+    .d-tab {
+      border: 1px solid #d6deea;
+      background: #fff;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+    .d-tab.active {
+      background: var(--accent-soft);
+      border-color: var(--accent-line);
+      color: var(--accent-strong);
+    }
+    select {
+      font-size: 14px;
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #d6deea;
+      background: #fff;
+      color: #0f172a;
+    }
+    a.link { color: var(--accent); text-decoration: none; font-weight: 600; }
+    a.link:hover { text-decoration: underline; }
+    .back-btn {
+      font-size: 14px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid #d6deea;
+      background: rgba(255,255,255,0.86);
+      color: #0f172a;
+      text-decoration: none;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: none;
+      position: static;
+      transform: none;
+    }
+    .back-btn:hover {
+      background: #f8fbff;
+      border-color: #bcd0f3;
+      color: #0f5eea;
+      text-decoration: none;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .panel {
+      border: 1px solid #d9e3f2;
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+      min-height: 0;
+    }
+    .panel h2 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .section-chip {
+      margin: 0 auto 10px;
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      color: var(--doc-act-fg);
+      border: 1px solid var(--accent-line);
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: linear-gradient(180deg, var(--surface) 0%, var(--accent-soft) 100%);
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.16);
+    }
+    .doc-list { display: grid; gap: 12px; }
+    .doc-list > section {
+      display: grid;
+      gap: 10px;
+    }
+    .doc-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .mode-label { font-size: 12px; color: var(--sub); font-weight: 700; }
+    .mode-switch { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+    .mode-btn {
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--sub);
+      cursor: pointer;
+    }
+    .mode-btn.active {
+      background: var(--accent-soft);
+      border-color: var(--accent-line);
+      color: var(--accent-strong);
+    }
+    .search-input {
+      width: 100%;
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #d6deea;
+      background: #fff;
+      margin-bottom: 6px;
+    }
+    .timeline-wrap {
+      border: 0;
+      border-radius: 0;
+      padding: 0;
+      background: transparent;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .timeline-compare-head { display: none; }
+    .timeline-compare-actions { display: none; }
+    .timeline-compare-stack {
+      margin-top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      gap: 6px;
+      padding-left: 0;
+    }
+    .timeline-compare-slot {
+      position: absolute;
+      left: 0;
+      top: calc(44% + 44px);
+      transform: translateX(calc(-100% - 5px));
+      width: auto;
+      display: flex;
+      justify-content: center;
+    }
+    .timeline-compare-controls {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      justify-content: center;
+    }
+    .timeline-compare-stack .timeline-compare-toggle,
+    .timeline-compare-stack .vtl-select {
+      margin: 0 auto;
+    }
+    .timeline-compare-toggle {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+      color: #1e3a8a;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(29, 78, 216, 0.12);
+    }
+    .timeline-compare-toggle:hover { background: #eef2ff; border-color: #b7ccff; color: #123d9a; }
+    .timeline-compare-close {
+      width: 28px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      padding: 0;
+    }
+    .timeline-compare-close:hover {
+      border-color: #b7ccff;
+      color: #123d9a;
+      background: #eef2ff;
+    }
+    .timeline-unified {
+      --left-rail: 170px;
+      border: 1px solid #d8dee8;
+      border-radius: 9px;
+      background:
+        radial-gradient(120% 90% at 0% 0%, rgba(59,130,246,.08) 0%, transparent 45%),
+        linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      padding: 10px 10px 12px;
+      min-width: 0;
+      overflow: auto;
+    }
+    .timeline-global {
+      position: relative;
+      min-height: 228px;
+      min-width: 0;
+      width: min(860px, calc(100% - var(--left-rail)));
+      margin: 0 0 0 var(--left-rail);
+      padding: 6px 0;
+    }
+    .timeline-global::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 4px;
+      bottom: 4px;
+      border-left: 1px dashed #cdd6df;
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .timeline-global-axis {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 44%;
+      transform: translateY(-50%);
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #cfd8e3 0%, #94a3b8 50%, #cfd8e3 100%);
+    }
+    .timeline-lane-label {
+      position: absolute;
+      left: 0;
+      transform: translateX(calc(-100% - 5px));
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #475569;
+      white-space: nowrap;
+      width: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      text-align: center;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      overflow: visible;
+    }
+    .timeline-lane-label .lane-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      flex: 0 0 auto;
+    }
+    .timeline-lane-label .lane-name {
+      display: inline-block;
+      max-width: none;
+      overflow: visible;
+      text-overflow: clip;
+      white-space: nowrap;
+      vertical-align: middle;
+      text-align: center;
+    }
+    .timeline-lane-label.top {
+      top: calc(44% - 40px);
+    }
+    .timeline-lane-label.bottom {
+      top: calc(44% + 20px);
+      transform: translateX(calc(-100% - 11px));
+    }
+    .timeline-lane-label.bottom::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: -18px;
+      border-top: 1px dashed #cdd6df;
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .timeline-lane-label.compare {
+      top: calc(44% + 88px);
+      transform: translateX(calc(-100% - 11px));
+    }
+    .timeline-axis-label {
+      position: absolute;
+      right: 0;
+      top: 44%;
+      transform: translate(104%, -50%);
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+      line-height: 1;
+    }
+    .timeline-gap {
+      position: absolute;
+      top: 44%;
+      transform: translate(-50%, -50%);
+      font-size: 14px;
+      color: #64748b;
+      font-weight: 800;
+      background: #fff;
+      border: 1px dashed #cfd8e3;
+      border-radius: 999px;
+      padding: 0 5px;
+      line-height: 1.1;
+    }
+    .timeline-pin {
+      position: absolute;
+      transform: translateX(-50%);
+      width: 118px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      pointer-events: none;
+    }
+    .timeline-pin.up {
+      bottom: calc(50% + 8px);
+    }
+    .timeline-pin.down {
+      top: calc(44% + 8px);
+    }
+    .timeline-pin.country {
+      bottom: calc(56% + 36px);
+    }
+    .timeline-pin.global {
+      top: calc(44% + 10px);
+      z-index: 3;
+    }
+    .timeline-pin.compare {
+      top: calc(44% + 66px);
+      z-index: 1;
+    }
+    .timeline-pin-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      box-shadow: 0 0 0 2px #fff;
+      pointer-events: auto;
+    }
+    .timeline-pin-dot.in_force { background:#16a34a; border-color:#15803d; }
+    .timeline-pin-dot.proposed { background:#f59e0b; border-color:#d97706; }
+    .timeline-pin-dot.guidelines { background:#3b82f6; border-color:#1d4ed8; }
+    .timeline-pin-dot.unknown { background:#94a3b8; border-color:#64748b; }
+    .timeline-pin-dot.mixed { background:#8b5cf6; border-color:#7c3aed; }
+    .timeline-pin-year {
+      font-size: 12px;
+      font-weight: 800;
+      color: #334155;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      pointer-events: auto;
+    }
+    .timeline-pin-desc {
+      font-size: 11px;
+      line-height: 1;
+      border-radius: 999px;
+      border: 1px solid #d5deea;
+      background: #ffffff;
+      color: #334155;
+      padding: 3px 7px;
+      white-space: nowrap;
+      box-shadow: none;
+      pointer-events: auto;
+    }
+    .timeline-pin-notes {
+      display: grid;
+      gap: 2px;
+      max-width: 156px;
+      color: #94a3b8;
+      font-size: 10px;
+      line-height: 1.15;
+      text-align: center;
+      pointer-events: none;
+    }
+    .timeline-pin-notes .note-line {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      margin: 1px 0;
+    }
+    .timeline-pin-stem {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      border-left: 2px dashed #cbd5e1;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .timeline-pin.compare .timeline-pin-stem {
+      top: -56px;
+      height: 56px;
+    }
+    .timeline-year-tick {
+      position: absolute;
+      top: calc(44% - 22px);
+      transform: translateX(-50%);
+      font-size: 12px;
+      font-weight: 800;
+      color: #334155;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      pointer-events: none;
+      background: #fff;
+      padding: 0 3px;
+      border-radius: 4px;
+    }
+    .vtl-select {
+      min-width: 72px;
+      max-width: 72px;
+      width: 72px;
+      font-size: 12px;
+      padding: 5px 6px;
+      border-radius: 9px;
+      border: 1px solid #bfd3ff;
+      background: #fff;
+      color: #334155;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+    }
+    .timeline-flow {
+      display: none;
+      margin: 0 0 8px;
+      font-size: 11px;
+      color: #6b7280;
+    }
+    .timeline-rows { padding: 0; }
+    .timeline-canvas { position: relative; padding: 2px 4px 0; min-height: 122px; }
+    .timeline-axis {
+      position: absolute;
+      left: 4px;
+      right: 4px;
+      top: 32px;
+      height: 2px;
+      border-radius: 999px;
+      background: #c5cfde;
+    }
+    .timeline-step {
+      position: absolute;
+      top: 4px;
+      transform: translateX(-50%);
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    .timeline-step.is-start { transform: translateX(0); align-items: flex-start; }
+    .timeline-step.is-end { transform: translateX(-100%); align-items: flex-end; }
+    .timeline-year-label {
+      font-size: 10px;
+      color: #6b7280;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+    .timeline-node {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      font-size: 9px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 4px 6px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      background: #eef0f3;
+      color: #374151;
+    }
+    .timeline-node::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: calc(100% + 4px);
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 0 2px #fff;
+      opacity: .85;
+    }
+    .timeline-cnt {
+      margin-left: 4px;
+      font-size: 8px;
+      font-weight: 800;
+      line-height: 1;
+      padding: 2px 4px;
+      border-radius: 999px;
+      background: rgba(17, 24, 39, 0.08);
+      color: inherit;
+    }
+    .timeline-node.is-current {
+      box-shadow: 0 0 0 1px #2563eb inset;
+      font-weight: 800;
+    }
+    .timeline-point-meta {
+      display: grid;
+      gap: 2px;
+      width: 108px;
+    }
+    .timeline-mini {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      border-radius: 6px;
+      padding: 2px 4px;
+      border: 1px solid transparent;
+      line-height: 1;
+      white-space: nowrap;
+      font-size: 9px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .timeline-mini-if { background:#eaf7ee; color:#166534; border-color:#b7e1c2; }
+    .timeline-mini-pr { background:#fff6df; color:#8a5a00; border-color:#efd9a0; }
+    .timeline-mini-gl { background:#e8f1ff; color:#1e3a8a; border-color:#b9d1ff; }
+    .timeline-mini-rv { background:#eef0f3; color:#374151; border-color:#d1d5db; }
+    .timeline-stage {
+      display: inline-block;
+      min-width: 68px;
+      text-align: center;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 4px 6px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .timeline-stage-inforce { background: #eaf7ee; color: #166534; border-color: #b7e1c2; }
+    .timeline-stage-proposed { background: #fff6df; color: #8a5a00; border-color: #efd9a0; }
+    .timeline-stage-guidelines { background: #e8f1ff; color: #1e3a8a; border-color: #b9d1ff; }
+    .timeline-stage-unknown { background: #eef0f3; color: #374151; border-color: #d1d5db; }
+    .timeline-node-in_force { background: #eaf7ee; color: #166534; border-color: #b7e1c2; }
+    .timeline-node-proposed { background: #fff6df; color: #8a5a00; border-color: #efd9a0; }
+    .timeline-node-guidelines { background: #e8f1ff; color: #1e3a8a; border-color: #b9d1ff; }
+    .timeline-node-unknown { background: #eef0f3; color: #374151; border-color: #d1d5db; }
+    .timeline-node-mixed {
+      background: repeating-linear-gradient(135deg, #f3e8ff 0 6px, #ede9fe 6px 12px);
+      color: #5b21b6;
+      border-color: #c4b5fd;
+    }
+    .doc-item {
+      border: 1px solid var(--line);
+      border-left: 4px solid transparent;
+      border-radius: 10px;
+      padding: 9px 10px;
+      background: #fff;
+    }
+    .doc-item.is-active-document {
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 1px #bfdbfe inset;
+    }
+    .doc-stage-inforce { background: linear-gradient(90deg, var(--status-strong-bg) 0 16px, var(--surface) 16px 100%); border-color: var(--status-strong-line); }
+    .doc-stage-proposed { background: linear-gradient(90deg, var(--status-mid-bg) 0 16px, var(--surface) 16px 100%); border-color: var(--status-mid-line); }
+    .doc-stage-guidelines { background: linear-gradient(90deg, var(--doc-act-bg) 0 16px, var(--surface) 16px 100%); border-color: var(--doc-act-line); }
+    .doc-stage-nolaw { background: linear-gradient(90deg, var(--status-weak-bg) 0 16px, var(--surface) 16px 100%); border-color: var(--status-weak-line); }
+    .doc-stage-unknown { background: linear-gradient(90deg, var(--status-na-bg) 0 16px, var(--surface) 16px 100%); border-color: var(--status-na-line); }
+    .doc-item.doc-type-report.doc-stage-inforce,
+    .doc-item.doc-type-report.doc-stage-proposed,
+    .doc-item.doc-type-report.doc-stage-guidelines,
+    .doc-item.doc-type-report.doc-stage-nolaw,
+    .doc-item.doc-type-report.doc-stage-unknown {
+      background: linear-gradient(90deg, var(--doc-other-bg) 0 16px, var(--surface) 16px 100%);
+      border-color: var(--doc-other-line);
+    }
+    .doc-type-law { border-left-color: var(--doc-act-bar); }
+    .doc-type-draft { border-left-color: var(--status-mid-line); }
+    .doc-type-guidance { border-left-color: var(--doc-guide-bar); }
+    .doc-type-report { border-left-color: var(--doc-other-bar); }
+    .doc-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .doc-title-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    .doc-name {
+      font-size: 12px;
+      margin: 0;
+      flex: 1 1 auto;
+      min-width: 0;
+      word-break: break-word;
+      line-height: 1.3;
+      font-weight: 600;
+    }
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 4px 6px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .tag-law { background: var(--doc-act-bg); color: var(--doc-act-fg); border-color: var(--doc-act-line); }
+    .tag-draft { background: var(--status-mid-bg); color: var(--status-mid-fg); border-color: var(--status-mid-line); }
+    .tag-guidance { background: var(--doc-guide-bg); color: var(--doc-guide-fg); border-color: var(--doc-guide-line); }
+    .tag-report { background: var(--doc-other-bg); color: var(--doc-other-fg); border-color: var(--doc-other-line); }
+    .tag-lang { background: #f8f8f8; color: #4b5563; border-color: #d1d5db; }
+    .lawstage-inforce { background: var(--status-strong-bg); color: var(--status-strong-fg); border-color: var(--status-strong-line); }
+    .lawstage-proposed { background: var(--status-mid-bg); color: var(--status-mid-fg); border-color: var(--status-mid-line); }
+    .lawstage-guidelines { background: transparent; color: #4b5563; border-color: #d1d5db; }
+    .lawstage-nolaw { background: #fdeaea; color: #9f1c1c; border-color: #f0bcbc; }
+    .lawstage-unknown { background: #f5f5f5; color: #374151; border-color: #d1d5db; }
+    .tag-review { background: #f5f5f5; color: #374151; border-color: #d1d5db; }
+    .doc-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .open-mini {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 4px 6px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #334155;
+      text-decoration: none;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+    .open-mini:hover { background: #eef2ff; border-color: #b7ccff; color: #123d9a; text-decoration: none; }
+    .doc-formats {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .volume-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      width: 100%;
+      padding: 2px 1px 2px 0;
+      margin-top: 4px;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .volume-item {
+      flex: 0 0 auto;
+      min-width: 112px;
+      max-width: 124px;
+      border: 1px solid #dbe3ef;
+      border-radius: 8px;
+      padding: 5px 3px 5px 5px;
+      background: #fff;
+    }
+    .volume-item.is-active-volume {
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 1px #bfdbfe inset;
+    }
+    .volume-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3px;
+    }
+    .volume-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #334155;
+      flex: 1 1 auto;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: none;
+    }
+    .volume-formats { margin-top: 5px; }
+    .volume-head .open-mini {
+      padding: 3px 5px;
+    }
+    .format-btn {
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      min-height: unset;
+      min-width: unset;
+      padding: 5px 7px;
+      border-radius: 999px;
+      border: 1px solid #b8c4d6;
+      background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
+      color: #1f334d;
+      cursor: pointer;
+      transition: transform .08s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+    }
+    .format-btn:hover {
+      border-color: #8fb2f8;
+      background: linear-gradient(180deg, #ffffff 0%, #eaf1ff 100%);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.16);
+      transform: translateY(-1px);
+    }
+    .format-btn.active {
+      background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+      color: #fff;
+      border-color: #1d4ed8;
+      box-shadow: 0 3px 10px rgba(29, 78, 216, 0.35);
+    }
+    .format-btn:focus-visible {
+      outline: 2px solid #93c5fd;
+      outline-offset: 1px;
+    }
+    .doc-type-group-title {
+      margin: 12px 0 8px;
+      font-size: 12px;
+      color: var(--sub);
+      font-weight: 700;
+    }
+    button {
+      font-size: 12px;
+      padding: 5px 8px;
+      border-radius: 7px;
+      border: none;
+      background: var(--accent);
+      color: #fff;
+      cursor: pointer;
+    }
+    button.secondary { background: #374151; }
+    .docs-split {
+      display: grid;
+      grid-template-columns: 540px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .docs-select-wrap {
+      width: 540px;
+      max-width: 540px;
+      min-width: 0;
+      position: relative;
+      overflow: visible;
+    }
+    .docs-list-header {
+      margin: 0 0 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: #0f3f93;
+      letter-spacing: .01em;
+      border: 1px solid #bfd3ff;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: linear-gradient(180deg, #ffffff 0%, #eaf1ff 100%);
+      box-shadow: 0 3px 10px rgba(37, 99, 235, 0.14);
+    }
+    .docs-flow-arrow {
+      position: absolute;
+      right: -22px;
+      top: 50%;
+      transform: translate(50%, -50%);
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid #c7d6f3;
+      background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+      color: #1d4ed8;
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 10px rgba(29, 78, 216, 0.16);
+      pointer-events: none;
+      z-index: 3;
+    }
+    .docs-select-pane, .docs-preview-pane {
+      min-width: 0;
+      max-width: 100%;
+      position: relative;
+      z-index: 0;
+    }
+    .docs-select-pane {
+      width: 100%;
+      max-width: 100%;
+      overflow: visible;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 8px;
+      background: #f8fafc;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+    }
+    .docs-preview-pane { overflow: hidden; }
+    .docs-select-pane > * {
+      max-width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .docs-select-pane .doc-list,
+    .docs-select-pane .doc-item,
+    .docs-select-pane .timeline-wrap,
+    .docs-select-pane .doc-toolbar {
+      max-width: 100%;
+      overflow: visible;
+      width: 100%;
+    }
+    .docs-preview-pane { z-index: 1; }
+    .viewer-box { height: clamp(620px, 92vh, 1100px); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background:#fff; }
+    iframe { width: 100%; height: 100%; border: 0; }
+    .docx-preview-box {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      padding: 12px;
+      font-family: "Segoe UI", "Noto Sans KR", sans-serif;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #1f2430;
+      background: #fff;
+    }
+    .preview-loading {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #dbe4f5;
+      background: #f8fbff;
+      color: #334155;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .preview-spinner {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      border: 2px solid #c7d7f8;
+      border-top-color: #2563eb;
+      animation: spin .8s linear infinite;
+      flex: 0 0 auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .docx-preview-box .docx {
+      transform: scale(0.92);
+      transform-origin: top left;
+      width: calc(100% / 0.92);
+    }
+    .docx-preview-box .docx-wrapper {
+      padding: 10px 20px 16px 14px !important;
+    }
+    .epub-preview-box {
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background: #fff;
+      box-sizing: border-box;
+      padding: 8px;
+    }
+    .summary {
+      line-height: 1.6;
+      font-size: 14px;
+      color: #1f2937;
+    }
+    .summary h1,.summary h2,.summary h3 { margin: 14px 0 8px; line-height: 1.3; }
+    .summary h1 {
+      margin-top: 0;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #eef4ff 0%, #f6fbff 100%);
+      border: 1px solid #dbe6ff;
+      font-size: 18px;
+    }
+    .summary h2 {
+      margin-top: 16px;
+      padding-left: 10px;
+      border-left: 3px solid #93c5fd;
+      font-size: 15px;
+      color: #1e3a8a;
+    }
+    .summary h3 {
+      margin-top: 14px;
+      font-size: 14px;
+      color: #334155;
+    }
+    .summary p { margin: 6px 0; }
+    .flag-icon {
+      width: 14px;
+      height: 14px;
+      vertical-align: middle;
+      margin-right: 0;
+      border-radius: 2px;
+      box-shadow: none;
+    }
+    .flag-fallback {
+      display: inline-block;
+      width: 14px;
+      min-width: 14px;
+      height: 14px;
+      line-height: 14px;
+      text-align: center;
+      font-size: 9px;
+      font-weight: 700;
+      color: #374151;
+      background: transparent;
+      border: 0;
+      border-radius: 3px;
+      margin-right: 0;
+      vertical-align: 0.05em;
+    }
+    .summary ul, .summary ol { padding-left: 20px; margin: 6px 0; }
+    .summary li { margin: 3px 0; }
+    .summary code { background: #f1ece1; padding: 1px 5px; border-radius: 6px; }
+    .summary a { color: #1d4ed8; text-decoration: none; border-bottom: 1px solid #bfdbfe; }
+    .summary a:hover { border-bottom-color: #1d4ed8; }
+    .summary .evidence {
+      font-size: 11px;
+      color: #6b6356;
+      margin: 6px 0;
+      padding: 6px 8px;
+      background: #f9f7f2;
+      border: 1px dashed #ddd2bd;
+      border-radius: 8px;
+    }
+    .summary-dim-footer {
+      margin-top: 12px;
+      border-top: 1px dashed #e7dfd1;
+      padding-top: 8px;
+      background: #fffdfa;
+      border-radius: 8px;
+    }
+    .summary-dim-footer h3 {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: var(--sub);
+    }
+    .summary-dim-desc {
+      margin: 0 0 6px;
+      font-size: 12px;
+      color: #6b6356;
+      line-height: 1.45;
+    }
+    .summary-dim-footer ul { margin: 0; padding-left: 18px; }
+    .summary-dim-footer li { margin: 2px 0; }
+    .status-list { display: grid; gap: 8px; margin: 0 0 12px; }
+    .status-item {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+      background: #fffcf6;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .status-item strong { font-size: 14px; color: var(--sub); }
+    .status-article-hint {
+      margin-top: 4px;
+      font-size: 11px;
+      color: #8b8b8b;
+      line-height: 1.4;
+    }
+    .status-compare {
+      margin-top: 7px;
+      border-top: 1px dashed #e7dfd1;
+      padding-top: 6px;
+    }
+    .compare-wrap {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 9px;
+      margin: 0 0 12px;
+    }
+    .compare-note {
+      margin: 0 0 7px;
+      font-size: 11px;
+      color: var(--sub);
+    }
+    .compare-rows { display: grid; gap: 6px; }
+    .compare-row {
+      border: 1px solid #ede7da;
+      border-radius: 8px;
+      padding: 6px 7px;
+      background: #fffdfa;
+    }
+    .compare-name {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .compare-diff {
+      font-size: 11px;
+      font-weight: 700;
+      color: #4b5563;
+      white-space: nowrap;
+    }
+    .compare-diff.pos { color: #166534; }
+    .compare-diff.neg { color: #b91c1c; }
+    .compare-diff.eq { color: #6b7280; }
+    .compare-line {
+      display: grid;
+      grid-template-columns: 70px 1fr 44px;
+      gap: 6px;
+      align-items: center;
+      font-size: 11px;
+      margin: 2px 0;
+    }
+    .compare-track {
+      width: 100%;
+      height: 9px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #efe9dc;
+      border: 1px solid #e1d8c6;
+    }
+    .compare-fill-country,
+    .compare-fill-avg {
+      height: 100%;
+      background: var(--compare-fill,#9ca3af);
+    }
+    .compare-num { text-align: right; font-variant-numeric: tabular-nums; color: var(--sub); }
+    .penalty-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 0 0 8px;
+    }
+    .btn-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #2563eb;
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #1d4ed8;
+      line-height: 1;
+    }
+    .btn-link:hover { background: #1d4ed8; text-decoration: none; }
+    .penalty-wrap { margin-top: 12px; overflow-x: auto; }
+    table.penalty-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 12px;
+    }
+    .penalty-table th, .penalty-table td {
+      border: 1px solid var(--line);
+      padding: 6px;
+      vertical-align: top;
+      text-align: left;
+      line-height: 1.4;
+    }
+    .penalty-table tbody tr:nth-child(even) { background: #fffcf6; }
+    .penalty-table tbody tr:hover { background: #f5f8ff; }
+    .penalty-table th { background: #f3ecdf; }
+    .mono { font-family: Consolas, "Courier New", monospace; font-size: 11px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 74px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+      padding: 4px 6px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .pill-strong {
+      background: #eaf7ee;
+      color: #166534;
+      border-color: #b7e1c2;
+    }
+    .pill-mid {
+      background: #fff6df;
+      color: #8a5a00;
+      border-color: #efd9a0;
+    }
+    .pill-weak {
+      background: #fdeaea;
+      color: #9f1c1c;
+      border-color: #f0bcbc;
+    }
+    .pill-unclear {
+      background: #dbe2ec;
+      color: #1f2937;
+      border-color: #b8c4d6;
+    }
+    .pill-nolaw {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+    .pill-na {
+      background: #eef0f3;
+      color: #4b5563;
+      border-color: #d1d5db;
+    }
+    .inline-pill { margin-left: 6px; vertical-align: middle; }
+    .wordcloud-card {
+      margin: 0 0 12px;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid #d9e3f2;
+      background:
+        radial-gradient(circle at 8% 20%, rgba(15, 94, 234, 0.12), transparent 26%),
+        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(244,248,255,0.9));
+      box-shadow: 0 12px 34px rgba(15,23,42,0.06);
+    }
+    .wordcloud-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .wordcloud-title {
+      margin: 0 0 4px;
+      font-size: 15px;
+      color: #1e293b;
+      letter-spacing: -.01em;
+    }
+    .wordcloud-meta {
+      margin: 0;
+      font-size: 12px;
+      color: var(--sub);
+    }
+    .wordcloud-switch {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid #d6deea;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.8);
+    }
+    .wordcloud-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: transparent;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .wordcloud-btn.active {
+      background: #0f5eea;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(15, 94, 234, 0.22);
+    }
+    .wordcloud-terms {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 9px 12px;
+      min-height: 112px;
+      padding: 10px 6px 4px;
+    }
+    .wordcloud-term {
+      --term-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      line-height: 1;
+      font-size: var(--term-size);
+      font-weight: 900;
+      letter-spacing: -.03em;
+      color: var(--term-color, #12355b);
+      transform: rotate(var(--term-tilt, 0deg));
+      text-shadow: 0 1px 0 rgba(255,255,255,0.8);
+      white-space: nowrap;
+    }
+    .wordcloud-empty {
+      min-height: 96px;
+      display: grid;
+      place-items: center;
+      color: var(--sub);
+      font-size: 13px;
+      text-align: center;
+    }
+    .governance-card {
+      margin: 0 0 12px;
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid #d9e3f2;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(14,165,233,0.12), transparent 34%),
+        linear-gradient(135deg, rgba(255,255,255,0.96), rgba(248,251,255,0.88));
+      box-shadow: 0 14px 34px rgba(15,23,42,0.07);
+    }
+    .governance-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .governance-title {
+      margin: 0 0 4px;
+      font-size: 15px;
+      color: #1e293b;
+    }
+    .governance-meta {
+      margin: 0;
+      font-size: 12px;
+      color: var(--sub);
+      line-height: 1.5;
+    }
+    .governance-type {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: #0f172a;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(15,23,42,0.16);
+    }
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .score-row {
+      border: 1px solid #dbe6f5;
+      border-radius: 14px;
+      padding: 10px;
+      background: rgba(255,255,255,0.78);
+    }
+    .score-label {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 7px;
+    }
+    .score-value {
+      color: #0f5eea;
+      font-variant-numeric: tabular-nums;
+    }
+    .score-track {
+      height: 8px;
+      border-radius: 999px;
+      background: #e8eef7;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #38bdf8 0%, #0f5eea 62%, #1e3a8a 100%);
+    }
+    .score-foot {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      font-size: 11px;
+      color: #475569;
+    }
+    .score-chip {
+      border: 1px solid #d6deea;
+      background: #fff;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-weight: 700;
+    }
+    .muted { color: var(--sub); }
+    @media (max-width: 980px) {
+      .top { justify-content: space-between; margin-bottom: 8px; }
+      .head-left { width: auto; justify-content: flex-start; position: static; }
+      .back-btn { position: static; transform: none; }
+      h1 { margin-bottom: 0; text-align: left; }
+      .langbox { position: static; transform: none; margin-bottom: 8px; }
+      .docs-split { grid-template-columns: 1fr; }
+      .docs-flow-arrow { display: none; }
+      .docs-select-wrap { width: 100%; max-width: 100%; }
+      .viewer-box { height: 84vh; }
+      .vtl-select { max-width: 100%; }
+      .timeline-lane-label { display: none; }
+      .timeline-compare-slot { display: none; }
+      .timeline-unified { --left-rail: 0px; }
+      .timeline-global { width: 100%; margin-left: 0; }
+      .wordcloud-head { align-items: stretch; }
+      .wordcloud-switch { width: 100%; justify-content: center; }
+      .wordcloud-term { transform: none; }
+      .score-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="langbox">
+        <label for="lang" id="langLabel"></label>
+        <select id="lang">
+          <option value="ko">한국어</option>
+          <option value="en" selected>English</option>
+        </select>
+      </div>
+      <div class="top">
+        <div class="head-left">
+          <a class="back-btn" href="/" id="backLink"></a>
+          <div class="title-stack">
+            <p class="page-kicker">Country Dashboard</p>
+            <h1 id="title"></h1>
+            <p class="page-subtitle" id="subtitle"></p>
+          </div>
+        </div>
+      </div>
+      <div class="detail-tabs">
+        <button type="button" class="d-tab active" data-detail-tab="documents" id="tabDocuments"></button>
+        <button type="button" class="d-tab" data-detail-tab="summary" id="tabSummary"></button>
+        <button type="button" class="d-tab" data-detail-tab="status" id="tabStatus"></button>
+        <button type="button" class="d-tab" data-detail-tab="penalties" id="tabPenaltiesIn"></button>
+      </div>
+      <div class="grid">
+        <section class="panel" id="leftPanel">
+          <h3 id="compareHeader"></h3>
+          <div id="compareBlock" class="compare-wrap"></div>
+          <h2 id="summaryHeader" class="section-chip"></h2>
+          <div id="summary" class="summary muted"></div>
+          <h2 id="statusHeader" class="section-chip"></h2>
+          <div id="statusBlock" class="status-list"></div>
+          <h2 id="penaltyHeader" class="section-chip"></h2>
+          <div class="penalty-head">
+            <p id="penaltyHint" class="muted" style="margin:0;"></p>
+            <a id="penaltyCsvBtn" class="btn-link" href="#" target="_blank" rel="noopener"></a>
+          </div>
+          <section id="penaltyBlock" class="penalty-wrap"></section>
+        </section>
+        <section class="panel" id="rightPanel">
+          <h2 id="docsHeader" class="section-chip"></h2>
+          <div class="timeline-wrap">
+            <div id="timelineUnified" class="timeline-unified"></div>
+            <div id="timelineCompareStack" class="timeline-compare-stack">
+              <button type="button" id="timelineCompareToggle" class="timeline-compare-toggle"></button>
+              <div id="timelineCompareControls" class="timeline-compare-controls">
+                <select id="timelineCompareSelect" class="vtl-select"></select>
+                <button type="button" id="timelineCompareClose" class="timeline-compare-close" aria-label="Close compare">×</button>
+              </div>
+            </div>
+          </div>
+          <section class="wordcloud-card" id="wordcloudCard">
+            <div class="wordcloud-head">
+              <div>
+                <h2 class="wordcloud-title" id="wordcloudHeader"></h2>
+                <p class="wordcloud-meta" id="wordcloudMeta"></p>
+              </div>
+              <div class="wordcloud-switch" id="wordcloudSwitch">
+                <button type="button" class="wordcloud-btn active" data-wordcloud-view="kor" id="wordcloudKorBtn"></button>
+                <button type="button" class="wordcloud-btn" data-wordcloud-view="source" id="wordcloudSourceBtn"></button>
+              </div>
+            </div>
+            <div id="wordcloudTerms" class="wordcloud-terms"></div>
+          </section>
+          <section class="governance-card" id="governanceCard">
+            <div class="governance-head">
+              <div>
+                <h2 class="governance-title" id="governanceHeader"></h2>
+                <p class="governance-meta" id="governanceMeta"></p>
+              </div>
+              <div class="governance-type" id="governanceType"></div>
+            </div>
+            <div class="score-grid" id="dimensionScoreGrid"></div>
+            <div class="score-foot" id="governanceFoot"></div>
+          </section>
+          <div class="docs-split">
+            <div class="docs-select-wrap">
+              <h2 id="docsListHeader" class="docs-list-header"></h2>
+              <div class="docs-select-pane">
+                <input id="docSearch" class="search-input" type="search" />
+                <div class="doc-toolbar">
+                  <span id="docsModeLabel" class="mode-label"></span>
+                  <div id="docsModeSwitch" class="mode-switch"></div>
+                </div>
+                <div id="docList" class="doc-list"></div>
+              </div>
+              <div class="docs-flow-arrow" aria-hidden="true">➜</div>
+            </div>
+            <div class="docs-preview-pane">
+              <h2 id="previewHeader" class="section-chip"></h2>
+              <div class="viewer-box">
+                <iframe id="preview"></iframe>
+                <div id="docxPreview" class="docx-preview-box" style="display:none;"></div>
+                <div id="xlsxPreview" class="docx-preview-box" style="display:none;"></div>
+                <div id="epubPreview" class="epub-preview-box" style="display:none;"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx-preview@0.3.2/dist/docx-preview.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/epubjs@0.3.93/dist/epub.min.js"></script>
+  <script>
+    const T = {
+      ko: {
+        title: '국가 상세 페이지',
+        subtitle: '법률 문서 목록을 열람하고, PDF는 페이지 내에서 바로 미리볼 수 있습니다.',
+        lang: '언어',
+        tabSummary: 'Summary',
+        tabStatus: 'Policy Status',
+        tabDocuments: 'Documents',
+        tabPenalties: 'Penalties',
+        back: '< 뒤로',
+        docs: 'Timeline',
+        docsCollection: '법률 문서 모음',
+        wordcloudTitle: '국가별 Word Cloud',
+        wordcloudMeta: 'Official Law/Act의 clause coding 대상 문장 기준 · {rows}개 segment',
+        wordcloudSourceFallback: '한국어 term이 비어 있어 원문/영어 기준으로 표시 중',
+        wordcloudKorean: '한국어',
+        wordcloudSource: '원문/영어',
+        wordcloudEmpty: '이 국가의 official law word cloud 데이터가 아직 없습니다.',
+        governanceTitle: '거버넌스 유형 · Dimension Score',
+        governanceMeta: 'Official Law/Act core evidence 기준 + B1/B2 context guidance 반영',
+        governanceEmpty: '이 국가의 dimension score 데이터가 아직 없습니다.',
+        governanceEvidence: '근거 강도',
+        governanceContextRows: 'B1/B2 context rows',
+        governanceGuidance: 'Voluntary guidance',
+        docSearchPlaceholder: '상세 검색 (파일명/유형/상태/언어/연도)',
+        docViewLabel: '문서 보기',
+        docViewOriginal: '원문(비영어)',
+        docViewEnglish: '영어 버전',
+        docViewKorean: '한국어 버전',
+        docViewAll: '전체 언어',
+        timeline: 'Timeline',
+        timelineCountryTitle: '국가',
+        timelineGlobalLabel: '글로벌',
+        timelineGlobalTitle: 'Year',
+        timelineCompareTitle: '국가 비교',
+        timelineComparePick: '비교할 국가 선택',
+        timelineCompareShow: '비교',
+        timelineCompareHide: '닫기',
+        timelineNoEvent: '이벤트 없음',
+        timelineEmpty: '연도 정보를 찾지 못했습니다.',
+        timelineFlowReady: '입법 흐름: 초안/제안 {from} -> 시행 {to}',
+        timelineFlowProposedOnly: '입법 흐름: 초안/제안 단계 중심',
+        timelineFlowInForceOnly: '입법 흐름: 시행 단계 문서 중심',
+        timelineFlowUnknown: '입법 흐름: 단계 판단용 근거가 아직 제한적',
+        timelineMultiHint: '복수 문서 연도',
+        tlInForce: '시행',
+        tlProposed: '초안/제안',
+        tlGuidelines: '가이드',
+        tlMixed: '혼합',
+        tlUnknown: '불명확',
+        tagLaw: 'Official Law/Act',
+        tagDraft: 'Draft',
+        tagGuidance: 'Official Guidance/Warning',
+        tagReport: 'Official Report/Assessment',
+        tagOther: 'Official Other',
+        status: '법제화 상태',
+        statusLabeling: '라벨링',
+        statusElection: '선거 관련',
+        statusNon: '동의 없는 딥페이크',
+        statusProvider: '서비스/플랫폼 책임',
+        statusPenalty: '처벌 법제화',
+        compareTitle: '해당 국가 vs 전체 평균',
+        compareNote: '점수 기준: 강함=4, 중간=3, 약함=2, 불명확=1, 법률 없음=0',
+        compareCountry: '해당 국가',
+        compareAverage: '전체 평균',
+        articleHintPrefix: '권장 확인',
+        hintLabeling: '라벨링/표시 의무 관련 조문 또는 문단',
+        hintElection: '선거/공직선거 무결성 관련 조문 또는 문단',
+        hintNon: '비동의 합성물(성적 이미지 포함) 및 인격권 침해 관련 조문 또는 문단',
+        hintProvider: '플랫폼/서비스 제공자 의무(삭제·통지·기록보관 등) 관련 조문 또는 문단',
+        hintPenalty: '형사처벌·과징금·벌금·가중처벌 관련 조문 또는 문단',
+        penaltyTitle: 'Penalties/Fines',
+        penaltyNormHint: '정규화 스키마 보기',
+        penaltyCsv: '정규화 CSV',
+        pOffense: '범죄 유형',
+        pScope: '딥페이크 범위',
+        pType: '형벌/행정',
+        pStatus: '시행상태',
+        pLaw: '법령/조문',
+        pFine: '벌금',
+        pPrison: '징역',
+        pSummary: '제재 요약',
+        pAggrCond: '가중처벌 요건',
+        pAggrPen: '가중처벌 내용',
+        pRefs: '근거',
+        pVerified: '최종 확인일',
+        reviewNeeded: '확인 필요',
+        noPenalty: '벌칙 데이터가 없습니다.',
+        strong: '강함',
+        medium: '중간',
+        weak: '약함',
+        unclear: '불명확',
+        noLaw: '법률 없음',
+        noStatus: '상태 정보가 없습니다.',
+        summaryDimTitle: 'Dimension 중심 빠른 요약',
+        summaryDimDesc: '아래 항목은 라벨링, 선거, 비동의 딥페이크, 플랫폼 책임, 처벌의 현재 법제화 강도를 요약합니다.',
+        summary: '요약',
+        preview: '문서 미리보기',
+        open: '열기',
+        previewBtn: '미리보기',
+        previewHint: 'PDF/MD/TXT/HTML 파일은 미리보기를 지원합니다.',
+        noDocs: '문서가 없습니다.',
+        loading: '불러오는 중...',
+        noCountry: '국가 파라미터가 없습니다.'
+      },
+      en: {
+        title: 'Country Detail Page',
+        subtitle: 'Browse legal documents. PDFs can be previewed in-page.',
+        lang: 'Language',
+        tabSummary: 'Summary',
+        tabStatus: 'Policy Status',
+        tabDocuments: 'Documents',
+        tabPenalties: 'Penalties',
+        back: '< Back',
+        docs: 'Timeline',
+        docsCollection: 'Document list',
+        wordcloudTitle: 'Country Word Cloud',
+        wordcloudMeta: 'Based on clause-coding rows from Official Law/Act · {rows} segments',
+        wordcloudSourceFallback: 'Showing source/English terms because Korean terms are empty',
+        wordcloudKorean: 'Korean',
+        wordcloudSource: 'Source/English',
+        wordcloudEmpty: 'No official-law word cloud data is available for this country yet.',
+        governanceTitle: 'Governance Type · Dimension Score',
+        governanceMeta: 'Official Law/Act core evidence plus B1/B2 context guidance',
+        governanceEmpty: 'No dimension score data is available for this country yet.',
+        governanceEvidence: 'Evidence strength',
+        governanceContextRows: 'B1/B2 context rows',
+        governanceGuidance: 'Voluntary guidance',
+        docSearchPlaceholder: 'Detail search (file/type/stage/lang/year)',
+        docViewLabel: 'Doc view',
+        docViewOriginal: 'Original (non-English)',
+        docViewEnglish: 'English version',
+        docViewKorean: 'Korean version',
+        docViewAll: 'All Languages',
+        timeline: 'Timeline',
+        timelineCountryTitle: 'Country',
+        timelineGlobalLabel: 'Global',
+        timelineGlobalTitle: 'Year',
+        timelineCompareTitle: 'Country comparison',
+        timelineComparePick: 'Select country',
+        timelineCompareShow: 'Compare',
+        timelineCompareHide: 'Hide',
+        timelineNoEvent: 'No event',
+        timelineEmpty: 'No year information detected.',
+        timelineFlowReady: 'Flow: Proposed {from} -> In Force {to}',
+        timelineFlowProposedOnly: 'Flow: mostly draft/proposed stage',
+        timelineFlowInForceOnly: 'Flow: mainly in-force materials',
+        timelineFlowUnknown: 'Flow: insufficient stage evidence yet',
+        timelineMultiHint: 'Multi-doc years',
+        tlInForce: 'In Force',
+        tlProposed: 'Proposed',
+        tlGuidelines: 'Guidelines',
+        tlMixed: 'Mixed',
+        tlUnknown: 'Unknown',
+        tagLaw: 'Official Law/Act',
+        tagDraft: 'Draft',
+        tagGuidance: 'Official Guidance/Warning',
+        tagReport: 'Official Report/Assessment',
+        tagOther: 'Official Other',
+        status: 'Policy Dimensions',
+        statusLabeling: 'Labeling',
+        statusElection: 'Election-related',
+        statusNon: 'Non-consensual deepfake',
+        statusProvider: 'Provider/platform liability',
+        statusPenalty: 'Penalty codification',
+        compareTitle: 'Country vs Global Average',
+        compareNote: 'Scoring: Strong=4, Medium=3, Weak=2, Unclear=1, No Law=0',
+        compareCountry: 'Country',
+        compareAverage: 'Average',
+        articleHintPrefix: 'Recommended check',
+        hintLabeling: 'Articles or paragraphs on labeling/disclosure obligations',
+        hintElection: 'Articles or paragraphs on election integrity/public-process harms',
+        hintNon: 'Articles or paragraphs on non-consensual synthetic content and personality/privacy harms',
+        hintProvider: 'Articles or paragraphs on provider/platform duties (notice-removal-recordkeeping)',
+        hintPenalty: 'Articles or paragraphs on criminal/administrative sanctions, fines, and aggravated penalties',
+        penaltyTitle: 'Penalties/Fines',
+        penaltyNormHint: 'Normalized schema view',
+        penaltyCsv: 'Normalized CSV',
+        pOffense: 'Offense',
+        pScope: 'Deepfake scope',
+        pType: 'Penalty type',
+        pStatus: 'Effective status',
+        pLaw: 'Law / Article',
+        pFine: 'Fine',
+        pPrison: 'Imprisonment',
+        pSummary: 'Sanction summary',
+        pAggrCond: 'Aggravating conditions',
+        pAggrPen: 'Aggravated penalty',
+        pRefs: 'Refs',
+        pVerified: 'Last verified',
+        reviewNeeded: 'Needs Review',
+        noPenalty: 'No penalty data.',
+        strong: 'Strong',
+        medium: 'Medium',
+        weak: 'Weak',
+        unclear: 'Unclear',
+        noLaw: 'No Law',
+        noStatus: 'No status data.',
+        summaryDimTitle: 'Dimension-focused quick recap',
+        summaryDimDesc: 'The items below summarize current codification strength across labeling, election, non-consensual deepfakes, platform liability, and penalties.',
+        summary: 'Summary',
+        preview: 'Document preview',
+        open: 'Open',
+        previewBtn: 'Preview',
+        previewHint: 'PDF/MD/TXT/HTML files support inline preview.',
+        noDocs: 'No documents.',
+        loading: 'Loading...',
+        noCountry: 'Missing country parameter.'
+      }
+    };
+
+    const COUNTRY_LABELS = {
+      ko: { '한국': '한국', '영국': '영국', '호주': '호주', 'EU': 'EU', '미국': '미국', '중국': '중국', '사우디': '사우디아라비아', '독일': '독일', '프랑스': '프랑스', '인도': '인도', '파키스탄': '파키스탄', '아랍에미리에이트': '아랍에미리에이트', '싱가폴': '싱가폴', '아르헨티나': '아르헨티나' },
+      en: { '한국': 'Korea', '영국': 'United Kingdom', '호주': 'Australia', 'EU': 'EU', '미국': 'United States', '중국': 'China', '사우디': 'Saudi Arabia', '독일': 'Germany', '프랑스': 'France', '인도': 'India', '파키스탄': 'Pakistan', '아랍에미리에이트': 'United Arab Emirates', '싱가폴': 'Singapore', '아르헨티나': 'Argentina' }
+    };
+    const WORDCLOUD_COUNTRY_KEYS = {
+      '한국': 'South Korea',
+      '영국': 'United Kingdom',
+      '호주': 'Australia',
+      'EU': 'EU',
+      '미국': 'United States',
+      '중국': 'China',
+      '사우디': 'Saudi Arabia',
+      '독일': 'Germany',
+      '프랑스': 'France',
+      '인도': 'India',
+      '파키스탄': 'Pakistan',
+      '아랍에미리에이트': 'United Arab Emirates',
+      '싱가폴': 'Singapore',
+      '아르헨티나': 'Argentina'
+    };
+
+    const qs = new URLSearchParams(location.search);
+    const country = qs.get('country') || '';
+    const initialLang = qs.get('lang') === 'ko' ? 'ko' : 'en';
+    const initialTab = (() => {
+      const v = String(qs.get('tab') || '').toLowerCase();
+      if (v === 'summary' || v === 'status' || v === 'documents' || v === 'penalties') return v;
+      return 'documents';
+    })();
+
+    const langSel = document.getElementById('lang');
+    langSel.value = initialLang;
+    const leftPanel = document.getElementById('leftPanel');
+    const rightPanel = document.getElementById('rightPanel');
+    const tabSummaryEl = document.getElementById('tabSummary');
+    const tabStatusEl = document.getElementById('tabStatus');
+    const tabDocumentsEl = document.getElementById('tabDocuments');
+    const tabPenaltiesInEl = document.getElementById('tabPenaltiesIn');
+    const detailTabButtons = Array.from(document.querySelectorAll('.d-tab[data-detail-tab]'));
+    let currentDetailTab = initialTab;
+
+    const preview = document.getElementById('preview');
+    const docsModeSwitchEl = document.getElementById('docsModeSwitch');
+    const docSearchEl = document.getElementById('docSearch');
+    const timelineUnified = document.getElementById('timelineUnified');
+    const timelineCompareStack = document.getElementById('timelineCompareStack');
+    const timelineCompareControls = document.getElementById('timelineCompareControls');
+    const timelineCompareToggle = document.getElementById('timelineCompareToggle');
+    const timelineCompareSelect = document.getElementById('timelineCompareSelect');
+    const timelineCompareClose = document.getElementById('timelineCompareClose');
+    const penaltyCsvBtn = document.getElementById('penaltyCsvBtn');
+    const wordcloudCard = document.getElementById('wordcloudCard');
+    const wordcloudTermsEl = document.getElementById('wordcloudTerms');
+    const wordcloudMetaEl = document.getElementById('wordcloudMeta');
+    const wordcloudSwitchEl = document.getElementById('wordcloudSwitch');
+    const governanceHeaderEl = document.getElementById('governanceHeader');
+    const governanceMetaEl = document.getElementById('governanceMeta');
+    const governanceTypeEl = document.getElementById('governanceType');
+    const dimensionScoreGridEl = document.getElementById('dimensionScoreGrid');
+    const governanceFootEl = document.getElementById('governanceFoot');
+    const docxPreviewEl = document.getElementById('docxPreview');
+    const xlsxPreviewEl = document.getElementById('xlsxPreview');
+    const epubPreviewEl = document.getElementById('epubPreview');
+    let currentPreviewDocUrl = '';
+    let currentPreviewDocExt = '';
+    const fileBufferCache = new Map();
+    const preloadPromiseCache = new Map();
+    const docxHtmlCache = new Map();
+    let epubBook = null;
+    let epubRendition = null;
+    let docsCache = [];
+    const compareDocsCache = {};
+    let dashboardSummary = {};
+    let globalTimelineAgg = {};
+    let compareTimelineCountry = '';
+    let compareTimelineVisible = false;
+    let currentDocsMode = 'all';
+    let wordcloudPayload = null;
+    let dimensionScorePayload = null;
+    let currentWordcloudView = 'kor';
+    const COUNTRY_DOC_MODE = {
+      '한국': 'known_non_en',
+      '중국': 'known_non_en',
+      '독일': 'known_non_en',
+      '프랑스': 'known_non_en',
+      '사우디': 'known_non_en',
+      '아랍에미리에이트': 'english_primary',
+      '미국': 'english_primary',
+      '영국': 'english_primary',
+      '호주': 'english_primary',
+      '아르헨티나': 'known_non_en',
+      '싱가폴': 'unknown',
+      '인도': 'unknown',
+      '파키스탄': 'unknown',
+      'EU': 'english_primary'
+    };
+
+    const escapeHtml = (s) => (s || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+    function renderInlineMd(text) {
+      let html = escapeHtml(text || '');
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      return html;
+    }
+
+    function lang() { return langSel.value === 'en' ? 'en' : 'ko'; }
+
+    function resolveWordcloudCountryKey() {
+      const mapped = WORDCLOUD_COUNTRY_KEYS[country] || country;
+      const buckets = [
+        wordcloudPayload && wordcloudPayload.by_country_text_kor,
+        wordcloudPayload && wordcloudPayload.by_country_text,
+      ];
+      for (const bucket of buckets) {
+        if (!bucket || typeof bucket !== 'object') continue;
+        if (bucket[mapped]) return mapped;
+        if (bucket[country]) return country;
+      }
+      return mapped;
+    }
+
+    function resolveAnalysisCountryKey(payload) {
+      const mapped = WORDCLOUD_COUNTRY_KEYS[country] || country;
+      const countries = payload && payload.countries && typeof payload.countries === 'object' ? payload.countries : {};
+      if (countries[mapped]) return mapped;
+      if (countries[country]) return country;
+      const target = String(mapped || country).toLowerCase();
+      return Object.keys(countries).find((key) => key.toLowerCase() === target) || mapped;
+    }
+
+    function currentCountryWordcloudBucket() {
+      if (!wordcloudPayload) return null;
+      const key = resolveWordcloudCountryKey();
+      const field = currentWordcloudView === 'source' ? 'by_country_text' : 'by_country_text_kor';
+      const bucket = wordcloudPayload[field] || {};
+      return bucket[key] || null;
+    }
+
+    function renderWordcloud() {
+      const t = T[lang()];
+      document.getElementById('wordcloudHeader').textContent = t.wordcloudTitle;
+      document.getElementById('wordcloudKorBtn').textContent = t.wordcloudKorean;
+      document.getElementById('wordcloudSourceBtn').textContent = t.wordcloudSource;
+      Array.from(wordcloudSwitchEl.querySelectorAll('[data-wordcloud-view]')).forEach((btn) => {
+        btn.classList.toggle('active', btn.getAttribute('data-wordcloud-view') === currentWordcloudView);
+      });
+
+      let bucket = currentCountryWordcloudBucket();
+      let fallbackToSource = false;
+      let terms = bucket && Array.isArray(bucket.terms) ? bucket.terms.slice(0, 58) : [];
+      if (!terms.length && currentWordcloudView === 'kor' && wordcloudPayload) {
+        const key = resolveWordcloudCountryKey();
+        const sourceBucket = (wordcloudPayload.by_country_text || {})[key] || null;
+        const sourceTerms = sourceBucket && Array.isArray(sourceBucket.terms) ? sourceBucket.terms.slice(0, 58) : [];
+        if (sourceTerms.length) {
+          bucket = sourceBucket;
+          terms = sourceTerms;
+          fallbackToSource = true;
+        }
+      }
+      const rows = bucket && Number.isFinite(Number(bucket.rows)) ? Number(bucket.rows) : 0;
+      wordcloudMetaEl.textContent = terms.length
+        ? `${t.wordcloudMeta.replace('{rows}', rows.toLocaleString(lang() === 'ko' ? 'ko-KR' : 'en-US'))}${fallbackToSource ? ` · ${t.wordcloudSourceFallback}` : ''}`
+        : '';
+      if (!terms.length) {
+        wordcloudTermsEl.className = 'wordcloud-empty';
+        wordcloudTermsEl.textContent = t.wordcloudEmpty;
+        return;
+      }
+
+      wordcloudTermsEl.className = 'wordcloud-terms';
+      const palette = ['#12355b', '#0b6e69', '#b7791f', '#7c2d12', '#334155', '#1d4ed8', '#0f766e'];
+      const max = Math.max(...terms.map((term) => Number(term.value) || 0), 1);
+      wordcloudTermsEl.innerHTML = terms.map((term, index) => {
+        const value = Number(term.value) || 0;
+        const weight = Math.sqrt(value / max);
+        const size = 0.78 + weight * 2.05;
+        const color = palette[index % palette.length];
+        const tilt = index % 7 === 0 ? -2 : (index % 6 === 0 ? 2 : 0);
+        const title = `${term.text || ''}: ${value}`;
+        return `<span class="wordcloud-term" title="${escapeHtml(title)}" style="--term-size:${size.toFixed(2)}rem;--term-color:${color};--term-tilt:${tilt}deg;">${escapeHtml(term.text || '')}</span>`;
+      }).join('');
+    }
+
+    async function loadWordcloud() {
+      try {
+        const res = await fetch('/api/analysis-wordclouds');
+        if (!res.ok) throw new Error('wordcloud fetch failed');
+        wordcloudPayload = await res.json();
+      } catch (_) {
+        wordcloudPayload = null;
+      }
+      renderWordcloud();
+    }
+
+    function dimensionLabel(value) {
+      const labelsKo = {
+        'scope/coverage': '범위/적용대상',
+        'disclosure/labeling': '공시/라벨링',
+        'remedies/consent': '구제/동의',
+        elections: '선거',
+        'criminalize/penalty': '범죄화/처벌',
+        'platform duties': '플랫폼 의무',
+      };
+      const labelsEn = {
+        'scope/coverage': 'Scope/Coverage',
+        'disclosure/labeling': 'Disclosure/Labeling',
+        'remedies/consent': 'Remedies/Consent',
+        elections: 'Elections',
+        'criminalize/penalty': 'Criminalize/Penalty',
+        'platform duties': 'Platform Duties',
+      };
+      return (lang() === 'ko' ? labelsKo : labelsEn)[value] || value;
+    }
+
+    function renderGovernanceScores() {
+      const t = T[lang()];
+      governanceHeaderEl.textContent = t.governanceTitle;
+      governanceMetaEl.textContent = t.governanceMeta;
+      const key = resolveAnalysisCountryKey(dimensionScorePayload);
+      const item = dimensionScorePayload && dimensionScorePayload.countries ? dimensionScorePayload.countries[key] : null;
+      if (!item) {
+        governanceTypeEl.textContent = '-';
+        dimensionScoreGridEl.innerHTML = `<div class="wordcloud-empty">${escapeHtml(t.governanceEmpty)}</div>`;
+        governanceFootEl.innerHTML = '';
+        return;
+      }
+      governanceTypeEl.textContent = item.governance_type || '-';
+      const scores = item.dimension_scores || {};
+      const orderedDims = ['scope/coverage', 'disclosure/labeling', 'remedies/consent', 'elections', 'criminalize/penalty', 'platform duties'];
+      dimensionScoreGridEl.innerHTML = orderedDims.map((dim) => {
+        const d = scores[dim] || {};
+        const score = Number(d.score || 0);
+        return `<div class="score-row">
+          <div class="score-label"><span>${escapeHtml(dimensionLabel(dim))}</span><span class="score-value">${score.toFixed(1)}</span></div>
+          <div class="score-track"><div class="score-fill" style="width:${Math.max(0, Math.min(100, score)).toFixed(1)}%"></div></div>
+        </div>`;
+      }).join('');
+      const guidance = Number(item.context_guidance_score || 0);
+      governanceFootEl.innerHTML = [
+        `${t.governanceEvidence}: ${item.evidence_strength || '-'}`,
+        `${t.governanceContextRows}: ${Number(item.context_rows || 0).toLocaleString(lang() === 'ko' ? 'ko-KR' : 'en-US')}`,
+        `${t.governanceGuidance}: ${guidance.toFixed(1)}`,
+      ].map((txt) => `<span class="score-chip">${escapeHtml(txt)}</span>`).join('');
+    }
+
+    async function loadGovernanceScores() {
+      try {
+        const res = await fetch('/api/analysis-dimension-scores');
+        if (!res.ok) throw new Error('dimension score fetch failed');
+        dimensionScorePayload = await res.json();
+      } catch (_) {
+        dimensionScorePayload = null;
+      }
+      renderGovernanceScores();
+    }
+
+
+    function pillText(level) {
+      const t = T[lang()];
+      if (level === 'strong') return t.strong;
+      if (level === 'mid') return t.medium;
+      if (level === 'weak') return t.weak;
+      if (level === 'unclear') return t.unclear;
+      if (level === 'nolaw') return t.noLaw;
+      return '-';
+    }
+
+    function levelToScore(level) {
+      if (level === 'strong') return 4;
+      if (level === 'mid') return 3;
+      if (level === 'weak') return 2;
+      if (level === 'unclear') return 1;
+      if (level === 'nolaw') return 0;
+      return null;
+    }
+    function hexToRgb(hex) {
+      const h = String(hex || '').replace('#', '');
+      const norm = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+      const n = parseInt(norm, 16);
+      if (!Number.isFinite(n)) return { r: 156, g: 163, b: 175 };
+      return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+    }
+    function mixHex(a, b, t) {
+      const x = Math.max(0, Math.min(1, t));
+      const ca = hexToRgb(a);
+      const cb = hexToRgb(b);
+      const r = Math.round(ca.r + (cb.r - ca.r) * x);
+      const g = Math.round(ca.g + (cb.g - ca.g) * x);
+      const b2 = Math.round(ca.b + (cb.b - ca.b) * x);
+      return `rgb(${r},${g},${b2})`;
+    }
+    function scoreFillColors(score) {
+      if (score <= 0) return ['#9ca3af', '#9ca3af'];
+      let base;
+      if (score <= 2) base = mixHex('#9ca3af', '#ef4444', score / 2);
+      else base = mixHex('#ef4444', '#16a34a', (score - 2) / 2);
+      const hi = mixHex(base, '#ffffff', 0.22);
+      return [hi, base];
+    }
+    function countryFlagAsset(c) {
+      if (c === '한국') return { code: 'KR', tw: '1f1f0-1f1f7' };
+      if (c === '영국') return { code: 'UK', tw: '1f1ec-1f1e7' };
+      if (c === '호주') return { code: 'AU', tw: '1f1e6-1f1fa' };
+      if (c === 'EU') return { code: 'EU', tw: '1f1ea-1f1fa' };
+      if (c === '미국') return { code: 'US', tw: '1f1fa-1f1f8' };
+      if (c === '중국') return { code: 'CN', tw: '1f1e8-1f1f3' };
+      if (c === '사우디') return { code: 'SA', tw: '1f1f8-1f1e6' };
+      if (c === '독일') return { code: 'DE', tw: '1f1e9-1f1ea' };
+      if (c === '프랑스') return { code: 'FR', tw: '1f1eb-1f1f7' };
+      if (c === '인도') return { code: 'IN', tw: '1f1ee-1f1f3' };
+      if (c === '파키스탄') return { code: 'PK', tw: '1f1f5-1f1f0' };
+      if (c === '아랍에미리에이트') return { code: 'AE', tw: '1f1e6-1f1ea' };
+      if (c === '싱가폴') return { code: 'SG', tw: '1f1f8-1f1ec' };
+      return { code: 'NA', tw: '' };
+    }
+    function countryFlagHtml(c) {
+      const f = countryFlagAsset(c);
+      if (!f.tw) return `<span class="flag-fallback">${escapeHtml(f.code)}</span>`;
+      const src = `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/${f.tw}.svg`;
+      return `<img class="flag-icon" src="${escapeHtml(src)}" alt="${escapeHtml(f.code)}" loading="lazy" />`;
+    }
+    function dimensionIcon(key) {
+      if (key === 'labeling') return '🏷️';
+      if (key === 'election') return '🗳️';
+      if (key === 'non_consensual') return '🛡️';
+      if (key === 'provider_liability') return '📡';
+      if (key === 'penalty') return '⚖️';
+      return '•';
+    }
+
+    function policyLevelForLine(content, statusObj) {
+      if (!statusObj) return 'na';
+      if (content.startsWith('`라벨링(표시) 법제화 상태`:') || content.startsWith('`Labeling status`:')) return statusObj.labeling_level || 'na';
+      if (content.startsWith('`선거 관련 법제화 상태`:') || content.startsWith('`Election-related status`:')) return statusObj.election_level || 'na';
+      if (content.startsWith('`동의 없는 딥페이크 법제화 상태`:') || content.startsWith('`Non-consensual deepfake status`:')) return statusObj.non_consensual_level || 'na';
+      if (content.startsWith('`서비스 제공자 및 플랫폼 책임 법제화 상태`:') || content.startsWith('`Service-provider/platform liability status`:')) return statusObj.provider_liability_level || 'na';
+      if (content.startsWith('`처벌 법제화 상태`:') || content.startsWith('`Penalty/sanctions codification status`:')) return statusObj.penalty_level || 'na';
+      return 'na';
+    }
+
+    function normalizeDocumentType(raw) {
+      const type = String(raw || '').toLowerCase();
+      if (type === 'official_law_act' || type === 'act_law') return 'official_law_act';
+      if (type === 'draft') return 'draft';
+      if (type === 'official_guidance_warning' || type === 'guideline_report') return 'official_guidance_warning';
+      if (type === 'official_report_assessment' || type === 'official_other') return 'official_report_assessment';
+      return '';
+    }
+    function docTypeTag(type) {
+      const t = T[lang()];
+      const normalized = normalizeDocumentType(type);
+      if (normalized === 'official_law_act') return { cls: 'tag-law', label: t.tagLaw };
+      if (normalized === 'draft') return { cls: 'tag-draft', label: t.tagDraft };
+      if (normalized === 'official_guidance_warning') return { cls: 'tag-guidance', label: t.tagGuidance };
+      if (normalized === 'official_report_assessment') return { cls: 'tag-report', label: t.tagReport };
+      return { cls: 'tag-report', label: t.tagOther };
+    }
+
+    function detectDocVariant(doc) {
+      const p = (doc.relative_path || doc.name || '').toLowerCase();
+      if (country === '한국') {
+        if (p.includes('ai basic act of the republic of korea')) return 'en';
+        if (p.includes('framework-act-on-the-development-of-artificial-intelligence-and-the-creation-of-a-foundation-for-trust')) return 'en';
+        if (p.includes('tacteen')) return 'en';
+        if (p.includes('korea-2025-ai-basic-act-subordinate')) return 'original';
+        if (p.includes('korea-election-rule-deepfake-labeling-annex')) return 'original';
+      }
+      if (p.includes('korean-translation') || p.includes('korean') || p.includes('번역') || p.includes('_ko') || p.includes('-ko.')) return 'ko';
+      if (p.includes('state council departmental documents') || p.includes('china government website')) return 'en';
+      if (p.includes('english') || p.includes('english-translate') || p.includes('_en') || p.includes('-en-') || p.includes('en_v') || p.includes('guide_en') || p.includes('en-1') || p.includes('en.pdf')) return 'en';
+      if (p.includes('official-cn') || p.includes('original') || p.includes('원문') || p.includes('_cn') || p.includes('-cn')) return 'original';
+      // If this country is known non-English and language is not explicit, treat as original.
+      const mode = COUNTRY_DOC_MODE[country] || 'unknown';
+      if (mode === 'known_non_en') return 'original';
+      if (mode === 'english_primary') return 'en';
+      // Unknown language: keep visible in "All" only.
+      return 'unknown';
+    }
+    function detectDocumentTypeLocal(doc) {
+      return normalizeDocumentType(doc && doc.document_type) || 'official_report_assessment';
+    }
+
+    function variantLabel(v) {
+      const t = T[lang()];
+      if (v === 'original') return 'Original';
+      if (v === 'en') return 'EN';
+      if (v === 'ko') return 'KO';
+      return 'UNK';
+    }
+
+    function extractDocYear(doc) {
+      if (doc && doc.event_year != null) {
+        const yy = Number(doc.event_year);
+        if (Number.isFinite(yy) && yy >= 1900 && yy <= 2099) return yy;
+      }
+      if (doc && doc.event_date) {
+        const md = String(doc.event_date).match(/(19|20)\d{2}/);
+        if (md) return Number(md[0]);
+      }
+      const s = `${doc.relative_path || ''} ${doc.name || ''}`;
+      const m = s.match(/(?:19|20)\d{2}/g);
+      if (!m || !m.length) return null;
+      const y = Number(m[0]);
+      if (!Number.isFinite(y) || y < 1900 || y > 2099) return null;
+      return y;
+    }
+
+    function stageKeyForTimeline(doc) {
+      if (doc && doc.event_stage) {
+        const x = String(doc.event_stage).toLowerCase();
+        if (x.includes('in_force')) return 'in_force';
+        if (x.includes('proposed')) return 'proposed';
+        if (x.includes('guideline')) return 'guidelines';
+        if (x.includes('no_law')) return 'unknown';
+      }
+      const s = String((doc && doc.law_stage) || '').toLowerCase();
+      if (s.includes('in_force')) return 'in_force';
+      if (s.includes('proposed') || s.includes('draft')) return 'proposed';
+      if (s.includes('guideline')) return 'guidelines';
+      return 'unknown';
+    }
+
+    function timelineStageLabel(stage) {
+      const t = T[lang()];
+      if (stage === 'in_force') return t.tlInForce;
+      if (stage === 'proposed') return t.tlProposed;
+      if (stage === 'guidelines') return t.tlGuidelines;
+      if (stage === 'mixed') return t.tlMixed;
+      return t.tlUnknown;
+    }
+
+    function dominantTimelineStage(r) {
+      const pairs = [
+        ['in_force', r.in_force || 0],
+        ['proposed', r.proposed || 0],
+        ['guidelines', r.guidelines || 0],
+        ['unknown', r.unknown || 0],
+      ];
+      pairs.sort((a, b) => b[1] - a[1]);
+      return pairs[0][0];
+    }
+    function timelineNodeStage(r) {
+      const nonZero = [
+        ['in_force', r.in_force || 0],
+        ['proposed', r.proposed || 0],
+        ['guidelines', r.guidelines || 0],
+        ['unknown', r.unknown || 0],
+      ].filter((x) => x[1] > 0);
+      if (nonZero.length > 1) return 'mixed';
+      if (!nonZero.length) return 'unknown';
+      return nonZero[0][0];
+    }
+
+    function countryDisplayLabel(c) {
+      const labels = COUNTRY_LABELS[lang()] || {};
+      return labels[c] || c;
+    }
+    function countryShortCode(c) {
+      if (c === '한국') return 'KOR';
+      if (c === '영국') return 'GBR';
+      if (c === '호주') return 'AUS';
+      if (c === 'EU') return 'EUR';
+      if (c === '미국') return 'USA';
+      if (c === '중국') return 'CHN';
+      if (c === '사우디') return 'SAU';
+      if (c === '독일') return 'DEU';
+      if (c === '프랑스') return 'FRA';
+      if (c === '인도') return 'IND';
+      if (c === '파키스탄') return 'PAK';
+      if (c === '아랍에미리에이트') return 'UAE';
+      if (c === '싱가폴') return 'SGP';
+      const raw = String(countryDisplayLabel(c) || c).replace(/[^A-Za-z]/g, '').toUpperCase();
+      return raw.slice(0, 3) || 'UNK';
+    }
+    function normalizeTimelineRow(row) {
+      const r = row || {};
+      return {
+        in_force: Number(r.in_force || 0),
+        proposed: Number(r.proposed || 0),
+        guidelines: Number(r.guidelines || 0),
+        unknown: Number(r.unknown || 0),
+      };
+    }
+    function buildCountryTimelineFromDocs(docs) {
+      const out = {};
+      const uniqueDocs = dedupeDocsByLawKey(docs || []);
+      for (const d of uniqueDocs) {
+        const y = extractDocYear(d);
+        if (!y) continue;
+        if (!out[y]) out[y] = { in_force: 0, proposed: 0, guidelines: 0, unknown: 0 };
+        out[y][stageKeyForTimeline(d)] += 1;
+      }
+      return out;
+    }
+    function shortLawTitle(doc) {
+      const key = docLawKey(doc);
+      let name = lawDisplayNameFromKey(key || '');
+      if (!name || name === 'Unknown law') {
+        name = String((doc && (doc.name || doc.relative_path)) || '');
+      }
+      name = String(name || '')
+        .replace(/\.[a-z0-9]+$/i, '')
+        .replace(/[_\-]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const countryTokens = [
+        'republic of korea', 'south korea', 'korea',
+        'united kingdom', 'uk', 'britain',
+        'australia',
+        'european union', 'eu',
+        'united states', 'usa', 'u s', 'us',
+        'china', 'prc',
+        'saudi arabia', 'saudi',
+        'germany',
+        'france',
+        'india',
+        'pakistan',
+        'united arab emirates', 'uae',
+        'singapore', 'singa',
+      ];
+      let compact = ` ${name} `;
+      for (const token of countryTokens) {
+        const safe = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        compact = compact.replace(new RegExp(`\\b${safe}\\b`, 'ig'), ' ');
+      }
+      name = compact.replace(/\s+/g, ' ').trim();
+      name = name.replace(/\b(19|20)\d{2}\b/g, ' ').replace(/\s+/g, ' ').trim();
+      name = name.replace(/^(of|the|for|and)\s+/i, '').trim();
+      if (name.length > 18) return `${name.slice(0, 15)}...`;
+      return name || 'Untitled';
+    }
+    function buildYearLawLines(docs) {
+      const byYear = {};
+      const uniqueDocs = dedupeDocsByLawKey(docs || []);
+      for (const d of uniqueDocs) {
+        if (isExcludedNonLegalDoc(d)) continue;
+        const y = extractDocYear(d);
+        if (!y) continue;
+        if (!byYear[y]) byYear[y] = [];
+        const title = shortLawTitle(d);
+        if (title && !byYear[y].includes(title)) byYear[y].push(title);
+      }
+      const out = {};
+      Object.keys(byYear).forEach((yk) => {
+        out[yk] = byYear[yk].slice(0, 3);
+      });
+      return out;
+    }
+    function alignTimelineLeftRail() {
+      const labels = Array.from(document.querySelectorAll('.timeline-lane-label'));
+      if (!labels.length) return;
+      labels.forEach((el) => { el.style.width = 'auto'; });
+      const maxW = Math.ceil(labels.reduce((m, el) => Math.max(m, el.getBoundingClientRect().width || 0), 0));
+      if (!Number.isFinite(maxW) || maxW <= 0) return;
+      labels.forEach((el) => { el.style.width = `${maxW}px`; });
+      const slot = document.getElementById('timelineCompareSlot');
+      if (slot) slot.style.width = `${maxW}px`;
+      if (timelineUnified) timelineUnified.style.setProperty('--left-rail', `${maxW + 12}px`);
+    }
+    function prefetchCompareCountryDocs(cn) {
+      const c = String(cn || '');
+      if (!c) return;
+      if (compareDocsCache[c] && (compareDocsCache[c].loading || Array.isArray(compareDocsCache[c].docs))) return;
+      compareDocsCache[c] = { loading: true, docs: [] };
+      fetch(`/api/documents/${encodeURIComponent(c)}`)
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error('fetch failed'))))
+        .then((json) => {
+          compareDocsCache[c] = { loading: false, docs: (json && json.documents) || [] };
+          renderTimeline(docsCache);
+        })
+        .catch(() => {
+          compareDocsCache[c] = { loading: false, docs: [] };
+        });
+    }
+    function allTimelineYears(t1, t2, t3) {
+      const years = new Set();
+      const addFrom = (obj) => {
+        Object.keys(obj || {}).forEach((k) => {
+          const y = Number(k);
+          if (Number.isFinite(y) && y >= 1900 && y <= 2099) years.add(y);
+        });
+      };
+      addFrom(t1); addFrom(t2); addFrom(t3);
+      const nowY = 2026;
+      years.add(nowY);
+      const sorted = Array.from(years).sort((a, b) => a - b);
+      if (!sorted.length) return [];
+      const minY = sorted[0];
+      const maxY = Math.max(nowY, sorted[sorted.length - 1]);
+      const out = [];
+      for (let y = minY; y <= maxY; y += 1) out.push(y);
+      return out;
+    }
+    function timelinePins(globalTimeline, ownTimeline, compareTimeline, ownYearLaws, compareYearLaws) {
+      const mergedYears = allTimelineYears(globalTimeline, ownTimeline, compareTimeline);
+      const activeYears = mergedYears.filter((y) => {
+        const g = normalizeTimelineRow(globalTimeline[y] || null);
+        const c = normalizeTimelineRow(ownTimeline[y] || null);
+        const x = normalizeTimelineRow(compareTimeline[y] || null);
+        const gt = g.in_force + g.proposed + g.guidelines + g.unknown;
+        const ct = c.in_force + c.proposed + c.guidelines + c.unknown;
+        const xt = x.in_force + x.proposed + x.guidelines + x.unknown;
+        return (gt + ct + xt) > 0;
+      });
+      if (!activeYears.length) return { yearTicks: [], countryPins: [], globalPins: [], gaps: [] };
+      const n = activeYears.length;
+      const outerPad = 6;
+      const yearTicks = activeYears.map((y, idx) => {
+        const left = n === 1 ? 50 : (outerPad + (idx / (n - 1)) * (100 - outerPad * 2));
+        return { year: y, left };
+      });
+      const countryPins = [];
+      const globalPins = [];
+      const comparePins = [];
+      for (let i = 0; i < yearTicks.length; i += 1) {
+        const y = yearTicks[i].year;
+        const left = yearTicks[i].left;
+        const crow = normalizeTimelineRow(ownTimeline[y] || null);
+        const ctotal = crow.in_force + crow.proposed + crow.guidelines + crow.unknown;
+        if (ctotal > 0) {
+          const cdom = timelineNodeStage(crow);
+          countryPins.push({
+            year: y,
+            left,
+            dominant: cdom,
+            label: `${timelineStageLabel(cdom)} ${ctotal}`,
+            notes: (ownYearLaws && ownYearLaws[y]) || [],
+          });
+        }
+        const grow = normalizeTimelineRow(globalTimeline[y] || null);
+        const gtotal = grow.in_force + grow.proposed + grow.guidelines + grow.unknown;
+        if (gtotal > 0) {
+          const gdom = timelineNodeStage(grow);
+          globalPins.push({
+            year: y,
+            left,
+            dominant: gdom,
+            label: `${timelineStageLabel(gdom)} ${gtotal}`,
+          });
+        }
+        const xrow = normalizeTimelineRow(compareTimeline[y] || null);
+        const xtotal = xrow.in_force + xrow.proposed + xrow.guidelines + xrow.unknown;
+        if (xtotal > 0) {
+          const xdom = timelineNodeStage(xrow);
+          comparePins.push({
+            year: y,
+            left,
+            dominant: xdom,
+            label: `${timelineStageLabel(xdom)} ${xtotal}`,
+            notes: (compareYearLaws && compareYearLaws[y]) || [],
+          });
+        }
+      }
+      const gaps = [];
+      for (let i = 0; i < yearTicks.length - 1; i += 1) {
+        const y1 = yearTicks[i].year;
+        const y2 = yearTicks[i + 1].year;
+        if ((y2 - y1) >= 5) {
+          gaps.push({
+            left: (yearTicks[i].left + yearTicks[i + 1].left) / 2,
+            from: y1,
+            to: y2,
+          });
+        }
+      }
+      return { yearTicks, countryPins, globalPins, comparePins, gaps };
+    }
+    function rebuildCompareCountryOptions() {
+      if (!timelineCompareSelect) return;
+      const t = T[lang()];
+      const countries = Object.keys(dashboardSummary || {}).filter((c) => c !== country).sort((a, b) => countryDisplayLabel(a).localeCompare(countryDisplayLabel(b), 'ko-KR'));
+      if (!countries.length) {
+        timelineCompareSelect.innerHTML = `<option value="">${escapeHtml(t.timelineComparePick)}</option>`;
+        compareTimelineCountry = '';
+        return;
+      }
+      if (!compareTimelineCountry || !countries.includes(compareTimelineCountry)) compareTimelineCountry = countries[0];
+      timelineCompareSelect.innerHTML = countries.map((c) => `<option value="${escapeHtml(c)}"${c === compareTimelineCountry ? ' selected' : ''}>${escapeHtml(countryShortCode(c))}</option>`).join('');
+    }
+    function renderTimeline(docs) {
+      const t = T[lang()];
+      if (!timelineUnified) return;
+      const own = buildCountryTimelineFromDocs(docs || []);
+      const global = globalTimelineAgg || {};
+      rebuildCompareCountryOptions();
+      const compareObj = (dashboardSummary[compareTimelineCountry] && dashboardSummary[compareTimelineCountry].timeline) || {};
+      const ownYearLaws = buildYearLawLines(docs || []);
+      const compareDocs = (compareDocsCache[compareTimelineCountry] && compareDocsCache[compareTimelineCountry].docs) || [];
+      const compareYearLaws = buildYearLawLines(compareDocs || []);
+      const tl = timelinePins(global, own, compareObj, ownYearLaws, compareYearLaws);
+      const yearTicks = tl.yearTicks || [];
+      const countryPins = tl.countryPins || [];
+      const globalPins = tl.globalPins || [];
+      const comparePins = tl.comparePins || [];
+      const gaps = tl.gaps || [];
+      if (!yearTicks.length) {
+        timelineUnified.innerHTML = `<p class="muted" style="margin:0;">${escapeHtml(t.timelineEmpty)}</p>`;
+        return;
+      }
+      const laneTop = `<span class="lane-icon">${countryFlagHtml(country)}</span><span class="lane-name">${escapeHtml(countryDisplayLabel(country))}</span>`;
+      const laneBottom = `<span class="lane-icon" aria-hidden="true">🌐</span><span class="lane-name">${escapeHtml(t.timelineGlobalLabel || 'Global')}</span>`;
+      const showComparePins = compareTimelineVisible && compareTimelineCountry;
+      if (showComparePins) prefetchCompareCountryDocs(compareTimelineCountry);
+      const laneCompare = showComparePins ? `<span class="lane-icon">${countryFlagHtml(compareTimelineCountry)}</span><span class="lane-name">${escapeHtml(countryDisplayLabel(compareTimelineCountry))}</span>` : '';
+      timelineUnified.innerHTML = `<div class="timeline-global"><div class="timeline-global-axis"></div>
+        <span class="timeline-lane-label top">${laneTop}</span>
+        <span class="timeline-lane-label bottom">${laneBottom}</span>
+        ${showComparePins ? `<span class="timeline-lane-label compare">${laneCompare}</span>` : ''}
+        <div id="timelineCompareSlot" class="timeline-compare-slot"></div>
+        ${gaps.map((g) => `
+        <span class="timeline-gap" style="left:${g.left.toFixed(2)}%" title="${escapeHtml(`${g.from}..${g.to} compressed`)}">…</span>
+      `).join('')}${yearTicks.map((p) => `
+        <span class="timeline-year-tick" style="left:${p.left.toFixed(2)}%">${p.year}</span>
+      `).join('')}${countryPins.map((p) => `
+        <div class="timeline-pin country" style="left:${p.left.toFixed(2)}%">
+          ${((p.notes || []).length ? `<div class="timeline-pin-notes">${(p.notes || []).map((n) => `<div class="note-line">${escapeHtml(n)}</div>`).join('')}</div>` : '')}
+          <span class="timeline-pin-desc">${escapeHtml(p.label)}</span>
+          <span class="timeline-pin-dot ${escapeHtml(p.dominant)}"></span>
+        </div>
+      `).join('')}${globalPins.map((p) => `
+        <div class="timeline-pin global" style="left:${p.left.toFixed(2)}%">
+          <span class="timeline-pin-dot ${escapeHtml(p.dominant)}"></span>
+          <span class="timeline-pin-desc">${escapeHtml(p.label)}</span>
+        </div>
+      `).join('')}${showComparePins ? comparePins.map((p) => `
+        <div class="timeline-pin compare" style="left:${p.left.toFixed(2)}%">
+          <span class="timeline-pin-stem"></span>
+          <span class="timeline-pin-dot ${escapeHtml(p.dominant)}"></span>
+          <span class="timeline-pin-desc">${escapeHtml(p.label)}</span>
+          ${((p.notes || []).length ? `<div class="timeline-pin-notes">${(p.notes || []).map((n) => `<div class="note-line">${escapeHtml(n)}</div>`).join('')}</div>` : '')}
+        </div>
+      `).join('') : ''}<span class="timeline-axis-label">${escapeHtml(t.timelineGlobalTitle)}</span></div>`;
+      const compareSlot = document.getElementById('timelineCompareSlot');
+      if (compareSlot && timelineCompareStack) compareSlot.appendChild(timelineCompareStack);
+      alignTimelineLeftRail();
+      if (timelineCompareSelect && !timelineCompareSelect.dataset.bound) {
+        timelineCompareSelect.addEventListener('change', () => {
+          compareTimelineCountry = timelineCompareSelect.value || '';
+          renderTimeline(docsCache);
+        });
+        timelineCompareSelect.dataset.bound = '1';
+      }
+      if (timelineCompareToggle && !timelineCompareToggle.dataset.bound) {
+        timelineCompareToggle.addEventListener('click', () => {
+          compareTimelineVisible = true;
+          renderTimeline(docsCache);
+        });
+        timelineCompareToggle.dataset.bound = '1';
+      }
+      if (timelineCompareClose && !timelineCompareClose.dataset.bound) {
+        timelineCompareClose.addEventListener('click', () => {
+          compareTimelineVisible = false;
+          renderTimeline(docsCache);
+        });
+        timelineCompareClose.dataset.bound = '1';
+      }
+      if (timelineCompareControls) timelineCompareControls.style.display = compareTimelineVisible ? 'flex' : 'none';
+      if (timelineCompareToggle) {
+        timelineCompareToggle.style.display = compareTimelineVisible ? 'none' : '';
+        timelineCompareToggle.textContent = t.timelineCompareShow;
+      }
+    }
+
+    function docLawKey(doc) {
+      const p = String((doc && (doc.legacy_relative_path || doc.relative_path || doc.name)) || '').replace(/\\/g, '/');
+      if (!p) return '';
+      const i = p.lastIndexOf('.');
+      return (i > 0 ? p.slice(0, i) : p).toLowerCase();
+    }
+    function canonicalLawKey(rawKey) {
+      let k = String(rawKey || '').toLowerCase();
+      if (k.includes('ai basic act of the republic of korea') ||
+          k.includes('framework-act-on-the-development-of-artificial-intelligence-and-the-creation-of-a-foundation-for-trust') ||
+          k.includes('korea-2026-ai-basic-act-law-no-21311') ||
+          k.includes('korea-2026-ai-basic-act-enforcement-decree-presidential-decree-no-36053')) {
+        return 'korea/korea-2025-ai-basic-act-core';
+      }
+      if (k.includes('korea-2025-ai-transparency-guidelines-2025-11-13') ||
+          k.includes('korea-2025-ai-transparency-guidelines-errata-2025-11-13')) {
+        return 'korea/korea-2025-ai-transparency-guidelines';
+      }
+      if (k.includes('korea-2025-act-on-fair-labeling-and-advertising-law-no-20712') ||
+          k.includes('korea-2025-enforcement-decree-of-act-on-fair-labeling-and-advertising-presidential-decree-no-35811')) {
+        return 'korea/korea-2025-act-on-fair-labeling-and-advertising-core';
+      }
+      if (k.includes('regulations on the management of deep synthesis of internet information services')) {
+        return 'china/china-2022-deep-synthesis-provisions';
+      }
+      // Merge language/translation variants of the same law into one family key.
+      k = k
+        .replace(/[-_ ]korean[-_ ]translation$/i, '')
+        .replace(/[-_ ]english[-_ ]translate(?:ion)?$/i, '')
+        .replace(/[-_ ]official[-_ ]cn$/i, '')
+        .replace(/[-_ ]original[-_ ]cn$/i, '')
+        .replace(/[-_ ]en(?:glish)?$/i, '')
+        .replace(/[-_ ]ko(?:rean)?$/i, '')
+        .replace(/[-_ ]cn$/i, '')
+        .replace(/[-_ ]{2,}/g, '-')
+        .replace(/[-_ ]+$/g, '');
+      return k;
+    }
+    function extPriority(doc) {
+      const e = String((doc && doc.extension) || '').toLowerCase();
+      if (e === '.pdf') return 5;
+      if (e === '.html') return 4;
+      if (e === '.docx') return 3;
+      if (e === '.md') return 2;
+      if (e === '.txt') return 1;
+      return 0;
+    }
+    function variantSortRank(doc) {
+      const v = detectDocVariant(doc);
+      if (v === 'original') return 0;
+      if (v === 'ko') return 1;
+      if (v === 'en') return 2;
+      return 9;
+    }
+    function sortFilesForDisplay(files) {
+      return [...(files || [])].sort((a, b) => {
+        const e = extPriority(b) - extPriority(a);
+        if (e !== 0) return e;
+        const v = variantSortRank(a) - variantSortRank(b);
+        if (v !== 0) return v;
+        return String((a && a.relative_path) || '').localeCompare(String((b && b.relative_path) || ''), 'en');
+      });
+    }
+    function dedupeDocsByLawKey(docs) {
+      const byKey = new Map();
+      for (const d of docs || []) {
+        const k = canonicalLawKey(docLawKey(d));
+        if (!k) continue;
+        const prev = byKey.get(k);
+        if (!prev || extPriority(d) > extPriority(prev)) byKey.set(k, d);
+      }
+      return Array.from(byKey.values());
+    }
+
+    function matchesDocSearch(doc, keyword) {
+      const kw = String(keyword || '').trim().toLowerCase();
+      if (!kw) return true;
+      const hay = [
+        doc.relative_path || '',
+        doc.name || '',
+        doc.document_type || '',
+        doc.law_stage || '',
+        detectDocVariant(doc),
+        String(extractDocYear(doc) || ''),
+      ].join(' ').toLowerCase();
+      return hay.includes(kw);
+    }
+    function isExcludedNonLegalDoc(doc) {
+      const rp = String((doc && (doc.relative_path || doc.name)) || '').toLowerCase();
+      const ext = String((doc && doc.extension) || '').toLowerCase();
+      if (ext !== '.csv') return false;
+      return (
+        rp.includes('frl-search-results') ||
+        rp.includes('search-results') ||
+        rp.includes('search-result') ||
+        rp.includes('result-list') ||
+        rp.includes('results-list')
+      );
+    }
+
+    function selectVisibleDocs(docs) {
+      const mode = currentDocsMode || 'all';
+      const kw = docSearchEl ? docSearchEl.value : '';
+      let out = docs.filter((d) => !isExcludedNonLegalDoc(d));
+      if (mode === 'original') out = docs.filter((d) => detectDocVariant(d) === 'original');
+      if (mode === 'en') out = docs.filter((d) => detectDocVariant(d) === 'en');
+      if (mode === 'ko') out = docs.filter((d) => detectDocVariant(d) === 'ko');
+      out = out.filter((d) => !isExcludedNonLegalDoc(d));
+      out = out.filter((d) => matchesDocSearch(d, kw));
+      return {
+        docs: out.sort((a, b) => String(a.relative_path || '').localeCompare(String(b.relative_path || ''), 'ko-KR'))
+      };
+    }
+
+    function extLabel(ext) {
+      const e = String(ext || '').replace('.', '').toUpperCase();
+      return e || 'FILE';
+    }
+    function docKindLabel(file) {
+      const rp = String((file && (file.relative_path || file.name)) || '').toLowerCase();
+      if (rp.includes('errata') || rp.includes('정오표')) return 'Errata';
+      if (rp.includes('enforcement-decree') || rp.includes('presidential-decree') || rp.includes('시행령')) return 'Decree';
+      if (rp.includes('law-no') || rp.includes('(법률)') || /\bact\b/.test(rp.replace(/[_-]+/g, ' '))) return 'Law';
+      if (rp.includes('guideline') || rp.includes('guide')) return 'Guideline';
+      return '';
+    }
+    function formatButtonLabel(file, siblings) {
+      const ext = String((file && file.extension) || '').toLowerCase();
+      const sameExt = (siblings || []).filter((f) => String((f && f.extension) || '').toLowerCase() === ext);
+      const base = extLabel(ext);
+      if (sameExt.length <= 1) return base;
+      const kind = docKindLabel(file);
+      const v = detectDocVariant(file);
+      const vLabel = v === 'en' ? 'EN' : (v === 'ko' ? 'KO' : (v === 'original' ? 'Original' : ''));
+      if (kind) return `${base} (${kind}${vLabel ? `, ${vLabel}` : ''})`;
+      if (v === 'original') return `${base} (Original)`;
+      if (v === 'en') return `${base} (EN)`;
+      if (v === 'ko') return `${base} (KO)`;
+      return base;
+    }
+    function cacheKeyByDoc(doc) {
+      return String((doc && doc.url) || '');
+    }
+    async function getFileBuffer(doc) {
+      const key = cacheKeyByDoc(doc);
+      if (!key) throw new Error('missing file url');
+      if (fileBufferCache.has(key)) return fileBufferCache.get(key);
+      if (preloadPromiseCache.has(key)) return preloadPromiseCache.get(key);
+      const p = fetch(key).then(async (res) => {
+        if (!res.ok) throw new Error('fetch failed');
+        const buf = await res.arrayBuffer();
+        fileBufferCache.set(key, buf);
+        preloadPromiseCache.delete(key);
+        return buf;
+      }).catch((e) => {
+        preloadPromiseCache.delete(key);
+        throw e;
+      });
+      preloadPromiseCache.set(key, p);
+      return p;
+    }
+    function prefetchDoc(doc) {
+      const ext = String((doc && doc.extension) || '').toLowerCase();
+      if (ext !== '.docx' && ext !== '.xlsx' && ext !== '.xls') return;
+      getFileBuffer(doc).catch(() => {});
+    }
+    function scheduleDocPrefetch(docs) {
+      const targets = (docs || []).filter((d) => {
+        const ext = String((d && d.extension) || '').toLowerCase();
+        return ext === '.docx' || ext === '.xlsx' || ext === '.xls';
+      }).slice(0, 12);
+      if (!targets.length) return;
+      setTimeout(() => {
+        for (const d of targets) prefetchDoc(d);
+      }, 30);
+    }
+    function setCurrentPreviewDoc(doc) {
+      currentPreviewDocUrl = String((doc && doc.url) || '');
+      currentPreviewDocExt = String((doc && doc.extension) || '').toLowerCase();
+    }
+    function syncPreviewHighlight() {
+      const buttons = Array.from(document.querySelectorAll('#docList .format-btn[data-format-url]'));
+      buttons.forEach((btn) => {
+        const u = String(btn.getAttribute('data-format-url') || '');
+        const e = String(btn.getAttribute('data-format-ext') || '').toLowerCase();
+        const on = !!currentPreviewDocUrl && u === currentPreviewDocUrl && e === currentPreviewDocExt;
+        btn.classList.toggle('active', on);
+      });
+      document.querySelectorAll('#docList .volume-item').forEach((el) => {
+        const on = !!el.querySelector('.format-btn.active');
+        el.classList.toggle('is-active-volume', on);
+      });
+      document.querySelectorAll('#docList .doc-item').forEach((el) => {
+        const on = !!el.querySelector('.format-btn.active');
+        el.classList.toggle('is-active-document', on);
+      });
+    }
+    async function renderEpubPreview(doc) {
+      if (!doc) return;
+      preview.style.display = 'none';
+      docxPreviewEl.style.display = 'none';
+      docxPreviewEl.innerHTML = '';
+      xlsxPreviewEl.style.display = 'none';
+      xlsxPreviewEl.innerHTML = '';
+      epubPreviewEl.style.display = '';
+      epubPreviewEl.innerHTML = '<div style="font-family:Segoe UI;padding:10px;color:#374151;">Loading EPUB preview...</div>';
+      if (epubRendition && typeof epubRendition.destroy === 'function') { try { epubRendition.destroy(); } catch (_) {} }
+      if (epubBook && typeof epubBook.destroy === 'function') { try { epubBook.destroy(); } catch (_) {} }
+      epubBook = null;
+      epubRendition = null;
+      if (typeof window.ePub !== 'function') throw new Error('epub.js library not loaded');
+      epubBook = window.ePub(doc.url || '');
+      epubRendition = epubBook.renderTo(epubPreviewEl, { width: '100%', height: '100%' });
+      await epubRendition.display();
+    }
+    function mdInlineToHtml(text) {
+      let html = escapeHtml(text || '');
+      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+      html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+      return html;
+    }
+    function markdownToHtmlForPreview(md) {
+      const lines = String(md || '').replace(/\r\n/g, '\n').split('\n');
+      const out = [];
+      let inUl = false;
+      let inOl = false;
+      let inCode = false;
+      let codeLang = '';
+      let para = [];
+      const flushPara = () => {
+        if (!para.length) return;
+        out.push(`<p>${mdInlineToHtml(para.join(' '))}</p>`);
+        para = [];
+      };
+      const closeLists = () => {
+        if (inUl) { out.push('</ul>'); inUl = false; }
+        if (inOl) { out.push('</ol>'); inOl = false; }
+      };
+      for (let idx = 0; idx < lines.length; idx += 1) {
+        const raw = lines[idx];
+        const line = raw || '';
+        const trimmed = line.trim();
+        if (inCode) {
+          if (trimmed.startsWith('```')) {
+            out.push('</code></pre>');
+            inCode = false;
+            codeLang = '';
+          } else {
+            out.push(`${escapeHtml(line)}\n`);
+          }
+          continue;
+        }
+        if (trimmed.startsWith('```')) {
+          flushPara();
+          closeLists();
+          codeLang = trimmed.replace(/^```/, '').trim();
+          out.push(`<pre><code${codeLang ? ` class="language-${escapeHtml(codeLang)}"` : ''}>`);
+          inCode = true;
+          continue;
+        }
+        if (!trimmed) {
+          flushPara();
+          closeLists();
+          continue;
+        }
+        const h = trimmed.match(/^(#{1,6})\s+(.*)$/);
+        if (h) {
+          flushPara();
+          closeLists();
+          const lv = h[1].length;
+          out.push(`<h${lv}>${mdInlineToHtml(h[2])}</h${lv}>`);
+          continue;
+        }
+        const bq = trimmed.match(/^>\s?(.*)$/);
+        if (bq) {
+          flushPara();
+          closeLists();
+          out.push(`<blockquote><p>${mdInlineToHtml(bq[1])}</p></blockquote>`);
+          continue;
+        }
+        const ol = trimmed.match(/^\d+\.\s+(.*)$/);
+        if (ol) {
+          flushPara();
+          if (inUl) { out.push('</ul>'); inUl = false; }
+          if (!inOl) { out.push('<ol>'); inOl = true; }
+          out.push(`<li>${mdInlineToHtml(ol[1])}</li>`);
+          continue;
+        }
+        const ul = trimmed.match(/^[-*]\s+(.*)$/);
+        if (ul) {
+          flushPara();
+          if (inOl) { out.push('</ol>'); inOl = false; }
+          if (!inUl) { out.push('<ul>'); inUl = true; }
+          out.push(`<li>${mdInlineToHtml(ul[1])}</li>`);
+          continue;
+        }
+        // Basic GitHub-like table support.
+        if (trimmed.includes('|')) {
+          const next = lines[idx + 1] || '';
+          const maybeDivider = String(next || '').trim();
+          if (/^\|?[\s:-]+\|[\s|:-]*$/.test(maybeDivider)) {
+            flushPara();
+            closeLists();
+            const headers = trimmed.replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+            out.push('<table><thead><tr>' + headers.map((c) => `<th>${mdInlineToHtml(c)}</th>`).join('') + '</tr></thead><tbody>');
+            let i = idx + 2;
+            while (i < lines.length && String(lines[i] || '').includes('|')) {
+              const row = String(lines[i] || '').trim().replace(/^\||\|$/g, '').split('|').map((c) => c.trim());
+              out.push('<tr>' + row.map((c) => `<td>${mdInlineToHtml(c)}</td>`).join('') + '</tr>');
+              i += 1;
+            }
+            out.push('</tbody></table>');
+            idx = i - 1;
+            continue;
+          }
+        }
+        para.push(trimmed);
+      }
+      flushPara();
+      closeLists();
+      if (inCode) out.push('</code></pre>');
+      return out.join('');
+    }
+    function buildMarkdownReaderSource(rawMd, sourceUrl) {
+      const html = markdownToHtmlForPreview(rawMd);
+      const baseHref = (sourceUrl || '').toString();
+      return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <base href="${escapeHtml(baseHref)}" />
+  <style>
+    html, body { margin: 0; padding: 0; background: #fff; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", Helvetica, Arial, sans-serif; color: #24292f; }
+    .markdown-body { box-sizing: border-box; min-width: 200px; max-width: 980px; margin: 0 auto; padding: 20px 18px 28px; line-height: 1.65; font-size: 14px; }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 { margin: 1.05em 0 .45em; line-height: 1.3; border-bottom: 1px solid #d0d7de; padding-bottom: .2em; }
+    .markdown-body h1 { font-size: 1.9em; }
+    .markdown-body h2 { font-size: 1.45em; }
+    .markdown-body h3 { font-size: 1.2em; border-bottom: 0; }
+    .markdown-body p { margin: .55em 0; }
+    .markdown-body ul, .markdown-body ol { padding-left: 1.5em; margin: .45em 0; }
+    .markdown-body li { margin: .2em 0; }
+    .markdown-body blockquote { margin: .6em 0; padding: 0 1em; color: #57606a; border-left: .25em solid #d0d7de; }
+    .markdown-body pre { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 8px; padding: 10px 12px; overflow: auto; }
+    .markdown-body code { background: rgba(175,184,193,0.2); padding: .15em .35em; border-radius: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .markdown-body pre code { background: transparent; padding: 0; border-radius: 0; }
+    .markdown-body table { border-collapse: collapse; width: 100%; margin: .6em 0; }
+    .markdown-body th, .markdown-body td { border: 1px solid #d0d7de; padding: 6px 10px; text-align: left; vertical-align: top; }
+    .markdown-body th { background: #f6f8fa; font-weight: 600; }
+    .markdown-body a { color: #0969da; text-decoration: none; }
+    .markdown-body a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <article class="markdown-body">${html}</article>
+</body>
+</html>`;
+    }
+    function buildHtmlReaderSource(rawHtml, sourceUrl) {
+      try {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(String(rawHtml || ''), 'text/html');
+        Array.from(doc.querySelectorAll('script, style, noscript, iframe, form, nav')).forEach((el) => el.remove());
+        const title = (doc.querySelector('title') && doc.querySelector('title').textContent) ? doc.querySelector('title').textContent.trim() : '';
+        const main = doc.querySelector('main, article, [role=\"main\"], #content, .content') || doc.body || doc.documentElement;
+        const content = main ? main.innerHTML : '';
+        const baseHref = (sourceUrl || '').toString();
+        return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <base href="${escapeHtml(baseHref)}" />
+  <style>
+    html, body { margin: 0; padding: 0; background: #fff; color: #111827; }
+    body { font-family: "Segoe UI", "Noto Sans KR", sans-serif; line-height: 1.62; font-size: 14px; }
+    .reader-wrap { max-width: 900px; margin: 0 auto; padding: 18px 16px 26px; }
+    h1,h2,h3,h4 { line-height: 1.35; color: #0f172a; margin: 1em 0 .55em; }
+    h1 { font-size: 22px; margin-top: 0; }
+    h2 { font-size: 18px; }
+    h3 { font-size: 16px; }
+    p, li { margin: .45em 0; word-break: break-word; }
+    ul, ol { padding-left: 1.2em; }
+    table { border-collapse: collapse; width: 100%; font-size: 13px; }
+    th, td { border: 1px solid #d1d5db; padding: 6px 8px; text-align: left; vertical-align: top; }
+    img, video { max-width: 100%; height: auto; }
+    a { color: #1d4ed8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .reader-title { font-weight: 800; margin-bottom: 8px; color: #111827; font-size: 20px; }
+  </style>
+</head>
+<body>
+  <div class="reader-wrap">
+    ${title ? `<div class="reader-title">${escapeHtml(title)}</div>` : ''}
+    ${content}
+  </div>
+</body>
+</html>`;
+      } catch (_) {
+        return `<html><body style="font-family:Segoe UI;padding:12px;color:#374151;">Failed to render HTML in reader mode.<br/><a href="${escapeHtml(sourceUrl || '#')}" target="_blank" rel="noopener">Open file in a new tab</a></body></html>`;
+      }
+    }
+    async function setPreviewByDoc(doc) {
+      if (!doc) {
+        setCurrentPreviewDoc(null);
+        docxPreviewEl.style.display = 'none';
+        docxPreviewEl.innerHTML = '';
+        xlsxPreviewEl.style.display = 'none';
+        xlsxPreviewEl.innerHTML = '';
+        epubPreviewEl.style.display = 'none';
+        epubPreviewEl.innerHTML = '';
+        if (epubRendition && typeof epubRendition.destroy === 'function') { try { epubRendition.destroy(); } catch (_) {} }
+        if (epubBook && typeof epubBook.destroy === 'function') { try { epubBook.destroy(); } catch (_) {} }
+        epubBook = null;
+        epubRendition = null;
+        preview.style.display = '';
+        preview.src = '';
+        preview.removeAttribute('srcdoc');
+        syncPreviewHighlight();
+        return;
+      }
+      setCurrentPreviewDoc(doc);
+      const ext = String(doc.extension || '').toLowerCase();
+      if (ext === '.html') {
+        try {
+          docxPreviewEl.style.display = 'none';
+          docxPreviewEl.innerHTML = '';
+          xlsxPreviewEl.style.display = 'none';
+          xlsxPreviewEl.innerHTML = '';
+          epubPreviewEl.style.display = 'none';
+          epubPreviewEl.innerHTML = '';
+          if (epubRendition && typeof epubRendition.destroy === 'function') { try { epubRendition.destroy(); } catch (_) {} }
+          if (epubBook && typeof epubBook.destroy === 'function') { try { epubBook.destroy(); } catch (_) {} }
+          epubBook = null;
+          epubRendition = null;
+          preview.style.display = '';
+          preview.src = '';
+          const res = await fetch(doc.url || '');
+          if (!res.ok) throw new Error('fetch failed');
+          const raw = await res.text();
+          preview.srcdoc = buildHtmlReaderSource(raw, doc.url || '');
+        } catch (e) {
+          preview.src = '';
+          preview.srcdoc = `<html><body style="font-family:Segoe UI;padding:12px;color:#374151;">HTML preview failed: ${escapeHtml(String((e && e.message) || e))}.<br/><a href="${escapeHtml(doc.url || '#')}" target="_blank" rel="noopener">Open file in a new tab</a></body></html>`;
+        }
+        syncPreviewHighlight();
+        return;
+      }
+      if (ext === '.md' || ext === '.txt') {
+        try {
+          docxPreviewEl.style.display = 'none';
+          docxPreviewEl.innerHTML = '';
+          xlsxPreviewEl.style.display = 'none';
+          xlsxPreviewEl.innerHTML = '';
+          epubPreviewEl.style.display = 'none';
+          epubPreviewEl.innerHTML = '';
+          if (epubRendition && typeof epubRendition.destroy === 'function') { try { epubRendition.destroy(); } catch (_) {} }
+          if (epubBook && typeof epubBook.destroy === 'function') { try { epubBook.destroy(); } catch (_) {} }
+          epubBook = null;
+          epubRendition = null;
+          preview.style.display = '';
+          preview.src = '';
+          const res = await fetch(doc.url || '');
+          if (!res.ok) throw new Error('fetch failed');
+          const raw = await res.text();
+          preview.srcdoc = buildMarkdownReaderSource(raw, doc.url || '');
+        } catch (e) {
+          preview.src = '';
+          preview.srcdoc = `<html><body style="font-family:Segoe UI;padding:12px;color:#374151;">Markdown preview failed: ${escapeHtml(String((e && e.message) || e))}.<br/><a href="${escapeHtml(doc.url || '#')}" target="_blank" rel="noopener">Open file in a new tab</a></body></html>`;
+        }
+        syncPreviewHighlight();
+        return;
+      }
+      if (ext === '.docx') {
+        try {
+          preview.style.display = 'none';
+          xlsxPreviewEl.style.display = 'none';
+          xlsxPreviewEl.innerHTML = '';
+          epubPreviewEl.style.display = 'none';
+          epubPreviewEl.innerHTML = '';
+          docxPreviewEl.style.display = '';
+          docxPreviewEl.innerHTML = `<div class="preview-loading"><span class="preview-spinner"></span><span>Rendering DOCX preview. This can take a few seconds.</span></div>`;
+          const cacheKey = cacheKeyByDoc(doc);
+          if (cacheKey && docxHtmlCache.has(cacheKey)) {
+            docxPreviewEl.innerHTML = docxHtmlCache.get(cacheKey);
+            syncPreviewHighlight();
+            return;
+          }
+          const buf = await getFileBuffer(doc);
+          if (!window.docx || typeof window.docx.renderAsync !== 'function') throw new Error('docx-preview library not loaded');
+          await window.docx.renderAsync(buf, docxPreviewEl, docxPreviewEl, { className: 'docx', ignoreWidth: true, ignoreHeight: true });
+          if (cacheKey) docxHtmlCache.set(cacheKey, docxPreviewEl.innerHTML);
+        } catch (e) {
+          docxPreviewEl.innerHTML = `<div style="color:#b91c1c;">DOCX preview failed: ${escapeHtml(String((e && e.message) || e))}. <a href="${escapeHtml(doc.url || '#')}" target="_blank" rel="noopener">Open file in a new tab</a></div>`;
+        }
+        syncPreviewHighlight();
+        return;
+      }
+      if (ext === '.xlsx' || ext === '.xls') {
+        try {
+          preview.style.display = 'none';
+          docxPreviewEl.style.display = 'none';
+          docxPreviewEl.innerHTML = '';
+          xlsxPreviewEl.style.display = '';
+          xlsxPreviewEl.innerHTML = '';
+          epubPreviewEl.style.display = 'none';
+          epubPreviewEl.innerHTML = '';
+          if (!window.XLSX) throw new Error('xlsx library not loaded');
+          const buf = await getFileBuffer(doc);
+          const wb = window.XLSX.read(buf, { type: 'array' });
+          const sheetName = wb.SheetNames && wb.SheetNames[0];
+          if (!sheetName) throw new Error('no worksheet found');
+          const ws = wb.Sheets[sheetName];
+          const html = window.XLSX.utils.sheet_to_html(ws);
+          xlsxPreviewEl.innerHTML = `<div style="font-size:12px;color:#374151;margin-bottom:8px;"><b>Sheet:</b> ${escapeHtml(sheetName)}</div>${html}`;
+        } catch (e) {
+          xlsxPreviewEl.innerHTML = `<div style="color:#b91c1c;">XLSX preview failed: ${escapeHtml(String((e && e.message) || e))}. <a href="${escapeHtml(doc.url || '#')}" target="_blank" rel="noopener">Open file in a new tab</a></div>`;
+        }
+        syncPreviewHighlight();
+        return;
+      }
+      if (ext === '.epub') {
+        preview.style.display = 'none';
+        docxPreviewEl.style.display = 'none';
+        docxPreviewEl.innerHTML = '';
+        xlsxPreviewEl.style.display = 'none';
+        xlsxPreviewEl.innerHTML = '';
+        epubPreviewEl.style.display = '';
+        epubPreviewEl.innerHTML = `<div style="font-family:Segoe UI;padding:10px;color:#374151;line-height:1.5;">
+          EPUB preview can be heavy for large files.<br/>
+          <button type="button" id="epubLoadBtn" style="margin-top:8px;padding:5px 9px;border:1px solid #cbd5e1;border-radius:8px;background:#f8fafc;color:#334155;cursor:pointer;">Load EPUB preview</button>
+          <a href="${escapeHtml(doc.url || '#')}" target="_blank" rel="noopener" style="margin-left:8px;">Open</a>
+        </div>`;
+        const btn = document.getElementById('epubLoadBtn');
+        if (btn) {
+          btn.addEventListener('click', async () => {
+            btn.disabled = true;
+            btn.textContent = 'Loading...';
+            try {
+              await renderEpubPreview(doc);
+            } catch (e) {
+              epubPreviewEl.innerHTML = `<div style="color:#b91c1c;">EPUB preview failed: ${escapeHtml(String((e && e.message) || e))}. <a href="${escapeHtml(doc.url || '#')}" target="_blank" rel="noopener">Open file in a new tab</a></div>`;
+            }
+          }, { once: true });
+        }
+        syncPreviewHighlight();
+        return;
+      }
+      docxPreviewEl.style.display = 'none';
+      docxPreviewEl.innerHTML = '';
+      xlsxPreviewEl.style.display = 'none';
+      xlsxPreviewEl.innerHTML = '';
+      epubPreviewEl.style.display = 'none';
+      epubPreviewEl.innerHTML = '';
+      if (epubRendition && typeof epubRendition.destroy === 'function') { try { epubRendition.destroy(); } catch (_) {} }
+      if (epubBook && typeof epubBook.destroy === 'function') { try { epubBook.destroy(); } catch (_) {} }
+      epubBook = null;
+      epubRendition = null;
+      preview.style.display = '';
+      if (ext !== '.pdf' && ext !== '.html' && ext !== '.md' && ext !== '.txt') {
+        preview.src = '';
+        preview.srcdoc = `<html><body style="font-family:Segoe UI;padding:12px;color:#374151;">This format cannot be rendered inline in this preview panel.<br/><a href="${escapeHtml(doc.url || '#')}" target="_blank" rel="noopener">Open file in a new tab</a></body></html>`;
+        return;
+      }
+      preview.removeAttribute('srcdoc');
+      preview.src = doc.url || '';
+      syncPreviewHighlight();
+    }
+    function lawDisplayNameFromKey(key) {
+      const base = String(key || '').split('/').pop() || key;
+      const lower = String(base || '').toLowerCase();
+      if (lower.includes('korea-2025-ai-basic-act-core')) return 'AI Basic Act of the Republic of Korea';
+      if (lower.includes('korea-2025-act-on-fair-labeling-and-advertising-core')) return 'korea-2025-act-on-fair-labeling-and-advertising';
+      if (lower.startsWith('china-')) {
+        return base
+          .replace(/[-_ ]korean[-_ ]translation$/i, '')
+          .replace(/[-_ ]english[-_ ]translate(?:ion)?$/i, '')
+          .replace(/[-_ ]official[-_ ]cn$/i, '')
+          .replace(/[-_ ]original[-_ ]cn$/i, '')
+          .replace(/[-_ ]{2,}/g, '-')
+          .replace(/[-_]+/g, ' ')
+          .trim();
+      }
+      if (lower.includes('deep-synthesis-provisions')) return 'Provisions on the Management of Deep Synthesis Internet Information Services';
+      if (lower.includes('c2024a00078')) return 'Criminal Code Amendment (Deepfake Sexual Material) Act 2024';
+      if (lower.includes('c2024g00562')) return 'Acts of Parliament assented to: Act Nos 77 and 78 of 2024';
+      if (lower.includes('c2026c00068')) return 'Criminal Code Act 1995 (No. 12, 1995) - Compilation No. 171 (Includes amendments: Act No. 2, 2026)';
+      if (lower.includes('f2024l00710')) return 'Online Safety (Designated Internet Services Class 1A and Class 1B Material) Industry Standard 2024';
+      if (lower.includes('f2024l01435')) return 'Digital ID (Accreditation) Data Standards 2024';
+      return base.replace(/[-_]+/g, ' ');
+    }
+    function parseVolumeFromLawKey(key) {
+      const raw = String(key || '');
+      const m = raw.match(/vol(?:ume)?[-_ ]?0*(\d{1,3})(?=$|[-_ ])/i);
+      if (!m) return null;
+      const volNum = Number(m[1]);
+      if (!Number.isFinite(volNum)) return null;
+      const baseKey = raw
+        .replace(m[0], '')
+        .replace(/[-_ ]{2,}/g, '-')
+        .replace(/[-_ ]+$/g, '')
+        .replace(/^[-_ ]+/g, '');
+      return {
+        vol_num: volNum,
+        vol_label: `Volume ${String(volNum).padStart(2, '0')}`,
+        base_key: baseKey || raw,
+      };
+    }
+    function groupDocsByLaw(docs) {
+      const groups = new Map();
+      for (const d of docs || []) {
+        const rawKey = docLawKey(d);
+        const key = canonicalLawKey(rawKey);
+        if (!key) continue;
+        if (!groups.has(key)) groups.set(key, { key, files: [] });
+        groups.get(key).files.push(d);
+      }
+      const out = [];
+      for (const g of groups.values()) {
+        g.files = sortFilesForDisplay(g.files);
+        g.primary = g.files[0];
+        const localTypes = g.files.map((f) => detectDocumentTypeLocal(f));
+        const typePriority = [
+          'official_law_act',
+          'draft',
+          'official_guidance_warning',
+          'official_report_assessment',
+        ];
+        g.document_type = typePriority.find((type) => localTypes.includes(type)) || 'official_report_assessment';
+        g.law_stage = g.primary.law_stage;
+        g.display_name = lawDisplayNameFromKey(g.key);
+        out.push(g);
+      }
+      return out.sort((a, b) => a.display_name.localeCompare(b.display_name, 'ko-KR'));
+    }
+    function groupLawFamilies(docs) {
+      const groups = groupDocsByLaw(docs);
+      const families = new Map();
+      for (const g of groups) {
+        const v = parseVolumeFromLawKey(g.key);
+        const famKey = v ? v.base_key : g.key;
+        if (!families.has(famKey)) {
+          families.set(famKey, {
+            key: famKey,
+            display_name: lawDisplayNameFromKey(famKey),
+            document_type: g.document_type,
+            law_stage: g.law_stage,
+            entries: [],
+          });
+        }
+        families.get(famKey).entries.push({
+          key: g.key,
+          files: g.files,
+          primary: g.primary,
+          display_name: g.display_name,
+          volume_num: v ? v.vol_num : null,
+          volume_label: v ? v.vol_label : null,
+        });
+      }
+      const out = Array.from(families.values());
+      for (const f of out) {
+        f.entries.sort((a, b) => {
+          if (a.volume_num != null && b.volume_num != null) return a.volume_num - b.volume_num;
+          if (a.volume_num != null) return -1;
+          if (b.volume_num != null) return 1;
+          return a.display_name.localeCompare(b.display_name, 'ko-KR');
+        });
+        f.has_volumes = f.entries.filter((e) => e.volume_num != null).length >= 2;
+        f.primary = f.entries[0] ? f.entries[0].primary : null;
+      }
+      return out.sort((a, b) => a.display_name.localeCompare(b.display_name, 'ko-KR'));
+    }
+    function entryDisplayLabel(entry) {
+      if (entry && entry.volume_label) return entry.volume_label;
+      const files = (entry && entry.files) || [];
+      const hasEpub = files.some((f) => String((f && f.extension) || '').toLowerCase() === '.epub');
+      if (hasEpub) return 'Consolidated EPUB';
+      return (entry && entry.display_name) || '';
+    }
+    function renderDocsList(selection) {
+      const t = T[lang()];
+      const docs = selection && Array.isArray(selection.docs) ? selection.docs : [];
+      const host = document.getElementById('docList');
+      renderTimeline(docs);
+      if (!docs.length) {
+        host.innerHTML = `<p class="muted">${escapeHtml(t.noDocs)}</p>`;
+        preview.src = '';
+        return;
+      }
+      const groups = groupLawFamilies(docs);
+      const typeColorClass = (tp) => {
+        const normalized = normalizeDocumentType(tp);
+        if (normalized === 'official_law_act') return 'doc-type-law';
+        if (normalized === 'draft') return 'doc-type-draft';
+        if (normalized === 'official_guidance_warning') return 'doc-type-guidance';
+        return 'doc-type-report';
+      };
+      const verifyTypeColoring = (arr, expectedType) => {
+        for (const g of arr || []) {
+          const ok = normalizeDocumentType(g.document_type) === expectedType;
+          if (!ok) {
+            console.warn('[doc-panel-check] type mismatch', { expectedType, actualType: g.document_type, key: g.key });
+          }
+        }
+      };
+      const byType = {
+        official_law_act: groups.filter((g) => normalizeDocumentType(g.document_type) === 'official_law_act'),
+        draft: groups.filter((g) => normalizeDocumentType(g.document_type) === 'draft'),
+        official_guidance_warning: groups.filter((g) => normalizeDocumentType(g.document_type) === 'official_guidance_warning'),
+        official_report_assessment: groups.filter((g) => normalizeDocumentType(g.document_type) === 'official_report_assessment'),
+      };
+      verifyTypeColoring(byType.official_law_act, 'official_law_act');
+      verifyTypeColoring(byType.draft, 'draft');
+      verifyTypeColoring(byType.official_guidance_warning, 'official_guidance_warning');
+      verifyTypeColoring(byType.official_report_assessment, 'official_report_assessment');
+      const sections = [
+        ['official_law_act', docTypeTag('official_law_act').label],
+        ['draft', docTypeTag('draft').label],
+        ['official_guidance_warning', docTypeTag('official_guidance_warning').label],
+        ['official_report_assessment', docTypeTag('official_report_assessment').label],
+      ];
+      host.innerHTML = sections.map(([k, title]) => {
+        const list = byType[k] || [];
+        if (!list.length) return '';
+        return `<section><h3 class="doc-type-group-title">${escapeHtml(title)}</h3>${list.map((g) => {
+          const stage = inferDocLawStage(g.primary || (g.entries[0] && g.entries[0].primary) || {});
+          const typeTag = docTypeTag(g.document_type);
+          const stageCardClass = ({
+            'lawstage-inforce': 'doc-stage-inforce',
+            'lawstage-proposed': 'doc-stage-proposed',
+            'lawstage-guidelines': 'doc-stage-guidelines',
+            'lawstage-nolaw': 'doc-stage-nolaw',
+            'lawstage-unknown': 'doc-stage-unknown',
+          })[stage.cls] || 'doc-stage-unknown';
+          const defaultFile = (g.entries[0] && g.entries[0].files && g.entries[0].files[0]) || null;
+          const mainBody = g.has_volumes
+            ? `<div class="volume-strip">${g.entries.map((entry) => {
+              const entryDefault = entry.files && entry.files[0] ? entry.files[0] : null;
+              const formatButtons = (entry.files || []).map((f) => `<button type="button" class="format-btn" data-format-url="${escapeHtml(f.url)}" data-format-ext="${escapeHtml(f.extension || '')}">${escapeHtml(formatButtonLabel(f, entry.files || []))}</button>`).join('');
+              return `<div class="volume-item">
+                <div class="volume-head">
+                  <span class="volume-title">${escapeHtml(entryDisplayLabel(entry))}</span>
+                  ${entryDefault ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(entryDefault.url)}">${escapeHtml(t.open)}</a>` : ''}
+                </div>
+                <div class="doc-formats volume-formats">${formatButtons}</div>
+              </div>`;
+            }).join('')}</div>`
+            : `<div class="doc-formats">${(g.entries[0] && g.entries[0].files ? g.entries[0].files : []).map((f) => `<button type="button" class="format-btn" data-format-url="${escapeHtml(f.url)}" data-format-ext="${escapeHtml(f.extension || '')}">${escapeHtml(formatButtonLabel(f, (g.entries[0] && g.entries[0].files) || []))}</button>`).join('')}</div>`;
+          return `<div class="doc-item ${escapeHtml(stageCardClass)} ${escapeHtml(typeColorClass(g.document_type))}">
+            <div class="doc-top">
+              <div class="doc-title-row">
+                <div class="doc-name">${escapeHtml(g.display_name)}</div>
+                <span class="tag ${escapeHtml(typeTag.cls)}">${escapeHtml(typeTag.label)}</span>
+                ${stage.needs_review ? `<span class="tag tag-review">${escapeHtml(T[lang()].reviewNeeded)}</span>` : ''}
+              </div>
+              ${defaultFile ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(defaultFile.url)}">${escapeHtml(t.open)}</a>` : ''}
+            </div>
+            ${mainBody}
+          </div>`;
+        }).join('')}</section>`;
+      }).join('');
+      host.querySelectorAll('button[data-format-url]').forEach((btn) => {
+        btn.addEventListener('mouseenter', () => {
+          const u = btn.getAttribute('data-format-url') || '';
+          const ext = btn.getAttribute('data-format-ext') || '';
+          prefetchDoc({ url: u, extension: ext });
+        });
+        btn.addEventListener('click', async () => {
+          const u = btn.getAttribute('data-format-url') || '';
+          const ext = btn.getAttribute('data-format-ext') || '';
+          const picked = { url: u, extension: ext };
+          await setPreviewByDoc(picked);
+        });
+      });
+      const firstFile = groups.length && groups[0].entries && groups[0].entries[0] && groups[0].entries[0].files
+        ? groups[0].entries[0].files[0]
+        : null;
+      scheduleDocPrefetch(docs);
+      setPreviewByDoc(firstFile);
+    }
+
+    function updateDocsModeOptions() {
+      if (!docsModeSwitchEl) return;
+      const t = T[lang()];
+      const mode = COUNTRY_DOC_MODE[country] || 'unknown';
+      const hasOriginal = docsCache.some((d) => detectDocVariant(d) === 'original');
+      const hasEn = docsCache.some((d) => detectDocVariant(d) === 'en');
+      const hasKo = docsCache.some((d) => detectDocVariant(d) === 'ko');
+      const opts = [];
+      if (mode === 'known_non_en') {
+        if (hasOriginal) opts.push({ v: 'original', l: t.docViewOriginal });
+        if (hasEn) opts.push({ v: 'en', l: t.docViewEnglish });
+        if (country !== '한국' && hasKo) opts.push({ v: 'ko', l: t.docViewKorean });
+        opts.push({ v: 'all', l: t.docViewAll });
+      } else if (mode === 'english_primary') {
+        opts.push({ v: 'en', l: t.docViewEnglish });
+      } else {
+        opts.push({ v: 'all', l: t.docViewAll });
+      }
+      const values = opts.map((o) => o.v);
+      currentDocsMode = values.includes(currentDocsMode) ? currentDocsMode : opts[0].v;
+      docsModeSwitchEl.innerHTML = opts.map((o) => `<button type="button" class="mode-btn${o.v === currentDocsMode ? ' active' : ''}" data-mode="${escapeHtml(o.v)}">${escapeHtml(o.l)}</button>`).join('');
+    }
+
+    function normalizeLawStage(raw) {
+      const vv = String(raw || '').toLowerCase().replace(/\s+/g, '_');
+      const needs_review = vv.includes('needs_review');
+      const v = vv.replace('_needs_review', '');
+      if (v.includes('in_force') || v === 'inforce') return { cls: 'lawstage-inforce', label: 'In Force', needs_review };
+      if (v.includes('proposed') || v.includes('draft')) return { cls: 'lawstage-proposed', label: 'Proposed', needs_review };
+      if (v.includes('guideline')) return { cls: 'lawstage-guidelines', label: 'Guidelines', needs_review };
+      if (v.includes('no_law') || v === 'nolaw') return { cls: 'lawstage-nolaw', label: 'No Law', needs_review };
+      if (v.includes('unknown') || v.includes('needs_review') || v.includes('unclear') || !v.trim()) {
+        return { cls: 'lawstage-unknown', label: 'Unknown', needs_review };
+      }
+      return null;
+    }
+
+    function inferDocLawStage(doc) {
+      const serverStage = normalizeLawStage(doc.law_stage);
+      if (serverStage) return serverStage;
+      const type = normalizeDocumentType(doc.document_type);
+      if (type === 'official_law_act') return { cls: 'lawstage-inforce', label: 'In Force' };
+      if (type === 'draft') return { cls: 'lawstage-proposed', label: 'Proposed' };
+      if (type === 'official_guidance_warning' || type === 'official_report_assessment') {
+        return { cls: 'lawstage-guidelines', label: 'Guidelines' };
+      }
+      return { cls: 'lawstage-unknown', label: 'Unknown', needs_review: false };
+    }
+
+    function mdToHtml(md, statusObj) {
+      const lines = md.split('\n');
+      const out = [];
+      let inList = false;
+      let listTag = '';
+      let inPolicyDimensions = false;
+      let skipPolicySection = false;
+      let firstH1Done = false;
+      const close = () => {
+        if (inList) {
+          out.push(`</${listTag || 'ul'}>`);
+          inList = false;
+          listTag = '';
+        }
+      };
+      for (const raw of lines) {
+        const line = raw.trimEnd();
+        if (!line.trim()) { close(); continue; }
+        if (line.startsWith('### ')) { close(); out.push('<h3>' + renderInlineMd(line.slice(4)) + '</h3>'); continue; }
+        if (line.startsWith('## ')) {
+          close();
+          const h2 = line.slice(3).trim();
+          inPolicyDimensions = (h2 === 'Policy Dimensions' || h2 === '법제화 상태');
+          skipPolicySection = inPolicyDimensions;
+          if (skipPolicySection) {
+            continue;
+          }
+          out.push('<h2>' + renderInlineMd(h2) + '</h2>');
+          continue;
+        }
+        if (skipPolicySection) {
+          continue;
+        }
+        if (line.startsWith('# ')) {
+          close();
+          const h1 = line.slice(2);
+          if (!firstH1Done) {
+            out.push('<h1>' + countryFlagHtml(country) + renderInlineMd(h1) + '</h1>');
+            firstH1Done = true;
+            continue;
+          }
+          out.push('<h1>' + renderInlineMd(h1) + '</h1>');
+          continue;
+        }
+        const ordered = line.match(/^\d+\.\s+(.*)$/);
+        const bullet = line.match(/^-\s+(.*)$/);
+        if (ordered || bullet) {
+          const tag = ordered ? 'ol' : 'ul';
+          if (!inList || listTag !== tag) {
+            close();
+            out.push(`<${tag}>`);
+            inList = true;
+            listTag = tag;
+          }
+          const content = (ordered ? ordered[1] : bullet[1]) || '';
+          let html = renderInlineMd(content);
+          if (inPolicyDimensions) {
+            const level = policyLevelForLine(content, statusObj);
+            if (level !== 'na') {
+              html += ` <span class="pill pill-${level} inline-pill">${escapeHtml(pillText(level))}</span>`;
+            }
+          }
+          out.push('<li>' + html + '</li>');
+          continue;
+        }
+        if (/^(Ref\d+:|Evidence\d+:)/.test(line)) { close(); out.push('<p class="evidence">' + renderInlineMd(line) + '</p>'); continue; }
+        close(); out.push('<p>' + renderInlineMd(line) + '</p>');
+      }
+      close();
+      return out.join('');
+    }
+    function dimRecapRows(statusObj) {
+      const t = T[lang()];
+      if (!statusObj) return '';
+      const defs = [
+        [t.statusLabeling, statusObj.labeling_level],
+        [t.statusElection, statusObj.election_level],
+        [t.statusNon, statusObj.non_consensual_level],
+        [t.statusProvider, statusObj.provider_liability_level],
+        [t.statusPenalty, statusObj.penalty_level],
+      ];
+      return defs.map(([label, level]) => `<li>${escapeHtml(label)}: <span class="pill pill-${escapeHtml(level || 'na')} inline-pill">${escapeHtml(pillText(level || 'na'))}</span></li>`).join('');
+    }
+
+    function setVisible(id, on) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.display = on ? '' : 'none';
+    }
+
+    function setDetailTab(tab) {
+      currentDetailTab = tab;
+      detailTabButtons.forEach((b) => b.classList.toggle('active', b.getAttribute('data-detail-tab') === tab));
+
+      if (tab === 'documents') {
+        leftPanel.style.display = 'none';
+        rightPanel.style.display = '';
+        return;
+      }
+
+      leftPanel.style.display = '';
+      rightPanel.style.display = 'none';
+
+      const showSummary = tab === 'summary';
+      const showStatus = tab === 'status';
+      const showPenalty = tab === 'penalties';
+
+      setVisible('summaryHeader', showSummary);
+      setVisible('summary', showSummary);
+
+      setVisible('compareHeader', false);
+      setVisible('compareBlock', false);
+      setVisible('statusHeader', showStatus);
+      setVisible('statusBlock', showStatus);
+
+      setVisible('penaltyHeader', showPenalty);
+      const penaltyHead = document.querySelector('.penalty-head');
+      if (penaltyHead) penaltyHead.style.display = showPenalty ? '' : 'none';
+      setVisible('penaltyBlock', showPenalty);
+    }
+
+    function applyText() {
+      const t = T[lang()];
+      const labels = COUNTRY_LABELS[lang()] || {};
+      const countryLabel = labels[country] || country;
+      document.documentElement.lang = lang();
+      document.getElementById('title').textContent = `${t.title} - ${countryLabel}`;
+      document.getElementById('subtitle').textContent = t.subtitle;
+      document.getElementById('langLabel').textContent = t.lang + ':';
+      tabSummaryEl.textContent = t.tabSummary;
+      tabStatusEl.textContent = t.tabStatus;
+      tabDocumentsEl.textContent = t.tabDocuments;
+      tabPenaltiesInEl.textContent = t.tabPenalties;
+      document.getElementById('backLink').textContent = t.back;
+      document.getElementById('docsHeader').textContent = t.docs;
+      document.getElementById('docsListHeader').textContent = t.docsCollection;
+      renderWordcloud();
+      renderGovernanceScores();
+      docSearchEl.placeholder = t.docSearchPlaceholder;
+      document.getElementById('docsModeLabel').textContent = t.docViewLabel + ':';
+      if (timelineCompareSelect && !timelineCompareSelect.options.length) {
+        timelineCompareSelect.innerHTML = `<option value="">${escapeHtml(t.timelineComparePick)}</option>`;
+      }
+      updateDocsModeOptions();
+      document.getElementById('summaryHeader').textContent = t.summary;
+      document.getElementById('statusHeader').textContent = t.status;
+      document.getElementById('compareHeader').textContent = t.compareTitle;
+      document.getElementById('penaltyHeader').textContent = t.penaltyTitle;
+      document.getElementById('penaltyHint').textContent = t.penaltyNormHint;
+      penaltyCsvBtn.textContent = t.penaltyCsv;
+      penaltyCsvBtn.href = `/api/penalties-normalized-csv/${encodeURIComponent(country)}?lang=${encodeURIComponent(lang())}`;
+      document.getElementById('previewHeader').textContent = t.preview;
+      setDetailTab(currentDetailTab);
+    }
+
+    function renderStatusBlock(statusObj, allStatuses) {
+      const t = T[lang()];
+      const host = document.getElementById('statusBlock');
+      if (!statusObj) {
+        host.innerHTML = `<p class="muted">${escapeHtml(t.noStatus)}</p>`;
+        return;
+      }
+      const avgRows = buildDimensionAverages(allStatuses || []);
+      const avgMap = new Map(avgRows.map((r) => [r.key, r.avg]));
+
+      const extractRefs = (text) => {
+        const m = String(text || '').match(/\((Ref\d+(?:\s*,\s*Ref\d+)*)\)\.?\s*$/);
+        return m ? m[1] : '';
+      };
+
+      const hintByKey = (key, refs) => {
+        let body = '';
+        if (key === 'labeling') body = t.hintLabeling;
+        if (key === 'election') body = t.hintElection;
+        if (key === 'non_consensual') body = t.hintNon;
+        if (key === 'provider_liability') body = t.hintProvider;
+        if (key === 'penalty') body = t.hintPenalty;
+        if (!body) return '';
+        if (!refs) return `${t.articleHintPrefix}: ${body}`;
+        return `${t.articleHintPrefix}: ${body} (${refs})`;
+      };
+
+      const rows = [
+        ['labeling', 'labeling_level', t.statusLabeling, statusObj.labeling, statusObj.labeling_level],
+        ['election', 'election_level', t.statusElection, statusObj.election, statusObj.election_level],
+        ['non_consensual', 'non_consensual_level', t.statusNon, statusObj.non_consensual, statusObj.non_consensual_level],
+        ['provider_liability', 'provider_liability_level', t.statusProvider, statusObj.provider_liability, statusObj.provider_liability_level],
+        ['penalty', 'penalty_level', t.statusPenalty, statusObj.penalty, statusObj.penalty_level],
+      ];
+      host.innerHTML = rows.map(([key, avgKey, label, text, level]) => {
+        const cs = levelToScore(level);
+        const cScore = cs == null ? 0 : cs;
+        const aScore = Number(avgMap.get(avgKey) || 0);
+        const cw = Math.max(1.5, Math.min(100, (cScore / 4) * 100));
+        const aw = Math.max(1.5, Math.min(100, (aScore / 4) * 100));
+        const [cc1, cc2] = scoreFillColors(cScore);
+        const [ac1, ac2] = scoreFillColors(aScore);
+        return `
+        <div class="status-item">
+          <strong>${escapeHtml(dimensionIcon(key))} ${escapeHtml(label)}</strong><br/>
+          ${escapeHtml(text || '')}
+          <span class="pill pill-${escapeHtml(level || 'na')} inline-pill">${escapeHtml(pillText(level || 'na'))}</span>
+          <div class="status-article-hint">${escapeHtml(hintByKey(key, extractRefs(text)))}</div>
+          <div class="status-compare">
+            <div class="compare-line">
+              <span>${escapeHtml(t.compareCountry)}</span>
+              <div class="compare-track"><div class="compare-fill-country" style="width:${cw.toFixed(2)}%;--compare-fill:linear-gradient(90deg,${cc1} 0%,${cc2} 100%);"></div></div>
+              <span class="compare-num">${cScore.toFixed(2)}</span>
+            </div>
+            <div class="compare-line">
+              <span>${escapeHtml(t.compareAverage)}</span>
+              <div class="compare-track"><div class="compare-fill-avg" style="width:${aw.toFixed(2)}%;--compare-fill:linear-gradient(90deg,${ac1} 0%,${ac2} 100%);"></div></div>
+              <span class="compare-num">${aScore.toFixed(2)}</span>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function buildDimensionAverages(allStatuses) {
+      const defs = [
+        ['labeling_level', T[lang()].statusLabeling],
+        ['election_level', T[lang()].statusElection],
+        ['non_consensual_level', T[lang()].statusNon],
+        ['provider_liability_level', T[lang()].statusProvider],
+        ['penalty_level', T[lang()].statusPenalty],
+      ];
+      return defs.map(([key, label]) => {
+        let sum = 0;
+        let n = 0;
+        for (const s of allStatuses || []) {
+          const sc = levelToScore(s[key]);
+          if (sc == null) continue;
+          sum += sc;
+          n += 1;
+        }
+        return { key, label, avg: n ? (sum / n) : 0 };
+      });
+    }
+
+    function renderCompareBlock(statusObj, allStatuses) {
+      const t = T[lang()];
+      const host = document.getElementById('compareBlock');
+      if (!statusObj || !Array.isArray(allStatuses) || !allStatuses.length) {
+        host.innerHTML = `<p class="muted">${escapeHtml(t.noStatus)}</p>`;
+        return;
+      }
+      const rows = buildDimensionAverages(allStatuses);
+      host.innerHTML = `<p class="compare-note">${escapeHtml(t.compareNote)}</p>
+        <div class="compare-rows">
+          ${rows.map((r) => {
+            const countryScore = levelToScore(statusObj[r.key]);
+            const cs = countryScore == null ? 0 : countryScore;
+            const cw = Math.max(0, Math.min(100, (cs / 4) * 100));
+            const aw = Math.max(0, Math.min(100, (r.avg / 4) * 100));
+            const [cc1, cc2] = scoreFillColors(cs);
+            const [ac1, ac2] = scoreFillColors(r.avg);
+            const diff = cs - r.avg;
+            const diffText = `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}`;
+            const diffCls = diff > 0 ? 'pos' : (diff < 0 ? 'neg' : 'eq');
+            return `<div class="compare-row">
+              <div class="compare-name">
+                <span>${escapeHtml(r.label)}</span>
+                <span class="compare-diff ${diffCls}">${escapeHtml(diffText)}</span>
+              </div>
+              <div class="compare-line">
+                <span>${escapeHtml(t.compareCountry)}</span>
+                <div class="compare-track"><div class="compare-fill-country" style="width:${Math.max(1.5, cw).toFixed(2)}%;--compare-fill:linear-gradient(90deg,${cc1} 0%,${cc2} 100%);"></div></div>
+                <span class="compare-num">${cs.toFixed(2)}</span>
+              </div>
+              <div class="compare-line">
+                <span>${escapeHtml(t.compareAverage)}</span>
+                <div class="compare-track"><div class="compare-fill-avg" style="width:${Math.max(1.5, aw).toFixed(2)}%;--compare-fill:linear-gradient(90deg,${ac1} 0%,${ac2} 100%);"></div></div>
+                <span class="compare-num">${r.avg.toFixed(2)}</span>
+              </div>
+            </div>`;
+          }).join('')}
+        </div>`;
+    }
+
+    function fmtFine(row) {
+      if (row.fine_min == null && row.fine_max == null) return '-';
+      const cur = row.fine_currency ? ` ${row.fine_currency}` : '';
+      if (row.fine_min != null && row.fine_max != null) return `${row.fine_min} - ${row.fine_max}${cur}`;
+      if (row.fine_max != null) return `<= ${row.fine_max}${cur}`;
+      return `>= ${row.fine_min}${cur}`;
+    }
+
+    function fmtPrison(row) {
+      if (row.imprisonment_min_months == null && row.imprisonment_max_months == null) return '-';
+      if (row.imprisonment_min_months != null && row.imprisonment_max_months != null) {
+        return `${row.imprisonment_min_months}-${row.imprisonment_max_months} months`;
+      }
+      if (row.imprisonment_max_months != null) return `<= ${row.imprisonment_max_months} months`;
+      return `>= ${row.imprisonment_min_months} months`;
+    }
+
+    async function loadPenalties() {
+      const t = T[lang()];
+      const host = document.getElementById('penaltyBlock');
+      if (!country) {
+        host.innerHTML = `<p class="muted">${escapeHtml(t.noCountry)}</p>`;
+        return;
+      }
+      const res = await fetch(`/api/penalties-normalized/${encodeURIComponent(country)}?lang=${encodeURIComponent(lang())}`);
+      if (!res.ok) {
+        host.innerHTML = `<p class="muted">${escapeHtml(t.noPenalty)}</p>`;
+        return;
+      }
+      const data = await res.json();
+      const items = data.penalties || [];
+      if (!items.length) {
+        host.innerHTML = `<p class="muted"><span class="tag lawstage-nolaw">No Law</span> ${escapeHtml(t.noPenalty)}</p>`;
+        return;
+      }
+      const channelLabel = (v) => {
+        const x = String(v || '').toLowerCase();
+        if (x === 'criminal') return lang() === 'ko' ? '형사' : 'Criminal';
+        if (x === 'administrative') return lang() === 'ko' ? '행정' : 'Administrative';
+        if (x === 'mixed') return lang() === 'ko' ? '혼합' : 'Mixed';
+        if (x === 'other') return lang() === 'ko' ? '기타' : 'Other';
+        return lang() === 'ko' ? '불명확' : 'Unknown';
+      };
+      const statusLabel = (v) => {
+        const x = String(v || '').toLowerCase();
+        if (x === 'in_force') return 'In Force';
+        if (x === 'proposed') return 'Proposed';
+        if (x === 'guidelines') return 'Guidelines';
+        if (x === 'no_law') return 'No Law';
+        return 'Unknown';
+      };
+      const rows = items.map((p) => `<tr>
+        <td>${escapeHtml(p.offense_label || '')}</td>
+        <td>${escapeHtml(p.deepfake_scope || '')}</td>
+        <td>${escapeHtml(channelLabel(p.sanction_channel))}</td>
+        <td>${(() => { const s = normalizeLawStage(p.effective_status) || { cls: 'lawstage-unknown', label: statusLabel(p.effective_status), needs_review: true }; return `<span class="tag ${escapeHtml(s.cls)}">${escapeHtml(s.label)}</span>${s.needs_review ? ` <span class="tag tag-review">${escapeHtml(t.reviewNeeded)}</span>` : ''}`; })()}</td>
+        <td class="mono">${escapeHtml(p.law_id || '')}</td>
+        <td>${escapeHtml(p.fine_range || '-')}</td>
+        <td>${escapeHtml(p.prison_range_months || '-')}</td>
+        <td>${escapeHtml(p.aggravation || '')}</td>
+        <td>${escapeHtml(p.aggravated_penalty || '')}</td>
+        <td>${escapeHtml((p.refs || []).join(', '))}</td>
+        <td>${escapeHtml(p.last_verified_at || '')}</td>
+      </tr>`).join('');
+      host.innerHTML = `<table class="penalty-table">
+        <thead>
+          <tr>
+            <th>${escapeHtml(t.pOffense)}</th>
+            <th>${escapeHtml(t.pScope)}</th>
+            <th>${escapeHtml(t.pType)}</th>
+            <th>${escapeHtml(t.pStatus)}</th>
+            <th>${escapeHtml(t.pLaw)}</th>
+            <th>${escapeHtml(t.pFine)}</th>
+            <th>${escapeHtml(t.pPrison)}</th>
+            <th>${escapeHtml(t.pAggrCond)}</th>
+            <th>${escapeHtml(t.pAggrPen)}</th>
+            <th>${escapeHtml(t.pRefs)}</th>
+            <th>${escapeHtml(t.pVerified)}</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+    }
+
+    async function loadSummary() {
+      const t = T[lang()];
+      const el = document.getElementById('summary');
+      if (!country) {
+        document.getElementById('statusBlock').innerHTML = `<p class="muted">${escapeHtml(t.noCountry)}</p>`;
+        el.textContent = t.noCountry;
+        return;
+      }
+      el.classList.add('muted');
+      el.textContent = t.loading;
+      const res = await fetch(`/api/summary/${encodeURIComponent(country)}?lang=${encodeURIComponent(lang())}`);
+      if (!res.ok) { el.textContent = t.noDocs; return; }
+      const md = await res.text();
+      const stRes = await fetch(`/api/statuses?lang=${encodeURIComponent(lang())}`);
+      let statusObj = null;
+      let allStatuses = [];
+      if (stRes.ok) {
+        const stData = await stRes.json();
+        allStatuses = stData.statuses || [];
+        statusObj = allStatuses.find((s) => s.country === country) || null;
+      }
+      renderStatusBlock(statusObj, allStatuses);
+      el.classList.remove('muted');
+      const dimFooter = `<section class="summary-dim-footer"><h3>${escapeHtml(T[lang()].summaryDimTitle)}</h3><p class="summary-dim-desc">${escapeHtml(T[lang()].summaryDimDesc)}</p><ul>${dimRecapRows(statusObj)}</ul></section>`;
+      el.innerHTML = mdToHtml(md, statusObj) + dimFooter;
+    }
+
+    async function loadDashboardTimelineData() {
+      try {
+        const res = await fetch('/api/dashboard-summary');
+        if (!res.ok) throw new Error('failed');
+        const json = await res.json();
+        dashboardSummary = json.summary || {};
+      } catch (_) {
+        dashboardSummary = {};
+      }
+      const agg = {};
+      Object.keys(dashboardSummary || {}).forEach((c) => {
+        const tl = (dashboardSummary[c] && dashboardSummary[c].timeline) || {};
+        Object.keys(tl).forEach((yk) => {
+          const y = Number(yk);
+          if (!Number.isFinite(y)) return;
+          if (!agg[y]) agg[y] = { in_force: 0, proposed: 0, guidelines: 0, unknown: 0 };
+          const r = normalizeTimelineRow(tl[yk]);
+          agg[y].in_force += r.in_force;
+          agg[y].proposed += r.proposed;
+          agg[y].guidelines += r.guidelines;
+          agg[y].unknown += r.unknown;
+        });
+      });
+      globalTimelineAgg = agg;
+    }
+
+    async function loadDocs() {
+      const t = T[lang()];
+      const host = document.getElementById('docList');
+      if (!country) { host.innerHTML = `<p class="muted">${escapeHtml(t.noCountry)}</p>`; return; }
+      host.innerHTML = `<p class="muted">${escapeHtml(t.loading)}</p>`;
+      await loadDashboardTimelineData();
+      const res = await fetch(`/api/documents/${encodeURIComponent(country)}`);
+      if (!res.ok) { host.innerHTML = `<p class="muted">${escapeHtml(t.noDocs)}</p>`; return; }
+      const data = await res.json();
+      docsCache = data.documents || [];
+      updateDocsModeOptions();
+      renderDocsList(selectVisibleDocs(docsCache));
+    }
+
+    if (docsModeSwitchEl) {
+      docsModeSwitchEl.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('button[data-mode]');
+        if (!btn) return;
+        const mode = btn.getAttribute('data-mode') || 'all';
+        currentDocsMode = mode;
+        updateDocsModeOptions();
+        renderDocsList(selectVisibleDocs(docsCache));
+      });
+    }
+    detailTabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const tab = btn.getAttribute('data-detail-tab') || 'summary';
+        setDetailTab(tab);
+      });
+    });
+    if (docSearchEl) {
+      docSearchEl.addEventListener('input', () => {
+        renderDocsList(selectVisibleDocs(docsCache));
+      });
+    }
+    if (wordcloudSwitchEl) {
+      wordcloudSwitchEl.addEventListener('click', (ev) => {
+        const btn = ev.target.closest('button[data-wordcloud-view]');
+        if (!btn) return;
+        currentWordcloudView = btn.getAttribute('data-wordcloud-view') === 'source' ? 'source' : 'kor';
+        renderWordcloud();
+      });
+    }
+
+    langSel.addEventListener('change', async () => {
+      applyText();
+      await loadSummary();
+      await loadPenalties();
+      await loadDocs();
+    });
+
+    (async () => {
+      applyText();
+      await loadWordcloud();
+      await loadGovernanceScores();
+      await loadSummary();
+      await loadPenalties();
+      await loadDocs();
+    })();
+  </script>
+</body>
+</html>
+
+
+

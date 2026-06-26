@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://kimjwn.github.io/sitemap.xml

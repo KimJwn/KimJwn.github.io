@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Methodology and Workflow</title>
+  <link rel="stylesheet" href="/assets/palette.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Poppins","Noto Sans KR","Segoe UI",sans-serif;
+      color: #0f172a;
+      background:
+        radial-gradient(circle at top left, rgba(15,94,234,0.12), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(148,163,184,0.18), transparent 22%),
+        linear-gradient(180deg, #f8fbff 0%, #f8fafc 44%, #ffffff 100%);
+    }
+    .wrap {
+      max-width: var(--layout-page-max-width);
+      margin: 0 auto;
+      padding: var(--layout-page-padding-top) var(--layout-page-padding-x) var(--layout-page-padding-bottom);
+    }
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.84) 100%);
+      border: 1px solid #d9e3f2;
+      border-radius: 24px;
+      padding: var(--layout-card-padding);
+      box-shadow: 0 22px 60px rgba(15,23,42,0.08);
+      overflow: hidden;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr);
+      gap: var(--layout-shell-gap);
+      align-items: start;
+    }
+    .sidebar {
+      position: sticky;
+      top: 24px;
+      display: grid;
+      gap: 14px;
+    }
+    .sidebar-card {
+      border: 1px solid #d9e3f2;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.88);
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+    }
+    .sidebar-kicker {
+      margin: 0 0 8px;
+      color: #0f5eea;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.04;
+      letter-spacing: -.05em;
+    }
+    .ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #d6deea;
+      background: rgba(255,255,255,0.82);
+      width: fit-content;
+    }
+    .global-tabs, .side-links {
+      display: grid;
+      gap: 8px;
+    }
+    .g-tab, .side-link {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--sub);
+    }
+    .g-tab.active {
+      background: var(--accent-soft);
+      border-color: var(--accent-line);
+      color: var(--accent-strong);
+    }
+    .content {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+    .hero {
+      display: grid;
+      gap: 14px;
+      padding: 24px;
+      border: 1px solid #d9e3f2;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(15,94,234,0.10), transparent 26%),
+        linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(247,250,255,0.88) 100%);
+      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+    }
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef4ff;
+      border: 1px solid #c9d8fa;
+      color: #17407d;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .hero-copy {
+      max-width: 64ch;
+    }
+    .hero-copy p, .section-intro, .muted {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+    .badge-row, .doc-grid, .step-grid, .command-grid, .axis-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .badge-row {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .doc-card, .step-card, .command-card, .table-block, .axis-card {
+      border: 1px solid #d9e3f2;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.90);
+      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+    }
+    .doc-card {
+      padding: 16px;
+      display: grid;
+      gap: 8px;
+    }
+    .doc-card strong {
+      font-size: 16px;
+      letter-spacing: -.02em;
+    }
+    .chip {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .chip.core {
+      background: #eaf7ee;
+      color: #166534;
+      border: 1px solid #b7e1c2;
+    }
+    .chip.context {
+      background: #fff4e5;
+      color: #9a3412;
+      border: 1px solid #fed7aa;
+    }
+    .section-head {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -.04em;
+    }
+    .step-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .axis-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .step-card {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+    .step-no {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #0f5eea;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 10px 18px rgba(15,94,234,.22);
+    }
+    .step-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -.03em;
+    }
+    .step-copy {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+    .step-meta {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .step-meta span {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #f8fbff;
+      border: 1px solid #d9e3f2;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .command-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .command-card {
+      padding: 18px;
+      display: grid;
+      gap: 12px;
+    }
+    .axis-card {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+    .axis-card strong {
+      font-size: 16px;
+      letter-spacing: -.02em;
+    }
+    .axis-copy {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+    .axis-list {
+      margin: 0;
+      padding-left: 18px;
+      color: #334155;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .command-card pre {
+      margin: 0;
+      padding: 14px;
+      border-radius: 16px;
+      background: #0f172a;
+      color: #e2e8f0;
+      overflow-x: auto;
+      font: 600 12px/1.7 "IBM Plex Mono","Consolas",monospace;
+    }
+    .table-block {
+      padding: 0;
+      overflow: hidden;
+    }
+    .table-toolbar {
+      padding: 16px 18px 0;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 14px;
+    }
+    table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: collapse;
+    }
+    table th:nth-child(2), table td:nth-child(2) {
+      min-width: 260px;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 12px;
+      font-size: var(--layout-main-table-font-size);
+      text-align: left;
+      vertical-align: top;
+      line-height: var(--layout-main-table-line-height);
+      background: #fff;
+    }
+    th {
+      background: var(--table-head);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .ok { color: #166534; font-weight: 700; }
+    .todo { color: #b91c1c; font-weight: 700; }
+    @media (max-width: 1100px) {
+      .badge-row, .step-grid, .command-grid, .axis-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      h1 { font-size: 28px; }
+    }
+    @media (max-width: 700px) {
+      .badge-row, .step-grid, .command-grid, .axis-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="shell">
+        <aside class="sidebar">
+          <section class="sidebar-card">
+            <p class="sidebar-kicker" id="sidebarKicker"></p>
+            <h1 id="title"></h1>
+            <p id="subtitle" class="muted"></p>
+          </section>
+          <section class="sidebar-card">
+            <div class="ctrl">
+              <label id="langLabel" for="lang"></label>
+              <select id="lang">
+                <option value="en" selected>English</option>
+                <option value="ko">한국어</option>
+              </select>
+            </div>
+          </section>
+          <nav class="sidebar-card global-tabs">
+            <a id="tabHome" class="g-tab" href="/"></a>
+            <a id="tabCountries" class="g-tab" href="/countries.html"></a>
+            <a id="tabCompare" class="g-tab" href="/status.html"></a>
+            <a id="tabPenalties" class="g-tab" href="/penalties.html"></a>
+            <a id="tabRQ" class="g-tab" href="/rq.html"></a>
+            <a id="tabWorkflow" class="g-tab active" href="/workflow.html"></a>
+          </nav>
+          <nav class="sidebar-card side-links">
+            <a class="side-link" href="#methodology" id="linkMethod"></a>
+            <a class="side-link" href="#sequence" id="linkSequence"></a>
+            <a class="side-link" href="#refresh" id="linkRefresh"></a>
+            <a class="side-link" href="#workflowTable" id="linkChecklist"></a>
+            <a class="side-link" href="/coding.html">Clause-based Coding</a>
+          </nav>
+        </aside>
+
+        <div class="content">
+          <section class="hero" id="methodology">
+            <span class="eyebrow" id="heroEyebrow"></span>
+            <div class="hero-copy">
+              <h2 id="heroTitle"></h2>
+              <p id="heroDesc"></p>
+            </div>
+            <div class="badge-row" id="docCards"></div>
+          </section>
+
+          <section>
+            <div class="section-head">
+              <h2 id="codingTitle"></h2>
+              <p class="section-intro" id="codingDesc"></p>
+            </div>
+            <div class="axis-grid" id="codingCards"></div>
+          </section>
+
+          <section>
+            <div class="section-head">
+              <h2 id="sequenceTitle"></h2>
+              <p class="section-intro" id="sequenceDesc"></p>
+            </div>
+            <div class="step-grid" id="stepGrid"></div>
+          </section>
+
+          <section id="refresh">
+            <div class="section-head">
+              <h2 id="refreshTitle"></h2>
+              <p class="section-intro" id="refreshDesc"></p>
+            </div>
+            <div class="command-grid">
+              <article class="command-card">
+                <strong id="refreshManualTitle"></strong>
+                <p class="muted" id="refreshManualDesc"></p>
+                <pre id="refreshManualCode"></pre>
+              </article>
+              <article class="command-card">
+                <strong id="refreshWrapperTitle"></strong>
+                <p class="muted" id="refreshWrapperDesc"></p>
+                <pre id="refreshWrapperCode"></pre>
+              </article>
+            </div>
+          </section>
+
+          <section class="table-block" id="workflowTable">
+            <div class="table-toolbar">
+              <div class="section-head">
+                <h2 id="checklistTitle"></h2>
+                <p class="section-intro" id="checklistDesc"></p>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th id="hCountry"></th>
+                    <th id="hPath"></th>
+                    <th id="hType"></th>
+                    <th id="hStage"></th>
+                    <th id="hDate"></th>
+                    <th id="hSource"></th>
+                    <th id="hTypeChk"></th>
+                    <th id="hStageChk"></th>
+                    <th id="hTimeChk"></th>
+                    <th id="hRefChk"></th>
+                    <th id="hSumChk"></th>
+                  </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const T = {
+      en: {
+        sidebarKicker: 'Method',
+        title: 'Methodology and Workflow',
+        subtitle: 'This page explains how the project moves from classified legal documents to coding-ready policy evidence.',
+        lang: 'Language',
+        navHome: 'Home',
+        navCountries: 'Countries',
+        navCompare: 'Compare',
+        navPenalties: 'Penalties',
+        navRQ: 'RQ',
+        navWorkflow: 'Workflow',
+        linkMethod: 'Methodology',
+        linkSequence: 'Pipeline Steps',
+        linkRefresh: 'Refresh Order',
+        linkChecklist: 'Checklist Table',
+        heroEyebrow: 'Corpus Design',
+        heroTitle: 'One core legal layer, one reading layer, one coding layer',
+        heroDesc: 'The framework is intentionally simple. In-force legal texts remain the core evidence layer, aligned Korean translations remain a reading sidecar, and clause coding stays centered on one main legal dimension plus optional overlays.',
+        codingTitle: 'Simplified coding framework',
+        codingDesc: 'Every retained clause goes through a short sequence: keep or exclude it, assign one main policy dimension, then add overlay tags only when they materially improve interpretation.',
+        sequenceTitle: 'Workflow at a glance',
+        sequenceDesc: 'The technical pipeline still has multiple stages, but the user-facing logic is shorter: control the corpus, prepare the text, align the reading layer, code the clause, and sync the outputs.',
+        refreshTitle: 'Refresh order when a new file is added',
+        refreshDesc: 'If a new document is placed under sources/official/<country>/<classification_folder>/, rerun the main source pipeline in this order. If Korean translation files were added or revised, rerun the aligned translation sidecar after the main source refresh.',
+        refreshManualTitle: 'Manual sequence',
+        refreshManualDesc: 'Run each stage one by one when you want to inspect intermediate outputs.',
+        refreshWrapperTitle: 'Wrapper script',
+        refreshWrapperDesc: 'Use the wrapper when you want the full document-to-text refresh in one command.',
+        checklistTitle: 'Update checklist',
+        checklistDesc: 'This auto-generated table highlights documents that still need metadata review, evidence linking, or summary synchronization.',
+        country: 'Country',
+        path: 'Document',
+        type: 'Type',
+        stage: 'Law stage',
+        date: 'Timeline date',
+        source: 'Timeline source',
+        typeChk: 'Type classified',
+        stageChk: 'Stage validated',
+        timeChk: 'Timeline metadata',
+        refChk: 'Ref linked',
+        sumChk: 'Summary synced',
+        ok: 'OK',
+        todo: 'TODO',
+        docCards: [
+          {
+            title: '1. Official Law / Act',
+            chip: 'Core evidence',
+            chipClass: 'core',
+            copy: 'In-force legal texts only. Clause-level coding and strongest claims should come from this layer.'
+          },
+          {
+            title: '2. Draft',
+            chip: 'Context Layer A',
+            chipClass: 'context',
+            copy: 'Pending bills or proposed rules. These show regulatory direction but do not count as current law.'
+          },
+          {
+            title: '3. Official Guidance / Warning',
+            chip: 'Context Layer B1',
+            chipClass: 'context',
+            copy: 'Non-binding but institutionally strong compliance or enforcement signals.'
+          },
+          {
+            title: '4. Official Report / Assessment',
+            chip: 'Context Layer B2',
+            chipClass: 'context',
+            copy: 'Descriptive institutional reports that explain risk framing, policy attention, and background conditions.'
+          }
+        ],
+        codingCards: [
+          {
+            title: '1. Inclusion decision',
+            copy: 'The first question is whether the retained clause still belongs in the study. If not, exclude it rather than over-code it.',
+            items: ['keep in scope', 'exclude']
+          },
+          {
+            title: '2. Primary policy dimension',
+            copy: 'Each in-scope clause should receive one main legal-comparison label.',
+            items: ['scope/coverage', 'disclosure/labeling', 'remedies/consent', 'elections', 'criminalize/penalty', 'platform duties']
+          },
+          {
+            title: '3. Optional overlays',
+            copy: 'Add overlays only when they materially improve interpretation. These overlays describe harm, intervention stage, and response mechanism rather than replacing the legal comparison axis.',
+            items: ['risk', 'life cycle', 'defense layer']
+          }
+        ],
+        steps: [
+          {
+            title: 'Document classification fixed',
+            copy: 'The project locks the corpus to sources/official/<country>/1~4_* and treats document_inventory.json as the canonical inventory.',
+            tags: ['Input: official folders', 'Output: document_inventory.json']
+          },
+          {
+            title: 'Raw text extraction',
+            copy: 'Each document is converted into text and stored under sources/derived/official-text. This preserves a document-level textual mirror of the classified corpus.',
+            tags: ['Output: official-text', 'Done']
+          },
+          {
+            title: 'Text normalization',
+            copy: 'Page numbers, broken spacing, duplicated blank lines, and header or footer noise are cleaned so the text becomes coding-ready body content.',
+            tags: ['Output: official-text-normalized', 'Preprocessing']
+          },
+          {
+            title: 'Pre-seg cleaning',
+            copy: 'Normalized text is cleaned again for segmentation. Repeated running headers, repeated structural headings, and non-substantive page artifacts are removed before structure is inferred.',
+            tags: ['Pre-seg', 'Noise removal']
+          },
+          {
+            title: 'Structural segmentation',
+            copy: 'The cleaned text is first split into high-level legal units such as Part, Chapter, Article, Section, Rule, Schedule, and Annex.',
+            tags: ['Structure first', 'Article/Section']
+          },
+          {
+            title: 'Topic relevance filter',
+            copy: 'Large amendment-like texts and large non-topic statutes are narrowed to provisions that are substantively tied to deepfakes, synthetic media, labeling, NCII or consent harms, and elections.',
+            tags: ['Topic-only', 'Focused retention']
+          },
+          {
+            title: 'Clause segmentation',
+            copy: 'Only the retained structural units are split into clause-level segments. This becomes the first true clause-level analytical layer.',
+            tags: ['Output: official-segments', 'Clause layer']
+          },
+          {
+            title: 'Segment metadata attachment',
+            copy: 'Each segment receives country, classification_folder, document_type, legal_force, core_evidence_allowed, source_path, and structural labels.',
+            tags: ['Metadata', 'Traceability']
+          },
+          {
+            title: 'Korean translation normalization',
+            copy: 'When a Korean working translation exists, it is normalized into a separate sidecar layer. Project-note metadata is removed, whitespace is collapsed, and Korean legal anchors such as 제50조 or 제474.17A조 are preserved.',
+            tags: ['Output: official-text-korean-normalized', 'Sidecar']
+          },
+          {
+            title: 'Source-aligned Korean segment build',
+            copy: 'The Korean translation is then aligned back onto the original source-derived segments. This preserves the original source_segment_id and keeps the translation as a reading aid rather than a second legal source of truth.',
+            tags: ['Output: official-segments-korean-aligned', 'Aligned translation']
+          },
+          {
+            title: 'Coding table generation',
+            copy: 'Segments are coded into primary policy dimensions first, then enriched with multi-label overlays for risk type, life cycle, and defense layer.',
+            tags: ['PD2+', 'Comparative coding']
+          },
+          {
+            title: 'Flat clause coding table',
+            copy: 'Retained clause segments are flattened into a coding-ready table with stable segment IDs and blank coding columns for policy dimensions, risk, life cycle, defense layer, and defense sub-codes.',
+            tags: ['Output: flat_clause_coding_table', 'Coding input']
+          },
+          {
+            title: 'Core evidence and context split',
+            copy: '1_official-law-act remains the direct legal basis, while folders 2, 3, and 4 are linked as contextual layers around the coded finding.',
+            tags: ['Evidence hierarchy', 'Interpretation']
+          },
+          {
+            title: 'Analysis artifacts and governance scores',
+            copy: 'Word clouds, dimension scores, and governance types are generated after clause coding. B1 guidance/warning and B2 report/assessment rows remain non-binding context, but they contribute to voluntary-guidance and hybrid legal-guidance scoring.',
+            tags: ['Output: analysis_dimension_scores', 'B1/B2 context scoring']
+          },
+          {
+            title: 'Review and workbook/app sync',
+            copy: 'Final reviewed results are reflected into the PD2 workbook tabs, JSON outputs, and web app views.',
+            tags: ['Workbook', 'JSON', 'Viewer']
+          }
+        ]
+      },
+      ko: {
+        sidebarKicker: 'Method',
+        title: '방법론과 작업 순서',
+        subtitle: '이 페이지는 분류된 법률 문서가 어떻게 코딩 가능한 정책 근거로 바뀌는지 설명합니다.',
+        lang: '언어',
+        navHome: 'Home',
+        navCountries: 'Countries',
+        navCompare: 'Compare',
+        navPenalties: 'Penalties',
+        navRQ: 'RQ',
+        navWorkflow: 'Workflow',
+        linkMethod: '방법론',
+        linkSequence: '파이프라인 단계',
+        linkRefresh: '갱신 순서',
+        linkChecklist: '체크리스트 표',
+        heroEyebrow: 'Corpus Design',
+        heroTitle: '4개 문서층과 1개의 핵심 근거층',
+        heroDesc: '이 프로젝트는 먼저 문서 코퍼스를 고정하고, 그 다음 문서를 조항 단위 코딩 파이프라인으로 넘깁니다. 법적 효력이 있는 문서만 핵심 근거로 쓰고, draft, guidance, report는 직접 법적 근거가 아니라 맥락층으로 유지합니다.',
+        sequenceTitle: '8단계 작업 순서',
+        sequenceDesc: '이 워크플로는 코퍼스 통제에서 시작해서 워크북과 앱 반영으로 끝납니다. 각 단계는 입력, 저장 위치, 분석 목적이 분명하게 나뉘어 있습니다.',
+        refreshTitle: '새 파일 추가 시 갱신 순서',
+        refreshDesc: '새 문서를 sources/official/<country>/<classification_folder>/ 아래에 넣으면, 인벤토리와 추출 텍스트와 정규화 텍스트가 맞도록 아래 순서대로 다시 실행합니다.',
+        refreshManualTitle: '수동 실행 순서',
+        refreshManualDesc: '중간 산출물을 확인하고 싶을 때 단계별로 각각 실행합니다.',
+        refreshWrapperTitle: '한 번에 실행',
+        refreshWrapperDesc: '문서 추가 후 전체 문서-텍스트 파이프라인을 한 번에 갱신할 때 사용합니다.',
+        checklistTitle: '업데이트 체크리스트',
+        checklistDesc: '이 자동 생성 표는 아직 메타데이터 검수, 근거 연결, 요약 동기화가 더 필요한 문서를 보여줍니다.',
+        country: '국가',
+        path: '문서',
+        type: '유형',
+        stage: '법령 상태',
+        date: '타임라인 날짜',
+        source: '타임라인 소스',
+        typeChk: '유형 분류',
+        stageChk: '상태 검증',
+        timeChk: '타임라인 메타',
+        refChk: '근거 연결',
+        sumChk: '요약 동기화',
+        ok: '완료',
+        todo: '필요',
+        docCards: [
+          {
+            title: '1. Official Law / Act',
+            chip: '핵심 근거',
+            chipClass: 'core',
+            copy: '현재 효력이 있는 법령 문서입니다. 조항 단위 코딩과 가장 강한 본문 주장은 이 층에서만 나와야 합니다.'
+          },
+          {
+            title: '2. Draft',
+            chip: 'Context Layer A',
+            chipClass: 'context',
+            copy: '입법안이나 proposed rule 같은 미시행 문서입니다. 현재 법의 증거가 아니라 규제 방향 신호로만 씁니다.'
+          },
+          {
+            title: '3. Official Guidance / Warning',
+            chip: 'Context Layer B1',
+            chipClass: 'context',
+            copy: '강제력은 약해도 기관의 집행 의도나 준수 기대를 강하게 드러내는 문서층입니다.'
+          },
+          {
+            title: '4. Official Report / Assessment',
+            chip: 'Context Layer B2',
+            chipClass: 'context',
+            copy: '정책 배경, 위험 인식, 현황 진단을 보여주는 설명적 문서층입니다.'
+          }
+        ],
+        steps: [
+          {
+            title: '문서 분류 확정',
+            copy: 'sources/official/<country>/1~4_* 구조와 document_inventory.json을 기준 인벤토리로 고정합니다.',
+            tags: ['입력: 공식 문서 폴더', '출력: document_inventory.json']
+          },
+          {
+            title: '원문 텍스트 추출',
+            copy: '각 문서를 텍스트로 변환해 sources/derived/official-text에 저장합니다. 분류 구조를 그대로 유지한 텍스트 미러 층입니다.',
+            tags: ['출력: official-text', '완료']
+          },
+          {
+            title: '텍스트 정규화',
+            copy: '페이지 번호, 공백 깨짐, 중복 줄바꿈, 머리말과 꼬리말 같은 노이즈를 정리해 코딩 가능한 본문으로 만듭니다.',
+            tags: ['출력: official-text-normalized', '전처리']
+          },
+          {
+            title: '조항 단위 세그먼트 분리',
+            copy: '정규화된 텍스트를 Article, Section, Rule, Annex, Clause 단위로 쪼개고 문서별 JSON 세그먼트 파일로 저장합니다. 이때부터 진짜 clause-level 분석층이 생깁니다.',
+            tags: ['출력: official-segments', '세그먼트']
+          },
+          {
+            title: '세그먼트 메타데이터 부착',
+            copy: '각 조각에 country, classification_folder, document_type, legal_force, core_evidence_allowed, source_path, article_label을 붙입니다.',
+            tags: ['메타데이터', '추적 가능성']
+          },
+          {
+            title: '코딩 테이블 생성',
+            copy: '세그먼트를 Labeling, Election, NCII, Platform, Penalty 기준으로 읽고 PD2용 비교 코딩 테이블을 만듭니다.',
+            tags: ['PD2', '비교 코딩']
+          },
+          {
+            title: '핵심 근거와 맥락 분리',
+            copy: '1_official-law-act만 직접 법적 근거로 쓰고, 2_draft, 3_official-guidance-warning, 4_official-report-assessment는 맥락층으로 연결합니다.',
+            tags: ['근거 위계', '해석']
+          },
+          {
+            title: '검수와 워크북 반영',
+            copy: '최종 검수 후 결과를 PD2 워크북 시트, JSON 산출물, 웹 앱 뷰어에 반영합니다.',
+            tags: ['Workbook', 'JSON', 'Viewer']
+          }
+        ]
+      }
+    };
+
+    const COUNTRY = {
+      ko: { '한국':'한국','영국':'영국','호주':'호주','EU':'EU','미국':'미국','중국':'중국','사우디':'사우디아라비아','독일':'독일','프랑스':'프랑스','인도':'인도','파키스탄':'파키스탄','아랍에미리에이트':'아랍에미리트','싱가폴':'싱가폴','아르헨티나':'아르헨티나' },
+      en: { '한국':'Korea','영국':'United Kingdom','호주':'Australia','EU':'EU','미국':'United States','중국':'China','사우디':'Saudi Arabia','독일':'Germany','프랑스':'France','인도':'India','파키스탄':'Pakistan','아랍에미리에이트':'United Arab Emirates','싱가폴':'Singapore','아르헨티나':'Argentina' },
+    };
+
+    const langSel = document.getElementById('lang');
+    const rowsEl = document.getElementById('rows');
+    const tabHomeEl = document.getElementById('tabHome');
+    const tabCountriesEl = document.getElementById('tabCountries');
+    const tabCompareEl = document.getElementById('tabCompare');
+    const tabPenaltiesEl = document.getElementById('tabPenalties');
+    const tabRQEl = document.getElementById('tabRQ');
+    const tabWorkflowEl = document.getElementById('tabWorkflow');
+
+    function lang() {
+      return langSel.value === 'ko' ? 'ko' : 'en';
+    }
+
+    function t() {
+      return T[lang()];
+    }
+
+    function esc(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function countryLabel(value) {
+      return (COUNTRY[lang()] || {})[value] || value;
+    }
+
+    function flag(value) {
+      return value ? `<span class="ok">${esc(t().ok)}</span>` : `<span class="todo">${esc(t().todo)}</span>`;
+    }
+
+    function renderDocCards() {
+      document.getElementById('docCards').innerHTML = t().docCards.map((item) => `
+        <article class="doc-card">
+          <span class="chip ${esc(item.chipClass)}">${esc(item.chip)}</span>
+          <strong>${esc(item.title)}</strong>
+          <p class="muted">${esc(item.copy)}</p>
+        </article>
+      `).join('');
+    }
+
+    function renderCodingCards() {
+      const items = t().codingCards || T.en.codingCards || [];
+      document.getElementById('codingCards').innerHTML = items.map((item) => `
+        <article class="axis-card">
+          <strong>${esc(item.title)}</strong>
+          <p class="axis-copy">${esc(item.copy)}</p>
+          <ul class="axis-list">
+            ${(item.items || []).map((value) => `<li>${esc(value)}</li>`).join('')}
+          </ul>
+        </article>
+      `).join('');
+    }
+
+    function renderSteps() {
+      document.getElementById('stepGrid').innerHTML = t().steps.map((item, index) => `
+        <article class="step-card">
+          <span class="step-no">${index + 1}</span>
+          <h3 class="step-title">${esc(item.title)}</h3>
+          <p class="step-copy">${esc(item.copy)}</p>
+          <div class="step-meta">
+            ${(item.tags || []).map((tag) => `<span>${esc(tag)}</span>`).join('')}
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function applyText() {
+      const tx = t();
+      document.documentElement.lang = lang();
+      document.getElementById('sidebarKicker').textContent = tx.sidebarKicker;
+      document.getElementById('title').textContent = tx.title;
+      document.getElementById('subtitle').textContent = tx.subtitle;
+      document.getElementById('langLabel').textContent = `${tx.lang}:`;
+      tabHomeEl.textContent = tx.navHome;
+      tabCountriesEl.textContent = tx.navCountries;
+      tabCompareEl.textContent = tx.navCompare;
+      tabPenaltiesEl.textContent = tx.navPenalties;
+      tabRQEl.textContent = tx.navRQ;
+      tabWorkflowEl.textContent = tx.navWorkflow;
+      document.getElementById('linkMethod').textContent = tx.linkMethod;
+      document.getElementById('linkSequence').textContent = tx.linkSequence;
+      document.getElementById('linkRefresh').textContent = tx.linkRefresh;
+      document.getElementById('linkChecklist').textContent = tx.linkChecklist;
+      document.getElementById('heroEyebrow').textContent = tx.heroEyebrow;
+      document.getElementById('heroTitle').textContent = tx.heroTitle;
+      document.getElementById('heroDesc').textContent = tx.heroDesc;
+      document.getElementById('codingTitle').textContent = tx.codingTitle || T.en.codingTitle;
+      document.getElementById('codingDesc').textContent = tx.codingDesc || T.en.codingDesc;
+      document.getElementById('sequenceTitle').textContent = tx.sequenceTitle;
+      document.getElementById('sequenceDesc').textContent = tx.sequenceDesc;
+      document.getElementById('refreshTitle').textContent = tx.refreshTitle;
+      document.getElementById('refreshDesc').textContent = tx.refreshDesc;
+      document.getElementById('refreshManualTitle').textContent = tx.refreshManualTitle;
+      document.getElementById('refreshManualDesc').textContent = tx.refreshManualDesc;
+      document.getElementById('refreshWrapperTitle').textContent = tx.refreshWrapperTitle;
+      document.getElementById('refreshWrapperDesc').textContent = tx.refreshWrapperDesc;
+      document.getElementById('checklistTitle').textContent = tx.checklistTitle;
+      document.getElementById('checklistDesc').textContent = tx.checklistDesc;
+      document.getElementById('refreshManualCode').textContent =
+`node scripts\\build-document-inventory.js
+node scripts\\extract-official-text.js
+node scripts\\normalize-official-text.js
+node scripts\\segment-official-text.js
+node scripts\\build-flat-clause-coding-table.js
+node scripts\\build-analysis-artifacts.js
+node scripts\\normalize-official-text-korean.js
+node scripts\\segment-official-text-korean-aligned.js`;
+      document.getElementById('refreshWrapperCode').textContent =
+`powershell -ExecutionPolicy Bypass -File scripts\\refresh-official-text-pipeline.ps1
+powershell -ExecutionPolicy Bypass -File scripts\\refresh-korean-translation-alignment.ps1`;
+      document.getElementById('hCountry').textContent = tx.country;
+      document.getElementById('hPath').textContent = tx.path;
+      document.getElementById('hType').textContent = tx.type;
+      document.getElementById('hStage').textContent = tx.stage;
+      document.getElementById('hDate').textContent = tx.date;
+      document.getElementById('hSource').textContent = tx.source;
+      document.getElementById('hTypeChk').textContent = tx.typeChk;
+      document.getElementById('hStageChk').textContent = tx.stageChk;
+      document.getElementById('hTimeChk').textContent = tx.timeChk;
+      document.getElementById('hRefChk').textContent = tx.refChk;
+      document.getElementById('hSumChk').textContent = tx.sumChk;
+      renderDocCards();
+      renderCodingCards();
+      renderSteps();
+    }
+
+    async function renderChecklist() {
+      const res = await fetch('/api/workflow-checklist');
+      const json = res.ok ? await res.json() : { checklist: [] };
+      rowsEl.innerHTML = (json.checklist || []).map((row) => `<tr>
+        <td>${esc(countryLabel(row.country))}</td>
+        <td>${esc(row.relative_path)}</td>
+        <td>${esc(row.document_type || '')}</td>
+        <td>${esc(row.law_stage || '')}</td>
+        <td>${esc(row.event_date || '')}</td>
+        <td>${esc(row.timeline_source || '')}</td>
+        <td>${flag(row.checklist && row.checklist.classify_document_type)}</td>
+        <td>${flag(row.checklist && row.checklist.validate_law_stage)}</td>
+        <td>${flag(row.checklist && row.checklist.add_timeline_metadata)}</td>
+        <td>${flag(row.checklist && row.checklist.link_refs_in_summary)}</td>
+        <td>${flag(row.checklist && row.checklist.sync_country_summary)}</td>
+      </tr>`).join('');
+    }
+
+    langSel.addEventListener('change', async () => {
+      applyText();
+      await renderChecklist();
+    });
+
+    (async () => {
+      applyText();
+      await renderChecklist();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Penalty Compare</title>
+  <link rel="stylesheet" href="/assets/palette.css" />
+  <style>
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      font-family:"Poppins","Noto Sans KR","Segoe UI",sans-serif;
+      color:#0f172a;
+      background:
+        radial-gradient(circle at top left, rgba(15,94,234,0.12), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(148,163,184,0.18), transparent 22%),
+        linear-gradient(180deg, #f8fbff 0%, #f8fafc 44%, #ffffff 100%);
+    }
+    .wrap { max-width:var(--layout-page-max-width); margin:0 auto; padding:var(--layout-page-padding-top) var(--layout-page-padding-x) var(--layout-page-padding-bottom); }
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.84) 100%);
+      border:1px solid #d9e3f2;
+      border-radius:24px;
+      padding:var(--layout-card-padding);
+      box-shadow:0 22px 60px rgba(15,23,42,0.08);
+      overflow:hidden;
+    }
+    .shell { display:grid; grid-template-columns:var(--layout-sidebar-width) minmax(0,1fr); gap:var(--layout-shell-gap); align-items:start; }
+    .sidebar { position:sticky; top:24px; display:grid; gap:14px; }
+    .sidebar-card { border:1px solid #d9e3f2; border-radius:20px; background:rgba(255,255,255,0.88); padding:18px; box-shadow:0 10px 28px rgba(15,23,42,0.05); }
+    .sidebar-kicker { margin:0 0 8px; color:#0f5eea; font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+    .top h1, h1 { margin:0 0 10px; width:auto; text-align:left; font-size:34px; line-height:1.04; letter-spacing:-.05em; }
+    .ctrl { display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap; padding:8px 10px; border-radius:999px; border:1px solid #d6deea; background:rgba(255,255,255,0.82); width:fit-content; }
+    .global-tabs { display:grid; gap:8px; }
+    .g-tab { text-decoration:none; font-size:12px; font-weight:700; padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:#fff; color:var(--sub); font-family:"Poppins","Noto Sans KR","Segoe UI",sans-serif; }
+    .g-tab.active { background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent-strong); }
+    .content { display:grid; gap:18px; min-width:0; }
+    .filters { display:grid; grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr)); gap:10px; margin:0; padding:18px; border:1px solid #d9e3f2; border-radius:20px; background:rgba(255,255,255,0.88); box-shadow:0 10px 28px rgba(15,23,42,0.05); }
+    input,select { font-size:14px; padding:11px 12px; border-radius:12px; border:1px solid #d6deea; background:#fff; }
+    .table-wrap { overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; border:1px solid #d9e3f2; border-radius:20px; background:#fff; box-shadow:0 10px 28px rgba(15,23,42,0.05); }
+    table { width:max-content; min-width:100%; border-collapse:collapse; }
+    table th:nth-child(3), table td:nth-child(3) { min-width: 220px; }
+    table th:last-child, table td:last-child { min-width: 140px; }
+    th,td { border:1px solid var(--line); padding:12px; text-align:left; vertical-align:top; font-size:var(--layout-main-table-font-size); line-height:var(--layout-main-table-line-height); }
+    th { background:var(--table-head); position:sticky; top:0; z-index:1; }
+    tbody tr:nth-child(even) { background:var(--surface-soft); }
+    tbody tr:hover { background:var(--hover-soft); }
+    .muted { color:#475569; font-size:14px; line-height:1.7; margin:0; max-width:34ch; }
+    .side-links { display:grid; gap:8px; }
+    .side-link { text-decoration:none; font-size:13px; font-weight:600; color:#334155; padding:10px 12px; border-radius:12px; background:#f8fbff; border:1px solid #d9e3f2; }
+    @media (max-width:900px) {
+      .shell { grid-template-columns:1fr; }
+      .sidebar { position:static; }
+      h1 { font-size:28px; }
+      .filters { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="shell">
+        <aside class="sidebar">
+          <section class="sidebar-card">
+            <p class="sidebar-kicker">Penalty Matrix</p>
+            <h1 id="title"></h1>
+            <p id="help" class="muted"></p>
+          </section>
+          <section class="sidebar-card">
+            <div class="ctrl">
+              <label id="langLabel" for="lang"></label>
+              <select id="lang"><option value="en" selected>English</option><option value="ko">한국어</option></select>
+            </div>
+          </section>
+          <nav class="sidebar-card global-tabs">
+            <a id="tabHome" class="g-tab" href="/"></a>
+            <a id="tabCountries" class="g-tab" href="/countries.html"></a>
+            <a id="tabCompare" class="g-tab" href="/status.html"></a>
+            <a id="tabPenalties" class="g-tab active" href="/penalties.html"></a>
+            <a id="tabRQ" class="g-tab" href="/rq.html"></a>
+          </nav>
+          <nav class="sidebar-card side-links">
+            <a class="side-link" href="#penaltyFilters">Filters</a>
+            <a class="side-link" href="#penaltyTable">Penalty Table</a>
+          </nav>
+        </aside>
+        <div class="content">
+          <div class="filters" id="penaltyFilters">
+            <input id="q" type="search" />
+            <select id="country"></select>
+            <select id="status"></select>
+            <select id="channel"></select>
+          </div>
+          <div class="table-wrap" id="penaltyTable">
+            <table>
+              <thead>
+                <tr>
+                  <th id="hCountry"></th>
+                  <th id="hLaw"></th>
+                  <th id="hOffense"></th>
+                  <th id="hScope"></th>
+                  <th id="hChannel"></th>
+                  <th id="hStatus"></th>
+                  <th id="hFine"></th>
+                  <th id="hPrison"></th>
+                  <th id="hAggr"></th>
+                  <th id="hAggrPen"></th>
+                  <th id="hRefs"></th>
+                  <th id="hVerified"></th>
+                </tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const T = {
+      en: {
+        title:'Penalty Compare',
+        lang:'Language',
+        navHome:'Home',
+        navCountries:'Countries',
+        navCompare:'Compare',
+        navPenalties:'Penalties',
+        navRQ:'RQ',
+        help:'Compare normalized penalties across countries.',
+        q:'Search offense/law/refs',
+        allCountry:'All countries',
+        allStatus:'All status',
+        allChannel:'All channel',
+        country:'Country', law:'Law ID', offense:'Offense', scope:'Scope', channel:'Channel', status:'Status',
+        fine:'Fine', prison:'Prison', aggr:'Aggravation', aggrPen:'Aggravated penalty', refs:'Refs', verified:'Verified',
+      },
+      ko: {
+        title:'처벌 비교',
+        lang:'언어',
+        navHome:'Home',
+        navCountries:'Countries',
+        navCompare:'Compare',
+        navPenalties:'Penalties',
+        navRQ:'RQ',
+        help:'국가별 정규화 처벌 데이터를 한 화면에서 비교합니다.',
+        q:'범죄/법령/근거 검색',
+        allCountry:'전체 국가',
+        allStatus:'전체 상태',
+        allChannel:'전체 채널',
+        country:'국가', law:'법령 ID', offense:'범죄', scope:'범위', channel:'채널', status:'상태',
+        fine:'벌금', prison:'징역', aggr:'가중요건', aggrPen:'가중처벌', refs:'근거', verified:'검증일',
+      },
+    };
+    const COUNTRY = {
+      ko: { '한국':'한국','영국':'영국','호주':'호주','EU':'EU','미국':'미국','중국':'중국','사우디':'사우디아라비아','독일':'독일','프랑스':'프랑스','인도':'인도','파키스탄':'파키스탄','아랍에미리에이트':'아랍에미리트','싱가폴':'싱가폴','아르헨티나':'아르헨티나' },
+      en: { '한국':'Korea','영국':'United Kingdom','호주':'Australia','EU':'EU','미국':'United States','중국':'China','사우디':'Saudi Arabia','독일':'Germany','프랑스':'France','인도':'India','파키스탄':'Pakistan','아랍에미리에이트':'United Arab Emirates','싱가폴':'Singapore','아르헨티나':'Argentina' },
+    };
+    const langSel = document.getElementById('lang');
+    const tabHomeEl = document.getElementById('tabHome');
+    const tabCountriesEl = document.getElementById('tabCountries');
+    const tabCompareEl = document.getElementById('tabCompare');
+    const tabPenaltiesEl = document.getElementById('tabPenalties');
+    const tabRQEl = document.getElementById('tabRQ');
+    const qEl = document.getElementById('q');
+    const countryEl = document.getElementById('country');
+    const statusEl = document.getElementById('status');
+    const channelEl = document.getElementById('channel');
+    const rowsEl = document.getElementById('rows');
+    let data = [];
+
+    function lang(){ return langSel.value === 'ko' ? 'ko' : 'en'; }
+    function txt(){ return T[lang()]; }
+    function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function countryLabel(c){ return (COUNTRY[lang()]||{})[c] || c; }
+
+    function applyText(){
+      const t = txt();
+      document.documentElement.lang = lang();
+      document.getElementById('title').textContent = t.title;
+      document.getElementById('langLabel').textContent = t.lang + ':';
+      tabHomeEl.textContent = t.navHome;
+      tabCountriesEl.textContent = t.navCountries;
+      tabCompareEl.textContent = t.navCompare;
+      tabPenaltiesEl.textContent = t.navPenalties;
+      tabRQEl.textContent = t.navRQ;
+      document.getElementById('help').textContent = t.help;
+      qEl.placeholder = t.q;
+      document.getElementById('hCountry').textContent = t.country;
+      document.getElementById('hLaw').textContent = t.law;
+      document.getElementById('hOffense').textContent = t.offense;
+      document.getElementById('hScope').textContent = t.scope;
+      document.getElementById('hChannel').textContent = t.channel;
+      document.getElementById('hStatus').textContent = t.status;
+      document.getElementById('hFine').textContent = t.fine;
+      document.getElementById('hPrison').textContent = t.prison;
+      document.getElementById('hAggr').textContent = t.aggr;
+      document.getElementById('hAggrPen').textContent = t.aggrPen;
+      document.getElementById('hRefs').textContent = t.refs;
+      document.getElementById('hVerified').textContent = t.verified;
+    }
+
+    function setupFilters() {
+      const t = txt();
+      const countries = [...new Set(data.map((r)=>r.country))].sort((a,b)=>a.localeCompare(b,'ko-KR'));
+      countryEl.innerHTML = [`<option value="">${esc(t.allCountry)}</option>`]
+        .concat(countries.map((c)=>`<option value="${esc(c)}">${esc(countryLabel(c))}</option>`)).join('');
+      statusEl.innerHTML = [`<option value="">${esc(t.allStatus)}</option>`,`<option value="in_force">In Force</option>`,`<option value="proposed">Proposed</option>`,`<option value="guidelines">Guidelines</option>`,`<option value="unknown">Unknown</option>`].join('');
+      channelEl.innerHTML = [`<option value="">${esc(t.allChannel)}</option>`,`<option value="criminal">Criminal</option>`,`<option value="administrative">Administrative</option>`,`<option value="mixed">Mixed</option>`,`<option value="other">Other</option>`].join('');
+    }
+
+    function renderRows() {
+      const q = qEl.value.trim().toLowerCase();
+      const c = countryEl.value;
+      const s = statusEl.value;
+      const ch = channelEl.value;
+      let rows = data.slice();
+      if (c) rows = rows.filter((r)=>r.country===c);
+      if (s) rows = rows.filter((r)=>r.effective_status===s);
+      if (ch) rows = rows.filter((r)=>r.sanction_channel===ch);
+      if (q) rows = rows.filter((r)=>[
+        r.country,r.law_id,r.offense_id,r.offense_label,r.deepfake_scope,r.sanction_channel,r.effective_status,r.fine_range,r.prison_range_months,r.aggravation,r.aggravated_penalty,(r.refs||[]).join(' ')
+      ].join(' ').toLowerCase().includes(q));
+      rowsEl.innerHTML = rows.map((r)=>`<tr>
+        <td>${esc(countryLabel(r.country))}</td>
+        <td>${esc(r.law_id)}</td>
+        <td>${esc(r.offense_label)}</td>
+        <td>${esc(r.deepfake_scope)}</td>
+        <td>${esc(r.sanction_channel)}</td>
+        <td>${esc(r.effective_status)}</td>
+        <td>${esc(r.fine_range || '-')}</td>
+        <td>${esc(r.prison_range_months || '-')}</td>
+        <td>${esc(r.aggravation || '')}</td>
+        <td>${esc(r.aggravated_penalty || '')}</td>
+        <td>${esc((r.refs || []).join(', '))}</td>
+        <td>${esc(r.last_verified_at || '')}</td>
+      </tr>`).join('');
+    }
+
+    async function load() {
+      const res = await fetch(`/api/penalties-normalized-all?lang=${encodeURIComponent(lang())}`);
+      const json = res.ok ? await res.json() : { penalties: [] };
+      data = json.penalties || [];
+      setupFilters();
+      renderRows();
+    }
+
+    [qEl,countryEl,statusEl,channelEl].forEach((el)=>el.addEventListener('input', renderRows));
+    langSel.addEventListener('change', async ()=>{ applyText(); await load(); });
+    (async ()=>{ applyText(); await load(); })();
+  </script>
+</body>
+</html>

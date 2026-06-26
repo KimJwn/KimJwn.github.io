@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 760" role="img" aria-label="Seoul skyline with Namsan tower at sunset">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#74c7df"/>
+      <stop offset="0.34" stop-color="#f6b98c"/>
+      <stop offset="0.68" stop-color="#705b7e"/>
+      <stop offset="1" stop-color="#1d2235"/>
+    </linearGradient>
+    <linearGradient id="building" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d7d7dd"/>
+      <stop offset="1" stop-color="#40485e"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd08a"/>
+      <stop offset="1" stop-color="#b76b65"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="760" fill="url(#sky)"/>
+  <g opacity="0.35" fill="#26304a">
+    <path d="M0 395 C120 335 210 352 315 314 C440 268 525 310 650 262 C760 222 850 265 980 230 C1120 194 1235 232 1400 180 L1400 760 L0 760Z"/>
+    <path d="M0 438 C190 376 320 402 480 350 C610 308 710 338 835 300 C1010 248 1160 295 1400 238 L1400 760 L0 760Z" opacity="0.45"/>
+  </g>
+  <g fill="#2d3a52" opacity="0.72">
+    <path d="M565 410 C610 312 680 280 742 410Z"/>
+    <rect x="646" y="220" width="18" height="190"/>
+    <rect x="651" y="170" width="8" height="56"/>
+    <rect x="641" y="212" width="28" height="16" rx="7"/>
+    <rect x="638" y="238" width="34" height="18" rx="8"/>
+    <path d="M655 132 L661 170 L649 170Z"/>
+  </g>
+  <g opacity="0.86">
+    <rect x="0" y="470" width="48" height="150" fill="url(#building)"/>
+    <rect x="58" y="420" width="44" height="200" fill="url(#warm)"/>
+    <rect x="112" y="455" width="70" height="165" fill="url(#building)"/>
+    <rect x="195" y="405" width="54" height="215" fill="url(#building)"/>
+    <rect x="262" y="475" width="86" height="145" fill="url(#warm)"/>
+    <rect x="362" y="430" width="48" height="190" fill="url(#building)"/>
+    <rect x="425" y="392" width="76" height="228" fill="url(#building)"/>
+    <rect x="515" y="462" width="66" height="158" fill="url(#warm)"/>
+    <rect x="596" y="428" width="72" height="192" fill="url(#building)"/>
+    <rect x="682" y="448" width="52" height="172" fill="url(#building)"/>
+    <rect x="750" y="388" width="82" height="232" fill="url(#building)"/>
+    <rect x="848" y="460" width="54" height="160" fill="url(#warm)"/>
+    <rect x="915" y="420" width="72" height="200" fill="url(#building)"/>
+    <rect x="1002" y="450" width="88" height="170" fill="url(#building)"/>
+    <rect x="1108" y="398" width="58" height="222" fill="url(#warm)"/>
+    <rect x="1180" y="432" width="74" height="188" fill="url(#building)"/>
+    <rect x="1270" y="468" width="62" height="152" fill="url(#building)"/>
+    <rect x="1344" y="410" width="56" height="210" fill="url(#warm)"/>
+  </g>
+  <g opacity="0.23" fill="#fff2bf">
+    <rect x="70" y="450" width="7" height="5"/>
+    <rect x="82" y="474" width="7" height="5"/>
+    <rect x="217" y="438" width="7" height="5"/>
+    <rect x="385" y="455" width="7" height="5"/>
+    <rect x="449" y="425" width="7" height="5"/>
+    <rect x="538" y="496" width="7" height="5"/>
+    <rect x="621" y="462" width="7" height="5"/>
+    <rect x="782" y="430" width="7" height="5"/>
+    <rect x="936" y="454" width="7" height="5"/>
+    <rect x="1036" y="482" width="7" height="5"/>
+    <rect x="1130" y="430" width="7" height="5"/>
+    <rect x="1205" y="462" width="7" height="5"/>
+    <rect x="1362" y="438" width="7" height="5"/>
+  </g>
+  <path d="M0 612 C130 575 200 612 335 552 C455 500 540 535 680 502 C825 468 910 508 1040 466 C1205 414 1295 460 1400 428 L1400 760 L0 760Z" fill="#1b342b" opacity="0.78"/>
+  <path d="M0 650 C130 615 250 642 370 602 C520 552 655 590 810 548 C1015 492 1185 538 1400 488 L1400 760 L0 760Z" fill="#14251f" opacity="0.86"/>
+  <path d="M120 628 C240 590 320 608 430 570 C555 525 670 544 790 512 C910 482 1040 498 1190 456" fill="none" stroke="#d7d2b7" stroke-width="12" opacity="0.26"/>
+  <path d="M122 628 C242 590 322 608 432 570 C557 525 672 544 792 512 C912 482 1042 498 1192 456" fill="none" stroke="#fff7d7" stroke-width="4" opacity="0.28"/>
+</svg>

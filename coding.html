@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clause-based Coding</title>
+  <link rel="stylesheet" href="/assets/palette.css" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Poppins","Noto Sans KR","Segoe UI",sans-serif;
+      color: #0f172a;
+      background:
+        radial-gradient(circle at top left, rgba(15,94,234,0.12), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(148,163,184,0.18), transparent 22%),
+        linear-gradient(180deg, #f8fbff 0%, #f8fafc 44%, #ffffff 100%);
+    }
+    .wrap {
+      max-width: var(--layout-page-max-width);
+      margin: 0 auto;
+      padding: var(--layout-page-padding-top) var(--layout-page-padding-x) var(--layout-page-padding-bottom);
+    }
+    .card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.84) 100%);
+      border: 1px solid #d9e3f2;
+      border-radius: 24px;
+      padding: var(--layout-card-padding);
+      box-shadow: 0 22px 60px rgba(15,23,42,0.08);
+      overflow: hidden;
+    }
+    .shell {
+      display: grid;
+      grid-template-columns: var(--layout-sidebar-width) minmax(0, 1fr);
+      gap: var(--layout-shell-gap);
+      align-items: start;
+    }
+    .sidebar {
+      position: sticky;
+      top: 24px;
+      display: grid;
+      gap: 14px;
+    }
+    .sidebar-card, .hero, .filter-bar, .facet-card, .table-block {
+      border: 1px solid #d9e3f2;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.90);
+      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+    }
+    .sidebar-card {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+    }
+    .sidebar-kicker {
+      margin: 0;
+      color: #0f5eea;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.04;
+      letter-spacing: -.05em;
+    }
+    .muted, .hero p, .facet-note, .empty {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.72;
+    }
+    .ctrl {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #d6deea;
+      background: rgba(255,255,255,0.82);
+      width: fit-content;
+    }
+    .global-tabs, .side-links {
+      display: grid;
+      gap: 8px;
+    }
+    .g-tab, .side-link {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--sub);
+    }
+    .g-tab.active {
+      background: var(--accent-soft);
+      border-color: var(--accent-line);
+      color: var(--accent-strong);
+    }
+    .content {
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+    .hero {
+      padding: 24px;
+      display: grid;
+      gap: 10px;
+      background:
+        radial-gradient(circle at top right, rgba(15,94,234,0.10), transparent 26%),
+        linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(247,250,255,0.88) 100%);
+    }
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef4ff;
+      border: 1px solid #c9d8fa;
+      color: #17407d;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .filter-bar {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr 220px 120px;
+      gap: 10px;
+    }
+    .filter-bar input, .filter-bar select, .filter-bar button {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid #d6deea;
+      padding: 12px 14px;
+      font: inherit;
+      background: #fff;
+    }
+    .filter-bar button {
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #0f5eea, #2b7fff);
+      border-color: #0f5eea;
+      cursor: pointer;
+    }
+    .meta-grid, .facet-grid {
+      display: grid;
+      gap: 12px;
+    }
+    .meta-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .meta-card {
+      border: 1px solid #d9e3f2;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.92);
+      padding: 16px;
+      display: grid;
+      gap: 6px;
+    }
+    .meta-card strong {
+      font-size: 28px;
+      letter-spacing: -.04em;
+    }
+    .facet-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .facet-card {
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+    }
+    .facet-card h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -.03em;
+    }
+    .facet-list {
+      display: grid;
+      gap: 8px;
+    }
+    .facet-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #f8fbff;
+      border: 1px solid #d9e3f2;
+      font-size: 13px;
+    }
+    .facet-item b {
+      color: #0f5eea;
+    }
+    .table-block {
+      padding: 0;
+      overflow: hidden;
+    }
+    .table-toolbar {
+      padding: 16px 18px 0;
+      display: grid;
+      gap: 6px;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 14px;
+    }
+    table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid var(--line);
+      padding: 12px;
+      font-size: 13px;
+      text-align: left;
+      vertical-align: top;
+      line-height: 1.6;
+      background: #fff;
+    }
+    th {
+      background: var(--table-head);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #d7e1ef;
+      background: #f8fbff;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .empty {
+      padding: 16px 18px 20px;
+    }
+    @media (max-width: 1100px) {
+      .meta-grid, .facet-grid { grid-template-columns: 1fr; }
+      .filter-bar { grid-template-columns: 1fr 1fr; }
+      .filter-bar button { grid-column: span 2; }
+    }
+    @media (max-width: 900px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      h1 { font-size: 28px; }
+    }
+    @media (max-width: 700px) {
+      .filter-bar { grid-template-columns: 1fr; }
+      .filter-bar button { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <div class="shell">
+        <aside class="sidebar">
+          <section class="sidebar-card">
+            <p class="sidebar-kicker" id="sidebarKicker"></p>
+            <h1 id="title"></h1>
+            <p class="muted" id="subtitle"></p>
+          </section>
+          <section class="sidebar-card">
+            <div class="ctrl">
+              <label id="langLabel" for="lang"></label>
+              <select id="lang">
+                <option value="en" selected>English</option>
+                <option value="ko">한국어</option>
+              </select>
+            </div>
+          </section>
+          <nav class="sidebar-card global-tabs">
+            <a id="tabHome" class="g-tab" href="/"></a>
+            <a id="tabCountries" class="g-tab" href="/countries.html"></a>
+            <a id="tabCompare" class="g-tab" href="/status.html"></a>
+            <a id="tabPenalties" class="g-tab" href="/penalties.html"></a>
+            <a id="tabRQ" class="g-tab" href="/rq.html"></a>
+            <a id="tabWorkflow" class="g-tab" href="/workflow.html"></a>
+            <a id="tabCoding" class="g-tab active" href="/coding.html"></a>
+          </nav>
+          <nav class="sidebar-card side-links">
+            <a class="side-link" href="#summary" id="linkSummary"></a>
+            <a class="side-link" href="#facets" id="linkFacets"></a>
+            <a class="side-link" href="#results" id="linkResults"></a>
+          </nav>
+        </aside>
+
+        <div class="content">
+          <section class="hero">
+            <span class="eyebrow" id="heroEyebrow"></span>
+            <p id="heroDesc"></p>
+          </section>
+
+          <section class="filter-bar">
+            <input id="search" type="search" />
+            <select id="countryFilter"></select>
+            <button id="applyBtn" type="button"></button>
+          </section>
+
+          <section id="summary" class="meta-grid">
+            <article class="meta-card">
+              <span id="meta1Label"></span>
+              <strong id="meta1Value">0</strong>
+              <p class="muted" id="meta1Note"></p>
+            </article>
+            <article class="meta-card">
+              <span id="meta2Label"></span>
+              <strong id="meta2Value">0</strong>
+              <p class="muted" id="meta2Note"></p>
+            </article>
+            <article class="meta-card">
+              <span id="meta3Label"></span>
+              <strong id="meta3Value">0</strong>
+              <p class="muted" id="meta3Note"></p>
+            </article>
+          </section>
+
+          <section id="facets" class="facet-grid">
+            <article class="facet-card">
+              <h2 id="facet1Title"></h2>
+              <p class="facet-note" id="facet1Note"></p>
+              <div class="facet-list" id="facet1List"></div>
+            </article>
+            <article class="facet-card">
+              <h2 id="facet2Title"></h2>
+              <p class="facet-note" id="facet2Note"></p>
+              <div class="facet-list" id="facet2List"></div>
+            </article>
+            <article class="facet-card">
+              <h2 id="facet3Title"></h2>
+              <p class="facet-note" id="facet3Note"></p>
+              <div class="facet-list" id="facet3List"></div>
+            </article>
+            <article class="facet-card">
+              <h2 id="facet4Title"></h2>
+              <p class="facet-note" id="facet4Note"></p>
+              <div class="facet-list" id="facet4List"></div>
+            </article>
+          </section>
+
+          <section id="results" class="table-block">
+            <div class="table-toolbar">
+              <h2 id="tableTitle"></h2>
+              <p class="muted" id="tableNote"></p>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th id="hCountry"></th>
+                    <th id="hProvision"></th>
+                    <th id="hPrimary"></th>
+                    <th id="hRisk"></th>
+                    <th id="hLife"></th>
+                    <th id="hDefense"></th>
+                    <th id="hSubcodes"></th>
+                    <th id="hNotes"></th>
+                    <th id="hConfidence"></th>
+                  </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+              </table>
+            </div>
+            <p class="empty" id="empty" style="display:none;"></p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const T = {
+      en: {
+        sidebarKicker: 'Results',
+        title: 'Clause-based Coding',
+        subtitle: 'This page shows clause-based coding outputs only. Raw segment text is intentionally hidden from the public-facing view.',
+        lang: 'Language',
+        navHome: 'Home',
+        navCountries: 'Countries',
+        navCompare: 'Compare',
+        navPenalties: 'Penalties',
+        navRQ: 'RQ',
+        navWorkflow: 'Workflow',
+        navCoding: 'Clause-based Coding',
+        linkSummary: 'Summary',
+        linkFacets: 'Facets',
+        linkResults: 'Coded rows',
+        heroEyebrow: 'Coded Output Layer',
+        heroDesc: 'The website shows clause-based coding outputs built around one primary policy dimension plus optional risk, life-cycle, and defense-layer overlays. Reviewed coding appears first, with auto-derived fallback filling remaining gaps when needed.',
+        searchPlaceholder: 'Search coded notes, provision labels, or tags',
+        countryAll: 'All countries',
+        apply: 'Apply',
+        meta1Label: 'Rows with coding output',
+        meta1Note: 'Reviewed coding first, auto-derived fallback when needed',
+        meta2Label: 'Source rows',
+        meta2Note: 'Rows available in the flat clause coding table',
+        meta3Label: 'Visible rows',
+        meta3Note: 'Limited API response for fast browsing',
+        facet1Title: 'Primary policy dimensions',
+        facet1Note: 'Main doctrinal comparison labels',
+        facet2Title: 'Risk tags',
+        facet2Note: 'Harm-focused multi-label coding',
+        facet3Title: 'Life-cycle tags',
+        facet3Note: 'Where intervention happens',
+        facet4Title: 'Defense layers',
+        facet4Note: 'Mechanism-focused governance layers',
+        tableTitle: 'Coded rows',
+        tableNote: 'Provision anchors, tags, notes, origin, and confidence are shown here. Raw clause text is intentionally omitted.',
+        hCountry: 'Country',
+        hProvision: 'Provision anchor',
+        hPrimary: 'Primary dimension',
+        hRisk: 'Risk',
+        hLife: 'Life cycle',
+        hDefense: 'Defense layer',
+        hSubcodes: 'Defense sub-codes',
+        hNotes: 'Coding notes',
+        hConfidence: 'Confidence',
+        empty: 'No coded rows matched this filter yet.',
+        truncated: 'Only the first batch of coded rows is shown here for browsing speed.',
+        modeManual: 'Showing reviewed coding only.',
+        modeAuto: 'Showing auto-derived fallback coding because reviewed rows are still sparse.',
+        modeMixed: 'Showing reviewed coding first, with auto-derived fallback rows filling the remaining gaps.'
+      },
+      ko: {
+        sidebarKicker: 'Results',
+        title: 'Clause-based Coding',
+        subtitle: '이 페이지는 코딩 결과만 보여주고, raw segment text는 공개 화면에서 숨깁니다.',
+        lang: '언어',
+        navHome: 'Home',
+        navCountries: 'Countries',
+        navCompare: 'Compare',
+        navPenalties: 'Penalties',
+        navRQ: 'RQ',
+        navWorkflow: 'Workflow',
+        navCoding: 'Clause-based Coding',
+        linkSummary: 'Summary',
+        linkFacets: 'Facets',
+        linkResults: 'Coded rows',
+        heroEyebrow: 'Coded Output Layer',
+        heroDesc: '웹은 workbook의 coding sheet를 읽어서 policy dimension, risk, life cycle, defense layer 같은 코딩 결과만 보여줍니다. clause text 자체는 여기서 노출하지 않습니다.',
+        searchPlaceholder: '코딩 노트, 조문 라벨, 태그 검색',
+        countryAll: '전체 국가',
+        apply: '적용',
+        meta1Label: '코딩된 행 수',
+        meta1Note: 'workbook 시트에서 실제 코딩 내용이 있는 행',
+        meta2Label: '시트 전체 행 수',
+        meta2Note: 'Flat-Clause-Coding 전체 행',
+        meta3Label: '현재 표시 행 수',
+        meta3Note: '웹 브라우징용 응답 제한',
+        facet1Title: 'Primary policy dimensions',
+        facet1Note: '주 비교 법제 축',
+        facet2Title: 'Risk tags',
+        facet2Note: '피해·위험 중심 다중라벨',
+        facet3Title: 'Life-cycle tags',
+        facet3Note: '개입 지점 코딩',
+        facet4Title: 'Defense layers',
+        facet4Note: '대응 메커니즘 코딩',
+        tableTitle: 'Coded rows',
+        tableNote: '조문 anchor, 태그, 노트, confidence만 보여주고 raw clause text는 숨깁니다.',
+        hCountry: '국가',
+        hProvision: '조문 anchor',
+        hPrimary: '주 차원',
+        hRisk: '리스크',
+        hLife: '라이프사이클',
+        hDefense: '디펜스 레이어',
+        hSubcodes: '세부 서브코드',
+        hNotes: '코딩 노트',
+        hConfidence: '신뢰도',
+        empty: '아직 이 조건에 맞는 coded row가 없습니다.',
+        truncated: '브라우징 성능을 위해 일부 coded row만 먼저 보여줍니다.'
+      }
+    };
+
+    const langSel = document.getElementById('lang');
+    const countryFilter = document.getElementById('countryFilter');
+    const searchEl = document.getElementById('search');
+    const applyBtn = document.getElementById('applyBtn');
+    const rowsEl = document.getElementById('rows');
+    const emptyEl = document.getElementById('empty');
+    let lastPayload = null;
+
+    function t() {
+      return langSel.value === 'ko' ? T.ko : T.en;
+    }
+
+    function esc(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderTags(list) {
+      const items = Array.isArray(list) ? list.filter(Boolean) : [];
+      if (!items.length) return '';
+      return `<div class="tags">${items.map((item) => `<span class="tag">${esc(item)}</span>`).join('')}</div>`;
+    }
+
+    function renderFacet(hostId, items) {
+      const host = document.getElementById(hostId);
+      host.innerHTML = (items || []).slice(0, 8).map((item) => `
+        <div class="facet-item">
+          <span>${esc(item.label)}</span>
+          <b>${esc(item.count)}</b>
+        </div>
+      `).join('');
+    }
+
+    function renderCountryOptions(payload) {
+      const current = countryFilter.value;
+      const options = [`<option value="">${esc(t().countryAll)}</option>`]
+        .concat((payload.available_countries || []).map((country) => `<option value="${esc(country)}">${esc(country)}</option>`));
+      countryFilter.innerHTML = options.join('');
+      if ([...countryFilter.options].some((option) => option.value === current)) countryFilter.value = current;
+    }
+
+    function renderRows(payload) {
+      const rows = payload.rows || [];
+      rowsEl.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${esc(row.country_label)}</td>
+          <td>
+            <strong>${esc(row.clause_label || row.article_label || row.heading || row.segment_id)}</strong>
+            <div class="muted">${esc(row.document_relative_path)}</div>
+          </td>
+          <td>
+            <div>${esc(row.policy_dimension_primary || '')}</div>
+            ${renderTags(row.policy_dimension_tags)}
+          </td>
+          <td>${renderTags(row.risk_tags)}</td>
+          <td>${renderTags(row.life_cycle_tags)}</td>
+          <td>${renderTags(row.defense_layer_tags)}</td>
+          <td>${renderTags(row.defense_subcodes)}</td>
+          <td>
+            <div>${esc(row.coding_notes || '')}</div>
+            <div class="muted">${esc(row.coding_origin === 'manual_workbook' ? 'Manual workbook coding' : 'Auto-derived fallback')}</div>
+          </td>
+          <td>${esc(row.confidence || '')}</td>
+        </tr>
+      `).join('');
+      emptyEl.style.display = rows.length ? 'none' : 'block';
+      emptyEl.textContent = t().empty;
+    }
+
+    function renderSummary(payload) {
+      document.getElementById('meta1Value').textContent = String(payload.total_coded_rows || 0);
+      document.getElementById('meta2Value').textContent = String(payload.total_source_rows || payload.total_sheet_rows || 0);
+      document.getElementById('meta3Value').textContent = String((payload.rows || []).length);
+      renderFacet('facet1List', payload.summary && payload.summary.by_primary_policy_dimension);
+      renderFacet('facet2List', payload.summary && payload.summary.by_risk);
+      renderFacet('facet3List', payload.summary && payload.summary.by_life_cycle);
+      renderFacet('facet4List', payload.summary && payload.summary.by_defense_layer);
+      const tx = t();
+      const modeManual = tx.modeManual || T.en.modeManual;
+      const modeAuto = tx.modeAuto || T.en.modeAuto;
+      const modeMixed = tx.modeMixed || T.en.modeMixed;
+      const modeNote = payload.data_mode === 'manual_only'
+        ? modeManual
+        : payload.data_mode === 'mixed'
+          ? modeMixed
+          : modeAuto;
+      document.getElementById('tableNote').textContent = payload.truncated
+        ? `${tx.tableNote} ${modeNote} ${tx.truncated}`
+        : `${tx.tableNote} ${modeNote}`;
+    }
+
+    async function loadData() {
+      const params = new URLSearchParams();
+      if (countryFilter.value) params.set('country', countryFilter.value);
+      if (searchEl.value.trim()) params.set('q', searchEl.value.trim());
+      params.set('limit', '250');
+      const res = await fetch(`/api/coding-results?${params.toString()}`);
+      const payload = res.ok ? await res.json() : { rows: [], summary: {}, available_countries: [] };
+      lastPayload = payload;
+      renderCountryOptions(payload);
+      renderSummary(payload);
+      renderRows(payload);
+    }
+
+    function applyText() {
+      const tx = t();
+      document.documentElement.lang = langSel.value === 'ko' ? 'ko' : 'en';
+      document.getElementById('sidebarKicker').textContent = tx.sidebarKicker;
+      document.getElementById('title').textContent = tx.title;
+      document.getElementById('subtitle').textContent = tx.subtitle;
+      document.getElementById('langLabel').textContent = `${tx.lang}:`;
+      document.getElementById('tabHome').textContent = tx.navHome;
+      document.getElementById('tabCountries').textContent = tx.navCountries;
+      document.getElementById('tabCompare').textContent = tx.navCompare;
+      document.getElementById('tabPenalties').textContent = tx.navPenalties;
+      document.getElementById('tabRQ').textContent = tx.navRQ;
+      document.getElementById('tabWorkflow').textContent = tx.navWorkflow;
+      document.getElementById('tabCoding').textContent = tx.navCoding;
+      document.getElementById('linkSummary').textContent = tx.linkSummary;
+      document.getElementById('linkFacets').textContent = tx.linkFacets;
+      document.getElementById('linkResults').textContent = tx.linkResults;
+      document.getElementById('heroEyebrow').textContent = tx.heroEyebrow;
+      document.getElementById('heroDesc').textContent = tx.heroDesc;
+      searchEl.placeholder = tx.searchPlaceholder;
+      applyBtn.textContent = tx.apply;
+      document.getElementById('meta1Label').textContent = tx.meta1Label;
+      document.getElementById('meta1Note').textContent = tx.meta1Note;
+      document.getElementById('meta2Label').textContent = tx.meta2Label;
+      document.getElementById('meta2Note').textContent = tx.meta2Note;
+      document.getElementById('meta3Label').textContent = tx.meta3Label;
+      document.getElementById('meta3Note').textContent = tx.meta3Note;
+      document.getElementById('facet1Title').textContent = tx.facet1Title;
+      document.getElementById('facet1Note').textContent = tx.facet1Note;
+      document.getElementById('facet2Title').textContent = tx.facet2Title;
+      document.getElementById('facet2Note').textContent = tx.facet2Note;
+      document.getElementById('facet3Title').textContent = tx.facet3Title;
+      document.getElementById('facet3Note').textContent = tx.facet3Note;
+      document.getElementById('facet4Title').textContent = tx.facet4Title;
+      document.getElementById('facet4Note').textContent = tx.facet4Note;
+      document.getElementById('tableTitle').textContent = tx.tableTitle;
+      document.getElementById('hCountry').textContent = tx.hCountry;
+      document.getElementById('hProvision').textContent = tx.hProvision;
+      document.getElementById('hPrimary').textContent = tx.hPrimary;
+      document.getElementById('hRisk').textContent = tx.hRisk;
+      document.getElementById('hLife').textContent = tx.hLife;
+      document.getElementById('hDefense').textContent = tx.hDefense;
+      document.getElementById('hSubcodes').textContent = tx.hSubcodes;
+      document.getElementById('hNotes').textContent = tx.hNotes;
+      document.getElementById('hConfidence').textContent = tx.hConfidence;
+      if (lastPayload) {
+        renderCountryOptions(lastPayload);
+        renderSummary(lastPayload);
+        renderRows(lastPayload);
+      }
+    }
+
+    applyBtn.addEventListener('click', loadData);
+    searchEl.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') loadData();
+    });
+    langSel.addEventListener('change', applyText);
+
+    applyText();
+    loadData();
+  </script>
+</body>
+</html>
