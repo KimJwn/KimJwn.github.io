@@ -45,7 +45,7 @@
       background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent 34%), var(--city-mark);
       background-repeat: no-repeat;
       background-position: bottom center;
-      background-size: 100% 44%;
+      background-size: 100% 44%, var(--city-size, 100% 44%);
     }
     body[data-city="busan"] {
       --sky-a: #061219;
@@ -55,10 +55,8 @@
       --glow-b: rgba(255, 165, 76, 0.18);
       --glow-x: 18%;
       --glow-y: 84%;
-      --city-mark:
-        linear-gradient(115deg, transparent 0 31%, rgba(255,255,255,0.16) 31.3% 31.7%, transparent 32%),
-        linear-gradient(to top, rgba(13, 36, 45, 0.9) 0 22%, transparent 22%),
-        repeating-linear-gradient(90deg, rgba(5, 10, 12, 0.92) 0 42px, rgba(17, 38, 47, 0.92) 42px 72px, transparent 72px 96px);
+      --city-mark: url("/images/busan-gwangandaegyo.svg");
+      --city-size: 100% 62%;
     }
     body[data-city="seoul"] {
       --sky-a: #100f18;
