@@ -1,0 +1,23 @@
+{
+  "country": "한국",
+  "penalties": [
+    {
+      "country": "한국",
+      "law_id": "KR_AI_BASIC_ACT_AND_SUBORDINATE_RULES",
+      "offense_id": "kr_non_consensual_and_platform_duties",
+      "offense_label": "Non-consensual synthetic-content offenses and platform-duty violations",
+      "deepfake_scope": "non_consensual",
+      "sanction_channel": "criminal",
+      "effective_status": "in_force",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "Aggravation may apply by offense type, dissemination scale, and victim impact.",
+      "aggravated_penalty": "Exact aggravated ranges should be confirmed against latest official consolidated articles.",
+      "refs": [
+        "Ref2",
+        "Ref4"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

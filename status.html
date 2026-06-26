@@ -233,7 +233,7 @@
     async function render() {
       const t = TXT[lang()];
       const labels = COUNTRY[lang()] || {};
-      const res = await fetch(`/api/statuses?lang=${encodeURIComponent(lang())}`);
+      const res = await fetch(`/api-static/statuses.${encodeURIComponent(lang())}.json`);
       if (!res.ok) {
         host.innerHTML = `<p>${escapeHtml(t.empty)}</p>`;
         return;

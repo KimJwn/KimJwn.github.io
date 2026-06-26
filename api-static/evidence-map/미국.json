@@ -1,0 +1,16 @@
+{
+  "country": "미국",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/united-states/1_official-law-act/united-states-2025-The TAKE IT DOWN Act.pdf",
+      "type": "Act/Law",
+      "uses": [
+        "Non-consensual intimate/deepfake harm response baseline",
+        "Federal-layer enforcement framing"
+      ],
+      "verification": "Primary statutory anchor",
+      "url": "/resource/united-states/1_official-law-act/united-states-2025-The%20TAKE%20IT%20DOWN%20Act.pdf"
+    }
+  ]
+}

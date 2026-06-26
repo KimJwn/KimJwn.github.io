@@ -1,0 +1,27 @@
+{
+  "country": "아르헨티나",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/argentina/4_official-report-assessment/argentina-2025-Resolución 4_2025- EX-2024-43945142-GDEBA-DPTLMIYSPGP.pdf",
+      "type": "Guideline / administrative resolution",
+      "uses": [
+        "public-administration AI governance baseline",
+        "responsible-use direction for generative AI in administrative settings"
+      ],
+      "verification": "Primary local corpus anchor",
+      "url": "/resource/argentina/4_official-report-assessment/argentina-2025-Resoluci%C3%B3n%204_2025-%20EX-2024-43945142-GDEBA-DPTLMIYSPGP.pdf"
+    },
+    {
+      "ref": "Ref2",
+      "source": "sources/official/argentina/3_official-guidance-warning/argentina-2025-Resolución 4_2025-Directrices de uso de Inteligencia Artificial Generativa en la Administración Pública.pdf",
+      "type": "Guideline",
+      "uses": [
+        "operational guidance for AI use in public administration",
+        "transparency and governance-oriented interpretation support"
+      ],
+      "verification": "Primary local corpus anchor",
+      "url": "/resource/argentina/3_official-guidance-warning/argentina-2025-Resoluci%C3%B3n%204_2025-Directrices%20de%20uso%20de%20Inteligencia%20Artificial%20Generativa%20en%20la%20Administraci%C3%B3n%20P%C3%BAblica.pdf"
+    }
+  ]
+}

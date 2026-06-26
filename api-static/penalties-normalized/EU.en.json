@@ -1,0 +1,23 @@
+{
+  "country": "EU",
+  "penalties": [
+    {
+      "country": "EU",
+      "law_id": "EU_AI_ACT_DSA",
+      "offense_id": "eu_transparency_platform_noncompliance",
+      "offense_label": "AI transparency and platform-duty noncompliance",
+      "deepfake_scope": "platform_noncompliance",
+      "sanction_channel": "administrative",
+      "effective_status": "in_force",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "Severity may increase based on risk scale, systemic impact, and repeated noncompliance.",
+      "aggravated_penalty": "Escalated administrative measures/fines may apply under EU enforcement pathways.",
+      "refs": [
+        "Ref1",
+        "Ref2"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

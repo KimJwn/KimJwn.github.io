@@ -1,0 +1,2 @@
+country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
+인도,IN_IT_RULES_AND_DRAFT_NOTICE,in_intermediary_noncompliance_and_synthetic_harms,중개자 준수의무 위반 및 합성피해 대응 관련 위반,platform_noncompliance,administrative,proposed,,,피해 유형 및 반복적 플랫폼 위반 여부에 따라 가중요소가 적용될 수 있습니다.,초안 확정 이후 가중처벌 수준이 최종 확정될 예정입니다.,Ref1|Ref2|Ref3,2026-03-10

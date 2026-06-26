@@ -586,12 +586,28 @@
     }
 
     async function loadData() {
-      const params = new URLSearchParams();
-      if (countryFilter.value) params.set('country', countryFilter.value);
-      if (searchEl.value.trim()) params.set('q', searchEl.value.trim());
-      params.set('limit', '250');
-      const res = await fetch(`/api/coding-results?${params.toString()}`);
+      const res = await fetch('/api-static/coding-results.json');
       const payload = res.ok ? await res.json() : { rows: [], summary: {}, available_countries: [] };
+      const countryNeedle = countryFilter.value;
+      const qNeedle = searchEl.value.trim().toLowerCase();
+      if (countryNeedle || qNeedle) {
+        const rows = (payload.rows || []).filter((row) => {
+          if (countryNeedle && row.country_label !== countryNeedle) return false;
+          if (!qNeedle) return true;
+          return [
+            row.country_label,
+            row.file_name,
+            row.document_relative_path,
+            row.policy_dimension_primary,
+            row.translation_ko,
+            row.translation_en,
+            row.text,
+          ].join(' ').toLowerCase().includes(qNeedle);
+        });
+        payload.rows = rows;
+        payload.total_coded_rows = rows.length;
+        payload.truncated = false;
+      }
       lastPayload = payload;
       renderCountryOptions(payload);
       renderSummary(payload);

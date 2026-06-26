@@ -1,0 +1,33 @@
+# UAE Deepfake Law Summary
+
+## Core Legal Framework
+- `Federal Decree-Law No. (34) of 2021 on Countering Rumors and Cybercrimes` is the primary legal anchor for cyber harms in UAE, including pathways potentially applicable to synthetic-media abuse (privacy, reputation, unlawful dissemination). (Ref1)
+- Current corpus also includes multiple official AI/deepfake guidance documents, indicating a combined model of statutory enforcement plus guidance-layer operational controls. (Ref2, Ref3, Ref4, Ref5, Ref6)
+
+## Summary
+- UAE governance in current corpus is best interpreted as cybercrime-law-centered enforcement rather than a single deepfake-specific offense code. Deepfake incidents are likely handled by mapping conduct into existing offense categories. (Ref1)
+- Operationally, risk reduction depends on pairing legal classification with guidance-driven preventive controls (labeling/transparency/monitoring workflows). (Ref1, Ref2, Ref3, Ref4, Ref5, Ref6)
+
+## Policy Dimensions
+- `Labeling status`: current official resources do not clearly establish one comprehensive statutory deepfake-labeling mandate at article-level precision. However, multiple official guidance documents provide repeated transparency/labeling direction, so services should run internal disclosure standards now and keep rapid legal-update pathways for future binding-text changes. (Ref1, Ref2, Ref3, Ref4, Ref5, Ref6)
+- `Election-related status`: explicit stand-alone election-deepfake codification remains limited in current corpus. Election-risk governance should be treated conservatively through broader cybercrime/public-order channels until dedicated official election-law anchors are available. (Ref1)
+- `Non-consensual deepfake status`: non-consensual deepfake harms appear addressable through combined privacy, reputation, and unlawful dissemination pathways under cybercrime law. Given harm-speed dynamics, legal interpretation should be paired with immediate operational controls. (Ref1)
+- `Service-provider/platform liability status`: platform responsibility appears to operate through general cybercrime enforcement architecture with guidance-layer supplementation, rather than a highly granular stand-alone platform-duty code. Compliance quality depends on end-to-end auditable intake-decision-action-record-cooperation chains. (Ref1, Ref2, Ref3, Ref4, Ref5, Ref6)
+- `Penalty/sanctions codification status`: sanctions are primarily applied through existing cybercrime penalties rather than deepfake-specific offense text. Practical exposure therefore depends on accurate offense-category mapping at incident intake. (Ref1)
+
+Ref1: `sources/official/united-arab-emirates/uae-2021-Federal Decree-Law No. (34) of 2021 On Countering Rumors and Cybercrimes.pdf`
+Ref2: `sources/official/united-arab-emirates/uae-2019-guideline-ai-ethics.pdf`
+Ref3: `sources/official/united-arab-emirates/uae-2023-generative-guide-ver1-en.pdf`
+Ref4: `sources/official/united-arab-emirates/uae-2021-AI-DeepFake-Guide-EN.pdf`
+Ref5: `sources/official/united-arab-emirates/uae-2022-AIGuide_EN_v1-online.pdf`
+Ref6: `sources/official/united-arab-emirates/uae-2022-MOCAI-AI-Ethics-EN-1.pdf`
+
+## Practice Notes (by Dimension)
+- `Labeling`: run internal disclosure controls now (wording/placement/persistence) with legal-update hooks.
+- `Election`: process election-context synthetic media under a dedicated high-risk review stream.
+- `Non-consensual deepfakes`: enforce one-pass SOPs for intake, immediate action, evidence retention, and recirculation control.
+- `Service-provider/platform liability`: maintain a single audit chain linking notice intake, action, records, appeals, and cooperation outputs.
+- `Penalty`: use offense-mapping matrices that jointly evaluate privacy, reputation, and unlawful dissemination risk categories.
+
+## Verify Before Use
+- Recheck latest official UAE publications for article scope, penalty schedules, commencement details, and updated implementation guidance/case interpretation.

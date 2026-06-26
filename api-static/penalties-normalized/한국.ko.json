@@ -1,0 +1,23 @@
+{
+  "country": "한국",
+  "penalties": [
+    {
+      "country": "한국",
+      "law_id": "KR_AI_BASIC_ACT_AND_SUBORDINATE_RULES",
+      "offense_id": "kr_non_consensual_and_platform_duties",
+      "offense_label": "비동의 합성콘텐츠 범죄 및 플랫폼 의무 위반",
+      "deepfake_scope": "non_consensual",
+      "sanction_channel": "criminal",
+      "effective_status": "in_force",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "행위유형, 유포 범위, 피해 정도에 따라 가중요소가 적용될 수 있습니다.",
+      "aggravated_penalty": "정확한 가중처벌 범위는 최신 통합 조문 기준 재확인이 필요합니다.",
+      "refs": [
+        "Ref2",
+        "Ref4"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

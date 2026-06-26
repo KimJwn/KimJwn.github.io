@@ -1713,7 +1713,7 @@
 
     async function loadWordclouds() {
       try {
-        const resp = await fetch('/api/analysis-wordclouds');
+        const resp = await fetch('/api-static/analysis-wordclouds.json');
         if (!resp.ok) throw new Error('wordcloud fetch failed');
         wordcloudPayload = await resp.json();
       } catch (_) {
@@ -2062,7 +2062,7 @@
 
     async function loadGovernanceScores() {
       try {
-        const resp = await fetch('/api/analysis-dimension-scores');
+        const resp = await fetch('/api-static/analysis-dimension-scores.json');
         if (!resp.ok) throw new Error('governance score fetch failed');
         governanceScores = await resp.json();
       } catch (e) {
@@ -2312,8 +2312,7 @@
       const t = T[lang()];
       wbHost.innerHTML = `<p class="wb-empty">${esc(t.wbLoading)}</p>`;
       try {
-        const query = sheetName ? `?sheet=${encodeURIComponent(sheetName)}` : '';
-        const resp = await fetch(`/api/summary-workbook${query}`);
+        const resp = await fetch('/api-static/summary-workbook.json');
         if (!resp.ok) throw new Error('workbook fetch failed');
         const json = await resp.json();
         workbookSheetNames = Array.isArray(json.sheets) ? json.sheets : [];
@@ -2358,14 +2357,14 @@
       const t = T[lang()];
       evHost.innerHTML = `<p class="ev-empty">${esc(t.evLoading)}</p>`;
       try {
-        const countriesResp = await fetch('/api/countries');
+        const countriesResp = await fetch('/api-static/countries.json');
         const countriesJson = await countriesResp.json();
         const countries = Array.isArray(countriesJson.countries) ? countriesJson.countries : [];
         const cards = [];
         for (const country of countries) {
           const [resp, evResp] = await Promise.all([
-            fetch(`/api/summary/${encodeURIComponent(country)}?lang=${lang()}`),
-            fetch(`/api/evidence-map/${encodeURIComponent(country)}`),
+            fetch(`/api-static/summary/${encodeURIComponent(country)}.${lang()}.md`),
+            fetch(`/api-static/evidence-map/${encodeURIComponent(country)}.json`),
           ]);
           if (!resp.ok) continue;
           const md = await resp.text();

@@ -237,7 +237,7 @@
     }
 
     async function load() {
-      const res = await fetch(`/api/penalties-normalized-all?lang=${encodeURIComponent(lang())}`);
+      const res = await fetch(`/api-static/penalties-normalized-all.${encodeURIComponent(lang())}.json`);
       const json = res.ok ? await res.json() : { penalties: [] };
       data = json.penalties || [];
       setupFilters();

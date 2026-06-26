@@ -1,0 +1,16 @@
+{
+  "country": "싱가폴",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/singapore/2_draft/elections-(integrity-of-online-advertising)-(amendment)-bill-29-2024.pdf",
+      "type": "Bill/Proposed law",
+      "uses": [
+        "election-related synthetic/deepfake governance pathway",
+        "election online-advertising integrity obligations and sanction direction"
+      ],
+      "verification": "Primary corpus anchor (proposal stage)",
+      "url": "/resource/singapore/2_draft/elections-(integrity-of-online-advertising)-(amendment)-bill-29-2024.pdf"
+    }
+  ]
+}

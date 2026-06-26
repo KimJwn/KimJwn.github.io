@@ -1,0 +1,26 @@
+{
+  "country": "프랑스",
+  "documents": [
+    {
+      "resource_dir": "france",
+      "name": "france-2024-sren-joe_20240522_0117_0002.pdf",
+      "absolute_path": "C:\\Users\\kimsh\\Downloads\\20251100-CSIRO-deepfake-policy\\sources\\official\\france\\1_official-law-act\\france-2024-sren-joe_20240522_0117_0002.pdf",
+      "relative_path": "1_official-law-act/france-2024-sren-joe_20240522_0117_0002.pdf",
+      "legacy_relative_path": "france-2024-sren-joe_20240522_0117_0002.pdf",
+      "extension": ".pdf",
+      "classification_code": 1,
+      "classification_folder": "1_official-law-act",
+      "classification_label": "Official Law / Act",
+      "context_layer": "core_legal",
+      "legal_force": "binding_in_force",
+      "core_evidence_allowed": true,
+      "document_type": "official_law_act",
+      "law_stage": "in_force",
+      "url": "/resource/france/1_official-law-act/france-2024-sren-joe_20240522_0117_0002.pdf",
+      "event_date": "2024-05-22",
+      "event_year": 2024,
+      "event_stage": "in_force",
+      "timeline_source": "metadata"
+    }
+  ]
+}

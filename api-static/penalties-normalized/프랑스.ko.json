@@ -1,0 +1,22 @@
+{
+  "country": "프랑스",
+  "penalties": [
+    {
+      "country": "프랑스",
+      "law_id": "FR_SREN_2024",
+      "offense_id": "fr_platform_safety_noncompliance",
+      "offense_label": "합성피해 관련 플랫폼 안전·디지털서비스 의무 위반",
+      "deepfake_scope": "platform_noncompliance",
+      "sanction_channel": "administrative",
+      "effective_status": "in_force",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "피해 규모와 반복 위반 여부에 따라 가중요소가 적용될 수 있습니다.",
+      "aggravated_penalty": "정확한 가중처벌 수준은 최신 공식 조문별 추출이 필요합니다.",
+      "refs": [
+        "Ref1"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+# US Deepfake Law Summary
+
+## Core Legal Framework
+- `The TAKE IT DOWN Act` is the current primary federal anchor in this corpus for response to non-consensual intimate/synthetic-image harms. (Ref1)
+- The US enforcement model is structurally distributed: federal law, state law, and platform policy layers typically operate together rather than as one unified federal deepfake code. (Ref1)
+
+## Summary
+- Under the current local official corpus, the most reliable US legal anchor is the TAKE IT DOWN Act. This allows stronger claims in non-consensual intimate synthetic-harm governance, while broader claims (universal labeling, election-specific federal codification, unified platform-liability code) are kept intentionally conservative. (Ref1)
+- Operationally, US compliance risk is managed through three-way alignment: federal baseline, state-specific add-ons, and platform execution policy. (Ref1)
+
+## Policy Dimensions
+- `Labeling status`: with current official corpus scope, it is difficult to conclude that a single nationwide comprehensive deepfake-labeling mandate is fully codified. Labeling controls likely operate through mixed channels (federal baseline + state rules + platform policy), so implementation should be designed conservatively and be update-ready by jurisdiction. (Ref1)
+- `Election-related status`: a standalone federal election-deepfake statute cannot be confidently established from current corpus alone. Election governance should therefore be framed as distributed control across federal baseline duties and state-level election/misinformation enforcement pathways. (Ref1)
+- `Non-consensual deepfake status`: this is the strongest codified area in the current US set. The TAKE IT DOWN Act functions as a federal reference point for non-consensual intimate synthetic-harm response, while practical enforcement intensity can vary by state framework and platform execution quality. (Ref1)
+- `Service-provider/platform liability status`: provider/platform liability is not a single-code federal model in this corpus; it is a layered responsibility model across legal and policy channels. Compliance quality depends on whether intake, takedown, evidence retention, and recirculation controls are demonstrably operational, not merely documented. (Ref1)
+- `Penalty/sanctions codification status`: sanctions are distributed across federal and state layers. Current corpus supports directionally stronger codification in non-consensual intimate-harm areas, but subtype-level penalty comparison still requires additional official state-law sources. (Ref1)
+
+Ref1: `sources/official/united-states/united-states-2025-The TAKE IT DOWN Act.pdf`
+
+## Practice Notes (by Dimension)
+- `Labeling`: maintain internal synthetic-content disclosure standards even where statutory language is fragmented.
+- `Election`: run election-period synthetic-content controls as a separate high-risk governance stream with state-level checkpoints.
+- `Non-consensual deepfakes`: enforce one-pass incident SOPs covering intake, immediate action, evidence chain, and recirculation prevention.
+- `Service-provider/platform liability`: document a conservative conflict rule (apply stricter requirement when federal/state expectations diverge).
+- `Penalty`: use a dual-layer sanctions matrix that tracks both federal exposure and state-law exposure per incident category.
+
+## Verify Before Use
+- Expand corpus with official state-level sources (election/labeling/penalty/platform duty) before finalizing fine-grained dimension strength claims.

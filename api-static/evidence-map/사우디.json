@@ -1,0 +1,26 @@
+{
+  "country": "사우디",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/saudi-arabia/1_official-law-act/saudi-2007-Anti-Cyber-Crime-Law-M17-EN.pdf",
+      "type": "Act/Law",
+      "uses": [
+        "baseline cybercrime penalties for privacy/reputation/unlawful dissemination harms",
+        "primary sanctions pathway for deepfake-related abuse in current corpus"
+      ],
+      "verification": "Primary statutory anchor",
+      "url": "/resource/saudi-arabia/1_official-law-act/saudi-2007-Anti-Cyber-Crime-Law-M17-EN.pdf"
+    },
+    {
+      "ref": "Ref2",
+      "source": "sources/official/saudi-arabia/3_official-guidance-warning/saudi-AI-DeepFake-Guide-EN-2021.pdf",
+      "type": "Guideline/Report",
+      "uses": [
+        "deepfake-specific operational guidance and risk framing"
+      ],
+      "verification": "Supplementary (non-binding)",
+      "url": "/resource/saudi-arabia/3_official-guidance-warning/saudi-AI-DeepFake-Guide-EN-2021.pdf"
+    }
+  ]
+}

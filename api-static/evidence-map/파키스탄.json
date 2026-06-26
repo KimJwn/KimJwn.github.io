@@ -1,0 +1,37 @@
+{
+  "country": "파키스탄",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/pakistan/1_official-law-act/pakistan-2025-II. The Prevention of Electronic Crimes (Amendment) Act, 2025.pdf",
+      "type": "Act/Law (amendment)",
+      "uses": [
+        "platform-regulation authority and enforcement direction",
+        "sanction pathways in updated cybercrime framework"
+      ],
+      "verification": "Primary statutory anchor",
+      "url": "/resource/pakistan/1_official-law-act/pakistan-2025-II.%20The%20Prevention%20of%20Electronic%20Crimes%20(Amendment)%20Act%2C%202025.pdf"
+    },
+    {
+      "ref": "Ref2",
+      "source": "sources/official/pakistan/2_draft/pakistan-2016-old-679255ee36f45_595.pdf",
+      "type": "Act/Law (base framework)",
+      "uses": [
+        "baseline PECA structure before amendment",
+        "continuity context for offenses/sanctions"
+      ],
+      "verification": "Baseline statutory anchor",
+      "url": "/resource/pakistan/2_draft/pakistan-2016-old-679255ee36f45_595.pdf"
+    },
+    {
+      "ref": "Ref3",
+      "source": "sources/official/pakistan/2_draft/pakistan-2025-proposed-National AI Policy Consultation Draft V1.pdf",
+      "type": "Policy draft (proposed, non-final)",
+      "uses": [
+        "future-facing policy direction only"
+      ],
+      "verification": "Supplementary, non-binding",
+      "url": "/resource/pakistan/2_draft/pakistan-2025-proposed-National%20AI%20Policy%20Consultation%20Draft%20V1.pdf"
+    }
+  ]
+}

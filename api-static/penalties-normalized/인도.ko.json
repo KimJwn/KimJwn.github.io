@@ -1,0 +1,24 @@
+{
+  "country": "인도",
+  "penalties": [
+    {
+      "country": "인도",
+      "law_id": "IN_IT_RULES_AND_DRAFT_NOTICE",
+      "offense_id": "in_intermediary_noncompliance_and_synthetic_harms",
+      "offense_label": "중개자 준수의무 위반 및 합성피해 대응 관련 위반",
+      "deepfake_scope": "platform_noncompliance",
+      "sanction_channel": "administrative",
+      "effective_status": "proposed",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "피해 유형 및 반복적 플랫폼 위반 여부에 따라 가중요소가 적용될 수 있습니다.",
+      "aggravated_penalty": "초안 확정 이후 가중처벌 수준이 최종 확정될 예정입니다.",
+      "refs": [
+        "Ref1",
+        "Ref2",
+        "Ref3"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

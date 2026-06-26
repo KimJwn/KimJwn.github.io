@@ -1,0 +1,24 @@
+{
+  "country": "인도",
+  "penalties": [
+    {
+      "country": "인도",
+      "law_id": "IN_IT_RULES_AND_DRAFT_NOTICE",
+      "offense_id": "in_intermediary_noncompliance_and_synthetic_harms",
+      "offense_label": "Intermediary noncompliance and synthetic-harm handling offenses",
+      "deepfake_scope": "platform_noncompliance",
+      "sanction_channel": "administrative",
+      "effective_status": "proposed",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "Aggravation may depend on harm profile and repeated platform noncompliance.",
+      "aggravated_penalty": "Final aggravated penalty levels are pending post-draft finalization.",
+      "refs": [
+        "Ref1",
+        "Ref2",
+        "Ref3"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

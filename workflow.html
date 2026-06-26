@@ -860,7 +860,7 @@ powershell -ExecutionPolicy Bypass -File scripts\\refresh-korean-translation-ali
     }
 
     async function renderChecklist() {
-      const res = await fetch('/api/workflow-checklist');
+      const res = await fetch('/api-static/workflow-checklist.json');
       const json = res.ok ? await res.json() : { checklist: [] };
       rowsEl.innerHTML = (json.checklist || []).map((row) => `<tr>
         <td>${esc(countryLabel(row.country))}</td>

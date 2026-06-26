@@ -1,0 +1,58 @@
+{
+  "country": "영국",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/united-kingdom/1_official-law-act/uk-2023-online-safety-act-sec179-amendment.pdf",
+      "type": "Act/Law",
+      "uses": [
+        "Core statutory platform-duty framing",
+        "Provider/platform liability status",
+        "Penalty/sanctions codification baseline"
+      ],
+      "verification": "Primary statutory anchor",
+      "url": "/resource/united-kingdom/1_official-law-act/uk-2023-online-safety-act-sec179-amendment.pdf"
+    },
+    {
+      "ref": "Ref2",
+      "source": "sources/official/united-kingdom/4_official-report-assessment/uk-2025-ai-content-labels-qualitative-research-report.pdf",
+      "type": "Guideline/Report",
+      "uses": [
+        "labeling implementation context",
+        "provider-duty operational interpretation"
+      ],
+      "verification": "Supplementary (non-statutory)",
+      "url": "/resource/united-kingdom/4_official-report-assessment/uk-2025-ai-content-labels-qualitative-research-report.pdf"
+    },
+    {
+      "ref": "Ref3",
+      "source": "sources/official/united-kingdom/4_official-report-assessment/uk-2025-ai-content-labels-technical-report.pdf",
+      "type": "Guideline/Report",
+      "uses": [
+        "technical implementation perspective for labeling/disclosure"
+      ],
+      "verification": "Supplementary (non-statutory)",
+      "url": "/resource/united-kingdom/4_official-report-assessment/uk-2025-ai-content-labels-technical-report.pdf"
+    },
+    {
+      "ref": "Ref4",
+      "source": "sources/official/united-kingdom/4_official-report-assessment/uk-2025-ai-labels---survey-data-tables.xlsx",
+      "type": "Guideline/Report data",
+      "uses": [
+        "user-recognition/operational feasibility context"
+      ],
+      "verification": "Supplementary (non-statutory)",
+      "url": "/resource/united-kingdom/4_official-report-assessment/uk-2025-ai-labels---survey-data-tables.xlsx"
+    },
+    {
+      "ref": "Ref5",
+      "source": "sources/official/united-kingdom/4_official-report-assessment/uk-2025-deepfake-defences-2---the-attribution-toolkit.pdf",
+      "type": "Guideline/Report",
+      "uses": [
+        "operational defense and response practice context"
+      ],
+      "verification": "Supplementary (non-statutory)",
+      "url": "/resource/united-kingdom/4_official-report-assessment/uk-2025-deepfake-defences-2---the-attribution-toolkit.pdf"
+    }
+  ]
+}

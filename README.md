@@ -9,7 +9,7 @@ This folder is a static copy of `app/public`.
 
 ## Important
 
-- The current pages still call `/api/...` endpoints.
+- The GitHub Pages build uses `api-static/` JSON and Markdown files instead of live `/api/...` endpoints.
 - GitHub Pages cannot run the Node server in this project.
 - That means this folder alone is not a fully working GitHub Pages deployment yet.
 

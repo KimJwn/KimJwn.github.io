@@ -1,0 +1,28 @@
+# France Deepfake Law Summary
+
+## Core Legal Framework
+- The official `SREN 2024` publication is the key local statutory anchor for France’s online platform safety/response duty architecture. (Ref1)
+- Under current local official corpus, deepfake governance in France is more clearly interpreted as integrated within existing digital-service/platform regulation than as a stand-alone deepfake-only statute. (Ref1)
+
+## Summary
+- The strongest currently evidenced French dimension is integration with platform responsibility and digital-safety obligations. Deepfake governance appears embedded in broader regulatory channels rather than isolated as one independent legal regime. (Ref1)
+- Practical compliance should therefore prioritize operational duty performance (intake, response, records, cooperation) rather than relying only on narrow deepfake-specific clause identification. (Ref1)
+
+## Policy Dimensions
+- `Labeling status`: current official corpus is insufficient to confirm a comprehensive nationwide stand-alone deepfake-labeling mandate at article-level precision. Labeling controls should be operated conservatively and updated when additional official text allows stronger clause-level confirmation. (Ref1)
+- `Election-related status`: explicit evidence of a stand-alone election-deepfake statute remains limited in the current set. Election-risk handling should be framed through broader digital-order/misinformation/public communication enforcement channels until dedicated official election-law sources are added. (Ref1)
+- `Non-consensual deepfake status`: non-consensual deepfake harms are best interpreted as handled through integrated criminal/digital-law pathways in current corpus context. Because direct article-level confirmation is limited, incident response should prioritize rapid harm mitigation controls while legal precision is further verified. (Ref1)
+- `Service-provider/platform liability status`: this is relatively the clearest dimension in current corpus. Service providers should maintain compliance-ready workflows for notice intake, actioning, record retention, and authority cooperation, with audit-grade traceability across the full process. (Ref1)
+- `Penalty/sanctions codification status`: sanctions appear to operate through integrated existing legal channels; deepfake-specific penalty-article precision still requires additional official text verification. Current best framing is “enforcement path exists, fine-grained sanction precision pending.” (Ref1)
+
+Ref1: `sources/official/france/france-2024-sren-joe_20240522_0117_0002.pdf`
+
+## Practice Notes (by Dimension)
+- `Labeling`: run provisional internal disclosure standards (wording/placement/persistence) with future legal mapping hooks.
+- `Election`: process election-context synthetic content under a separate high-risk governance stream.
+- `Non-consensual deepfakes`: enforce immediate block/evidence preservation/recirculation prevention SOPs.
+- `Service-provider/platform liability`: maintain one incident-log chain linking policy basis, action, timing, and cooperation outputs.
+- `Penalty`: assess exposure by enforcement pathway category (administrative/criminal potential) rather than single-clause assumptions.
+
+## Verify Before Use
+- Recheck direct deepfake mentions, sanction specifics, and commencement timing in text-extractable official SREN-aligned publications.

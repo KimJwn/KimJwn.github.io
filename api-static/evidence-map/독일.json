@@ -1,0 +1,27 @@
+{
+  "country": "독일",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/germany/2_draft/germany-2024-bundesrat-draft-background-222-24b.pdf",
+      "type": "Legislative background / draft context",
+      "uses": [
+        "codification context and legislative rationale",
+        "limits of current-force conclusions for labeling/platform duties"
+      ],
+      "verification": "Context anchor",
+      "url": "/resource/germany/2_draft/germany-2024-bundesrat-draft-background-222-24b.pdf"
+    },
+    {
+      "ref": "Ref2",
+      "source": "sources/official/germany/2_draft/germany-2024-bundesrat-criminal-deepfake-personality-rights-201b-stgb-e.pdf",
+      "type": "Criminal-law draft/enactment-track text",
+      "uses": [
+        "non-consensual deepfake/personality-rights criminalization trajectory",
+        "sanctions codification direction"
+      ],
+      "verification": "Primary criminal-law anchor",
+      "url": "/resource/germany/2_draft/germany-2024-bundesrat-criminal-deepfake-personality-rights-201b-stgb-e.pdf"
+    }
+  ]
+}

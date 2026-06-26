@@ -1,0 +1,2 @@
+country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
+파키스탄,PK_PECA_2016_2025_AMENDMENT,pk_social_media_unlawful_content_noncompliance,Unlawful/offensive social-media content and platform noncompliance,platform_noncompliance,administrative,in_force,,,"Aggravation may apply depending on content severity, public-order risk, and repeated noncompliance.",Exact aggravated schedules require latest official clause-by-clause verification.,Ref1|Ref2,2026-03-10

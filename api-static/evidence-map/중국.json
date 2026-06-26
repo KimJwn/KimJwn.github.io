@@ -1,0 +1,56 @@
+{
+  "country": "중국",
+  "refs": [
+    {
+      "ref": "Ref1",
+      "source": "sources/official/china/1_official-law-act/china-2022-deep-synthesis-provisions-official-cn.pdf",
+      "type": "Act/Law (official regulation text)",
+      "uses": [
+        "Deep-synthesis governance baseline",
+        "Provider/platform duties and administrative enforcement structure"
+      ],
+      "verification": "Primary statutory anchor (original language)",
+      "url": "/resource/china/1_official-law-act/china-2022-deep-synthesis-provisions-official-cn.pdf"
+    },
+    {
+      "ref": "Ref2",
+      "source": "sources/official/china/1_official-law-act/china-2022-deep-synthesis-provisions-english-translate.pdf",
+      "type": "Official translation/officially hosted translation copy",
+      "uses": [
+        "Cross-language verification for article intent and policy-dimension interpretation"
+      ],
+      "verification": "Primary interpretation anchor (EN)",
+      "url": "/resource/china/1_official-law-act/china-2022-deep-synthesis-provisions-english-translate.pdf"
+    },
+    {
+      "ref": "Ref3",
+      "source": "sources/official/china/1_official-law-act/china-2022-deep-synthesis-provisions-korean-translation.pdf",
+      "type": "Translation copy",
+      "uses": [
+        "Korean readability support"
+      ],
+      "verification": "Supplementary (not canonical over EN/CN)",
+      "url": "/resource/china/1_official-law-act/china-2022-deep-synthesis-provisions-korean-translation.pdf"
+    },
+    {
+      "ref": "Ref4",
+      "source": "sources/official/china/1_official-law-act/china-2025-ai-generated-synthetic-content-labeling-measures-notice-cn.pdf",
+      "type": "Official notice / implementation measure",
+      "uses": [
+        "Labeling/marking direction reinforcement"
+      ],
+      "verification": "Primary labeling reinforcement anchor",
+      "url": "/resource/china/1_official-law-act/china-2025-ai-generated-synthetic-content-labeling-measures-notice-cn.pdf"
+    },
+    {
+      "ref": "Ref5",
+      "source": "sources/official/china/2_draft/china-2025-proposed-ai-content-labeling-guidelines-english-translate.md",
+      "type": "Proposed / draft guidance",
+      "uses": [
+        "forward-looking implementation direction (non-final)"
+      ],
+      "verification": "Supplementary and non-final",
+      "url": "/resource/china/2_draft/china-2025-proposed-ai-content-labeling-guidelines-english-translate.md"
+    }
+  ]
+}

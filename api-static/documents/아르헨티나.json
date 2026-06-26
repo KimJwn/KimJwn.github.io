@@ -1,0 +1,47 @@
+{
+  "country": "아르헨티나",
+  "documents": [
+    {
+      "resource_dir": "argentina",
+      "name": "argentina-2025-Resolución 4_2025-Directrices de uso de Inteligencia Artificial Generativa en la Administración Pública.pdf",
+      "absolute_path": "C:\\Users\\kimsh\\Downloads\\20251100-CSIRO-deepfake-policy\\sources\\official\\argentina\\3_official-guidance-warning\\argentina-2025-Resolución 4_2025-Directrices de uso de Inteligencia Artificial Generativa en la Administración Pública.pdf",
+      "relative_path": "3_official-guidance-warning/argentina-2025-Resolución 4_2025-Directrices de uso de Inteligencia Artificial Generativa en la Administración Pública.pdf",
+      "legacy_relative_path": "argentina-2025-Resolución 4_2025-Directrices de uso de Inteligencia Artificial Generativa en la Administración Pública.pdf",
+      "extension": ".pdf",
+      "classification_code": 3,
+      "classification_folder": "3_official-guidance-warning",
+      "classification_label": "Official Guidance / Warning",
+      "context_layer": "context_b1",
+      "legal_force": "nonbinding_official_guidance",
+      "core_evidence_allowed": false,
+      "document_type": "official_guidance_warning",
+      "law_stage": "guidelines",
+      "url": "/resource/argentina/3_official-guidance-warning/argentina-2025-Resoluci%C3%B3n%204_2025-Directrices%20de%20uso%20de%20Inteligencia%20Artificial%20Generativa%20en%20la%20Administraci%C3%B3n%20P%C3%BAblica.pdf",
+      "event_date": "2025-01-01",
+      "event_year": 2025,
+      "event_stage": "guidelines",
+      "timeline_source": "metadata"
+    },
+    {
+      "resource_dir": "argentina",
+      "name": "argentina-2025-Resolución 4_2025- EX-2024-43945142-GDEBA-DPTLMIYSPGP.pdf",
+      "absolute_path": "C:\\Users\\kimsh\\Downloads\\20251100-CSIRO-deepfake-policy\\sources\\official\\argentina\\4_official-report-assessment\\argentina-2025-Resolución 4_2025- EX-2024-43945142-GDEBA-DPTLMIYSPGP.pdf",
+      "relative_path": "4_official-report-assessment/argentina-2025-Resolución 4_2025- EX-2024-43945142-GDEBA-DPTLMIYSPGP.pdf",
+      "legacy_relative_path": "argentina-2025-Resolución 4_2025- EX-2024-43945142-GDEBA-DPTLMIYSPGP.pdf",
+      "extension": ".pdf",
+      "classification_code": 4,
+      "classification_folder": "4_official-report-assessment",
+      "classification_label": "Official Report / Assessment",
+      "context_layer": "context_b2",
+      "legal_force": "nonbinding_official_report",
+      "core_evidence_allowed": false,
+      "document_type": "official_report_assessment",
+      "law_stage": "guidelines",
+      "url": "/resource/argentina/4_official-report-assessment/argentina-2025-Resoluci%C3%B3n%204_2025-%20EX-2024-43945142-GDEBA-DPTLMIYSPGP.pdf",
+      "event_date": "2025-01-01",
+      "event_year": 2025,
+      "event_stage": "guidelines",
+      "timeline_source": "metadata"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "country": "EU",
+  "penalties": [
+    {
+      "country": "EU",
+      "law_id": "EU_AI_ACT_DSA",
+      "offense_id": "eu_transparency_platform_noncompliance",
+      "offense_label": "AI 투명성 및 플랫폼 의무 위반",
+      "deepfake_scope": "platform_noncompliance",
+      "sanction_channel": "administrative",
+      "effective_status": "in_force",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "위험 규모, 시스템 영향, 반복 위반 여부에 따라 제재 강도가 높아질 수 있습니다.",
+      "aggravated_penalty": "EU 집행 경로에서 강화된 행정조치/과징금이 적용될 수 있습니다.",
+      "refs": [
+        "Ref1",
+        "Ref2"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

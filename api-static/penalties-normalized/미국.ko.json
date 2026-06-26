@@ -1,0 +1,22 @@
+{
+  "country": "미국",
+  "penalties": [
+    {
+      "country": "미국",
+      "law_id": "US_TAKE_IT_DOWN",
+      "offense_id": "us_non_consensual_intimate_distribution",
+      "offense_label": "비동의 친밀/합성콘텐츠 유통 관련 범죄",
+      "deepfake_scope": "non_consensual",
+      "sanction_channel": "criminal",
+      "effective_status": "in_force",
+      "fine_range": "",
+      "prison_range_months": "",
+      "aggravation": "피해자 연령, 고의성, 반복성, 유포 범위에 따라 가중요소가 적용될 수 있습니다.",
+      "aggravated_penalty": "정확한 가중처벌 수치는 관할(주)별로 달라 별도 확인이 필요합니다.",
+      "refs": [
+        "Ref1"
+      ],
+      "last_verified_at": "2026-03-10"
+    }
+  ]
+}

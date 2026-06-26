@@ -1923,7 +1923,7 @@
 
     async function loadWordcloud() {
       try {
-        const res = await fetch('/api/analysis-wordclouds');
+        const res = await fetch('/api-static/analysis-wordclouds.json');
         if (!res.ok) throw new Error('wordcloud fetch failed');
         wordcloudPayload = await res.json();
       } catch (_) {
@@ -1985,7 +1985,7 @@
 
     async function loadGovernanceScores() {
       try {
-        const res = await fetch('/api/analysis-dimension-scores');
+        const res = await fetch('/api-static/analysis-dimension-scores.json');
         if (!res.ok) throw new Error('dimension score fetch failed');
         dimensionScorePayload = await res.json();
       } catch (_) {
@@ -2302,7 +2302,7 @@
       if (!c) return;
       if (compareDocsCache[c] && (compareDocsCache[c].loading || Array.isArray(compareDocsCache[c].docs))) return;
       compareDocsCache[c] = { loading: true, docs: [] };
-      fetch(`/api/documents/${encodeURIComponent(c)}`)
+      fetch(`/api-static/documents/${encodeURIComponent(c)}.json`)
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error('fetch failed'))))
         .then((json) => {
           compareDocsCache[c] = { loading: false, docs: (json && json.documents) || [] };
@@ -3482,7 +3482,7 @@
       document.getElementById('penaltyHeader').textContent = t.penaltyTitle;
       document.getElementById('penaltyHint').textContent = t.penaltyNormHint;
       penaltyCsvBtn.textContent = t.penaltyCsv;
-      penaltyCsvBtn.href = `/api/penalties-normalized-csv/${encodeURIComponent(country)}?lang=${encodeURIComponent(lang())}`;
+      penaltyCsvBtn.href = `/api-static/penalties-normalized-csv/${encodeURIComponent(country)}.${encodeURIComponent(lang())}.csv`;
       document.getElementById('previewHeader').textContent = t.preview;
       setDetailTab(currentDetailTab);
     }
@@ -3636,7 +3636,7 @@
         host.innerHTML = `<p class="muted">${escapeHtml(t.noCountry)}</p>`;
         return;
       }
-      const res = await fetch(`/api/penalties-normalized/${encodeURIComponent(country)}?lang=${encodeURIComponent(lang())}`);
+      const res = await fetch(`/api-static/penalties-normalized/${encodeURIComponent(country)}.${encodeURIComponent(lang())}.json`);
       if (!res.ok) {
         host.innerHTML = `<p class="muted">${escapeHtml(t.noPenalty)}</p>`;
         return;
@@ -3706,10 +3706,10 @@
       }
       el.classList.add('muted');
       el.textContent = t.loading;
-      const res = await fetch(`/api/summary/${encodeURIComponent(country)}?lang=${encodeURIComponent(lang())}`);
+      const res = await fetch(`/api-static/summary/${encodeURIComponent(country)}.${encodeURIComponent(lang())}.md`);
       if (!res.ok) { el.textContent = t.noDocs; return; }
       const md = await res.text();
-      const stRes = await fetch(`/api/statuses?lang=${encodeURIComponent(lang())}`);
+      const stRes = await fetch(`/api-static/statuses.${encodeURIComponent(lang())}.json`);
       let statusObj = null;
       let allStatuses = [];
       if (stRes.ok) {
@@ -3725,7 +3725,7 @@
 
     async function loadDashboardTimelineData() {
       try {
-        const res = await fetch('/api/dashboard-summary');
+        const res = await fetch('/api-static/dashboard-summary.json');
         if (!res.ok) throw new Error('failed');
         const json = await res.json();
         dashboardSummary = json.summary || {};
@@ -3755,7 +3755,7 @@
       if (!country) { host.innerHTML = `<p class="muted">${escapeHtml(t.noCountry)}</p>`; return; }
       host.innerHTML = `<p class="muted">${escapeHtml(t.loading)}</p>`;
       await loadDashboardTimelineData();
-      const res = await fetch(`/api/documents/${encodeURIComponent(country)}`);
+      const res = await fetch(`/api-static/documents/${encodeURIComponent(country)}.json`);
       if (!res.ok) { host.innerHTML = `<p class="muted">${escapeHtml(t.noDocs)}</p>`; return; }
       const data = await res.json();
       docsCache = data.documents || [];
