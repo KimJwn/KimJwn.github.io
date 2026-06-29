@@ -3,6 +3,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Research Questions</title>
+  <script>
+    if (location.pathname === '/rq.html') {
+      location.replace('/deepfake-policy/rq/' + location.search + location.hash);
+    }
+  </script>
   <link rel="stylesheet" href="/assets/palette.css" />
   <style>
     * { box-sizing:border-box; }
