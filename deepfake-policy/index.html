@@ -1,9 +1,14 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="description" content="Deepfake Policy Observatory: compare country-level deepfake laws, clause-based coding, penalties, and official legal sources." />
+  <link rel="canonical" href="https://kimjwn.github.io/deepfake-policy/" />
+  <meta property="og:title" content="Deepfake Policy Observatory" />
+  <meta property="og:description" content="Compare country-level deepfake laws, clause-based coding, penalties, and official legal sources." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kimjwn.github.io/deepfake-policy/" />
   <title>Deepfake Policy Research</title>
   <link rel="stylesheet" href="../assets/palette.css" />
   <style>
@@ -72,9 +77,9 @@
     .hero {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+      grid-template-columns: 1fr;
       gap: 22px;
-      align-items: center;
+      align-items: start;
       padding: 30px 24px;
       border: 1px solid #d9e3f2;
       border-radius: 24px;
@@ -111,7 +116,7 @@
     .copy {
       display: grid;
       gap: 16px;
-      max-width: 430px;
+      max-width: 780px;
     }
     .eyebrow {
       display: inline-flex;
@@ -279,7 +284,7 @@
     }
     .portal-grid {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
     }
     .portal {
@@ -341,9 +346,9 @@
       </div>
       <div class="langbox">
         <label for="uiLang" id="langLabel"></label>
-        <select id="uiLang">
+      <select id="uiLang">
+          <option value="en" selected>English</option>
           <option value="ko">한국어</option>
-          <option value="en">English</option>
         </select>
       </div>
     </header>
@@ -357,58 +362,48 @@
           <p id="homeDesc"></p>
         </div>
         <div class="actions">
-          <a class="btn" href="../countries.html" id="primaryCta"></a>
-          <a class="btn-subtle" href="../status.html" id="secondaryCta"></a>
+          <a class="btn" href="/deepfake-policy/countries/" id="primaryCta"></a>
+          <a class="btn-subtle" href="/deepfake-policy/coding/" id="secondaryCta"></a>
         </div>
-      </div>
-
-      <div class="quote-stage">
-        <article class="quote-card" id="quoteCard">
-          <div class="quote-meta">
-            <span class="indicator" id="quoteIndicator"></span>
-            <span class="source" id="quoteSource"></span>
-          </div>
-          <p class="quote" id="quoteBody"></p>
-          <div class="quote-footer">
-            <strong id="quoteCountry"></strong>
-            <span id="quoteLaw"></span>
-          </div>
-        </article>
-        <div class="dots" id="quoteDots"></div>
       </div>
     </section>
 
     <section class="portal-grid">
-      <a class="portal" href="../countries.html">
+      <a class="portal" href="/deepfake-policy/countries/">
         <span class="portal-kicker" id="portal1Kick"></span>
         <p class="portal-title" id="portal1Title"></p>
         <p class="portal-copy" id="portal1Copy"></p>
       </a>
-      <a class="portal" href="../status.html">
+      <a class="portal" href="/deepfake-policy/coding/">
         <span class="portal-kicker" id="portal2Kick"></span>
         <p class="portal-title" id="portal2Title"></p>
         <p class="portal-copy" id="portal2Copy"></p>
       </a>
-      <a class="portal" href="../penalties.html">
+      <a class="portal" href="/deepfake-policy/penalties/">
         <span class="portal-kicker" id="portal3Kick"></span>
         <p class="portal-title" id="portal3Title"></p>
         <p class="portal-copy" id="portal3Copy"></p>
       </a>
-      <a class="portal" href="../rq.html">
+      <a class="portal" href="/deepfake-policy/countries/#countryDirectory">
         <span class="portal-kicker" id="portal4Kick"></span>
         <p class="portal-title" id="portal4Title"></p>
         <p class="portal-copy" id="portal4Copy"></p>
       </a>
-      <a class="portal" href="../coding.html">
-        <span class="portal-kicker" id="portal5Kick"></span>
-        <p class="portal-title" id="portal5Title"></p>
-        <p class="portal-copy" id="portal5Copy"></p>
-      </a>
-      <a class="portal" href="../workflow.html">
-        <span class="portal-kicker" id="portal6Kick"></span>
-        <p class="portal-title" id="portal6Title"></p>
-        <p class="portal-copy" id="portal6Copy"></p>
-      </a>
+    </section>
+
+    <section class="quote-stage" aria-label="Legal provisions">
+      <article class="quote-card" id="quoteCard">
+        <div class="quote-meta">
+          <span class="indicator" id="quoteIndicator"></span>
+          <span class="source" id="quoteSource"></span>
+        </div>
+        <p class="quote" id="quoteBody"></p>
+        <div class="quote-footer">
+          <strong id="quoteCountry"></strong>
+          <span id="quoteLaw"></span>
+        </div>
+      </article>
+      <div class="dots" id="quoteDots"></div>
     </section>
 
     <p class="footer-note" id="footerNote"></p>
@@ -424,26 +419,20 @@
         accent: '실제 법률 조문',
         desc: '첫 화면은 요약 대시보드가 아니라 입구용 홈으로 분리했습니다. 상단 조문 카드에서 각국 법률 문구를 먼저 읽고, 그다음 국가별 비교와 세부 페이지로 들어갈 수 있습니다.',
         primary: '국가별 대시보드 열기',
-        secondary: '비교 테이블 보기',
+        secondary: 'Clause-based Coding 보기',
         indicator: '조문',
         portal1Kick: 'Directory',
-        portal1Title: 'Countries',
-        portal1Copy: '국가별 카드와 차원별 수준을 보며 상세 페이지로 이동합니다.',
-        portal2Kick: 'Compare',
-        portal2Title: 'Status Table',
-        portal2Copy: '라벨링, 선거, 비동의, 플랫폼 책임, 처벌을 한 번에 비교합니다.',
+        portal1Title: '국가별 비교',
+        portal1Copy: '국가별 카드, 차원별 수준, 상세 페이지 진입점을 한 번에 봅니다.',
+        portal2Kick: 'Coding',
+        portal2Title: 'Clause-based Coding',
+        portal2Copy: 'Policy dimensions, risk tags, life-cycle tags, defense layers를 코딩 결과 중심으로 봅니다.',
         portal3Kick: 'Sanctions',
-        portal3Title: 'Penalties',
+        portal3Title: 'Penalty 비교',
         portal3Copy: '제재 유형과 법적 근거를 중심으로 처벌 구조를 비교합니다.',
-        portal4Kick: 'Research',
-        portal4Title: 'RQ',
-        portal4Copy: '연구 질문과 해석 프레임을 정리한 페이지로 이동합니다.',
-        portal5Kick: 'Coding',
-        portal5Title: 'Clause-based Coding',
-        portal5Copy: '세그먼트 원문은 숨기고 policy dimension, risk, life cycle, defense layer 같은 코딩 결과만 보여줍니다.',
-        portal6Kick: 'Method',
-        portal6Title: 'Workflow',
-        portal6Copy: '문서 분류, 텍스트 추출, 정규화, 조항 코딩 순서를 설명하는 방법론 페이지입니다.',
+        portal4Kick: 'Sources',
+        portal4Title: '원문 문서 링크',
+        portal4Copy: '국가별 문서 목록에서 법/문서 제목과 Official source 링크를 확인합니다.',
         footer: '메인 홈은 조문 중심 진입 화면이고, 비교 기능은 각 하위 페이지에서 유지됩니다.',
       },
       en: {
@@ -454,26 +443,20 @@
         accent: 'Actual Legal Text',
         desc: 'The first page is now a separate home screen rather than the dashboard itself. Users can start from rotating statutory language, then move into country comparison and detail pages.',
         primary: 'Open country dashboard',
-        secondary: 'Open comparison table',
+        secondary: 'Open clause-based coding',
         indicator: 'Provision',
         portal1Kick: 'Directory',
-        portal1Title: 'Countries',
-        portal1Copy: 'Browse country cards and dimension levels, then open the detail page.',
-        portal2Kick: 'Compare',
-        portal2Title: 'Status Table',
-        portal2Copy: 'Compare labeling, election, non-consensual harms, platform liability, and penalties.',
+        portal1Title: 'Country Comparison',
+        portal1Copy: 'Browse country cards, dimension levels, and country detail entry points.',
+        portal2Kick: 'Coding',
+        portal2Title: 'Clause-based Coding',
+        portal2Copy: 'Review policy dimensions, risk tags, life-cycle tags, and defense layers as coded outputs.',
         portal3Kick: 'Sanctions',
-        portal3Title: 'Penalties',
+        portal3Title: 'Penalty Comparison',
         portal3Copy: 'Review sanction structures with normalized offense and legal-basis views.',
-        portal4Kick: 'Research',
-        portal4Title: 'RQ',
-        portal4Copy: 'Open the page that frames the core research questions and interpretation logic.',
-        portal5Kick: 'Coding',
-        portal5Title: 'Clause-based Coding',
-        portal5Copy: 'Open coded outputs only, without exposing raw segment text.',
-        portal6Kick: 'Method',
-        portal6Title: 'Workflow',
-        portal6Copy: 'Open the methodology page for corpus classification, text extraction, normalization, and clause coding order.',
+        portal4Kick: 'Sources',
+        portal4Title: 'Official Source Links',
+        portal4Copy: 'Open country document lists with law titles and official source links.',
         footer: 'The home page is now a legal-text entry point; comparison functions remain in the subpages.',
       },
     };
@@ -562,6 +545,8 @@
       },
     ];
 
+    const LANG_STORAGE_KEY = 'deepfakePolicyLang';
+    const qs = new URLSearchParams(location.search);
     const uiLang = document.getElementById('uiLang');
     const siteTitleEl = document.getElementById('siteTitle');
     const langLabelEl = document.getElementById('langLabel');
@@ -583,9 +568,29 @@
     let currentIndex = 0;
     let rotateTimer = null;
     let fadeTimer = null;
+    uiLang.value = qs.get('lang') === 'ko'
+      ? 'ko'
+      : (() => {
+          try { return !qs.has('lang') && localStorage.getItem(LANG_STORAGE_KEY) === 'ko' ? 'ko' : 'en'; }
+          catch (_) { return 'en'; }
+        })();
 
     function lang() {
       return uiLang.value === 'en' ? 'en' : 'ko';
+    }
+    function saveLang() {
+      try { localStorage.setItem(LANG_STORAGE_KEY, lang()); }
+      catch (_) {}
+    }
+    function withLang(path) {
+      const url = new URL(path, location.origin);
+      url.searchParams.set('lang', lang());
+      return url.pathname + url.search + url.hash;
+    }
+    function refreshLinks() {
+      document.querySelectorAll('a[href^="/deepfake-policy/"]').forEach((a) => {
+        a.setAttribute('href', withLang(a.getAttribute('href')));
+      });
     }
     function text() {
       return T[lang()];
@@ -680,18 +685,17 @@
       document.getElementById('portal4Kick').textContent = t.portal4Kick;
       document.getElementById('portal4Title').textContent = t.portal4Title;
       document.getElementById('portal4Copy').textContent = t.portal4Copy;
-      document.getElementById('portal5Kick').textContent = t.portal5Kick;
-      document.getElementById('portal5Title').textContent = t.portal5Title;
-      document.getElementById('portal5Copy').textContent = t.portal5Copy;
-      document.getElementById('portal6Kick').textContent = t.portal6Kick;
-      document.getElementById('portal6Title').textContent = t.portal6Title;
-      document.getElementById('portal6Copy').textContent = t.portal6Copy;
       footerNoteEl.textContent = t.footer;
+      refreshLinks();
       renderBgQuotes();
       setQuote(currentIndex, false);
     }
 
-    uiLang.addEventListener('change', renderText);
+    uiLang.addEventListener('change', () => {
+      saveLang();
+      renderText();
+    });
+    saveLang();
     renderText();
   </script>
 </body>

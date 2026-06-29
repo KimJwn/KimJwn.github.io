@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>국가 상세 페이지</title>
+  <meta name="description" content="Country-level deepfake policy dashboard with legal summaries, policy dimensions, penalties, clause-based coding, and official source links." />
+  <link rel="canonical" href="https://kimjwn.github.io/deepfake-policy/country/" />
+  <meta property="og:title" content="Deepfake Policy Country Dashboard" />
+  <meta property="og:description" content="Browse country-level deepfake law summaries, policy dimensions, penalties, clause-based coding, and official source links." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kimjwn.github.io/deepfake-policy/country/" />
+  <title>Deepfake Policy Country Dashboard</title>
   <link rel="stylesheet" href="/assets/palette.css" />
   <style>
     * { box-sizing: border-box; }
@@ -1473,13 +1479,6 @@
 <body>
   <main class="wrap">
     <section class="card">
-      <div class="langbox">
-        <label for="lang" id="langLabel"></label>
-        <select id="lang">
-          <option value="ko">한국어</option>
-          <option value="en" selected>English</option>
-        </select>
-      </div>
       <div class="top">
         <div class="head-left">
           <a class="back-btn" href="/deepfake-policy/" id="backLink"></a>
@@ -1489,10 +1488,17 @@
             <p class="page-subtitle" id="subtitle"></p>
           </div>
         </div>
+        <div class="langbox">
+          <label for="lang" id="langLabel"></label>
+          <select id="lang">
+            <option value="en" selected>English</option>
+            <option value="ko">한국어</option>
+          </select>
+        </div>
       </div>
       <div class="detail-tabs">
-        <button type="button" class="d-tab active" data-detail-tab="documents" id="tabDocuments"></button>
-        <button type="button" class="d-tab" data-detail-tab="summary" id="tabSummary"></button>
+        <button type="button" class="d-tab active" data-detail-tab="summary" id="tabSummary"></button>
+        <button type="button" class="d-tab" data-detail-tab="documents" id="tabDocuments"></button>
         <button type="button" class="d-tab" data-detail-tab="status" id="tabStatus"></button>
         <button type="button" class="d-tab" data-detail-tab="penalties" id="tabPenaltiesIn"></button>
       </div>
@@ -1841,6 +1847,7 @@
     };
     const COUNTRY_BY_SLUG = Object.fromEntries(Object.entries(COUNTRY_SLUGS).map(([label, slug]) => [slug, label]));
 
+    const LANG_STORAGE_KEY = 'deepfakePolicyLang';
     const qs = new URLSearchParams(location.search);
     function countryFromPath() {
       const parts = location.pathname.split('/').filter(Boolean).map((part) => decodeURIComponent(part));
@@ -1859,21 +1866,29 @@
     }
     const country = countryFromPath() || qs.get('country') || '';
     if (location.pathname.endsWith('/country.html') && country && COUNTRY_SLUGS[country]) {
-      const next = new URL(`/country/${COUNTRY_SLUGS[country]}/`, location.origin);
+      const next = new URL(`/deepfake-policy/country/${COUNTRY_SLUGS[country]}/`, location.origin);
       next.searchParams.set('lang', qs.get('lang') === 'ko' ? 'ko' : 'en');
       const tab = qs.get('tab');
       if (tab) next.searchParams.set('tab', tab);
       location.replace(next.pathname + next.search);
     }
-    const initialLang = qs.get('lang') === 'ko' || langFromPath() === 'ko' ? 'ko' : 'en';
+    function storedLang() {
+      try { return localStorage.getItem(LANG_STORAGE_KEY) === 'ko' ? 'ko' : 'en'; }
+      catch (_) { return 'en'; }
+    }
+    const initialLang = qs.get('lang') === 'ko' || langFromPath() === 'ko' ? 'ko' : (!qs.has('lang') && !langFromPath() ? storedLang() : 'en');
     const initialTab = (() => {
       const v = String(qs.get('tab') || '').toLowerCase();
       if (v === 'summary' || v === 'status' || v === 'documents' || v === 'penalties') return v;
-      return 'documents';
+      return 'summary';
     })();
 
     const langSel = document.getElementById('lang');
     langSel.value = initialLang;
+    function saveLang() {
+      try { localStorage.setItem(LANG_STORAGE_KEY, lang()); }
+      catch (_) {}
+    }
     const leftPanel = document.getElementById('leftPanel');
     const rightPanel = document.getElementById('rightPanel');
     const tabSummaryEl = document.getElementById('tabSummary');
@@ -1956,6 +1971,25 @@
     }
 
     function lang() { return langSel.value === 'en' ? 'en' : 'ko'; }
+    function withLang(path) {
+      const url = new URL(path, location.origin);
+      url.searchParams.set('lang', lang());
+      return url.pathname + url.search;
+    }
+    function updatePageMeta() {
+      const slug = COUNTRY_SLUGS[country] || '';
+      const label = country ? countryDisplayLabel(country) : 'Country';
+      const canonical = slug
+        ? `https://kimjwn.github.io/deepfake-policy/country/${slug}/?lang=${lang()}`
+        : `https://kimjwn.github.io/deepfake-policy/country/?lang=${lang()}`;
+      document.title = `${label} | Deepfake Policy Country Dashboard`;
+      const desc = `${label} deepfake policy dashboard with legal summaries, policy dimensions, penalties, clause-based coding, and official source links.`;
+      document.querySelector('meta[name="description"]')?.setAttribute('content', desc);
+      document.querySelector('link[rel="canonical"]')?.setAttribute('href', canonical);
+      document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);
+      document.querySelector('meta[property="og:description"]')?.setAttribute('content', desc);
+      document.querySelector('meta[property="og:url"]')?.setAttribute('content', canonical);
+    }
 
     function resolveWordcloudCountryKey() {
       const mapped = WORDCLOUD_COUNTRY_KEYS[country] || country;
@@ -3727,6 +3761,7 @@
       tabDocumentsEl.textContent = t.tabDocuments;
       tabPenaltiesInEl.textContent = t.tabPenalties;
       document.getElementById('backLink').textContent = t.back;
+      document.getElementById('backLink').href = withLang('/deepfake-policy/countries/');
       document.getElementById('docsHeader').textContent = t.docs;
       document.getElementById('docsListHeader').textContent = t.docsCollection;
       renderWordcloud();
@@ -4056,6 +4091,8 @@
     }
 
     langSel.addEventListener('change', async () => {
+      saveLang();
+      updatePageMeta();
       applyText();
       await loadSummary();
       await loadPenalties();
@@ -4063,6 +4100,8 @@
     });
 
     (async () => {
+      saveLang();
+      updatePageMeta();
       applyText();
       await loadWordcloud();
       await loadGovernanceScores();
