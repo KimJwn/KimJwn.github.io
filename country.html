@@ -781,6 +781,9 @@
       padding: 3px 5px;
     }
     .format-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       font-size: 11px;
       font-weight: 700;
       line-height: 1;
@@ -792,6 +795,7 @@
       background: linear-gradient(180deg, #ffffff 0%, #f3f7ff 100%);
       color: #1f334d;
       cursor: pointer;
+      text-decoration: none;
       transition: transform .08s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
     }
     .format-btn:hover {
@@ -1421,7 +1425,7 @@
       </div>
       <div class="top">
         <div class="head-left">
-          <a class="back-btn" href="/" id="backLink"></a>
+          <a class="back-btn" href="/deepfake-policy/" id="backLink"></a>
           <div class="title-stack">
             <p class="page-kicker">Country Dashboard</p>
             <h1 id="title"></h1>
@@ -1522,7 +1526,7 @@
     const T = {
       ko: {
         title: '국가 상세 페이지',
-        subtitle: '법률 문서 목록을 열람하고, PDF는 페이지 내에서 바로 미리볼 수 있습니다.',
+        subtitle: '법률 문서 목록을 열람하고, 원문은 공식 웹사이트에서 새 탭으로 확인할 수 있습니다.',
         lang: '언어',
         tabSummary: 'Summary',
         tabStatus: 'Policy Status',
@@ -1616,17 +1620,17 @@
         summaryDimTitle: 'Dimension 중심 빠른 요약',
         summaryDimDesc: '아래 항목은 라벨링, 선거, 비동의 딥페이크, 플랫폼 책임, 처벌의 현재 법제화 강도를 요약합니다.',
         summary: '요약',
-        preview: '문서 미리보기',
-        open: '열기',
-        previewBtn: '미리보기',
-        previewHint: 'PDF/MD/TXT/HTML 파일은 미리보기를 지원합니다.',
+        preview: '원문 웹사이트',
+        open: '원문 사이트',
+        previewBtn: '원문 사이트',
+        previewHint: '원문 파일 미리보기 대신 공식 웹사이트 또는 공식 검색 결과를 새 탭으로 엽니다.',
         noDocs: '문서가 없습니다.',
         loading: '불러오는 중...',
         noCountry: '국가 파라미터가 없습니다.'
       },
       en: {
         title: 'Country Detail Page',
-        subtitle: 'Browse legal documents. PDFs can be previewed in-page.',
+        subtitle: 'Browse legal documents and open originals on official websites in a new tab.',
         lang: 'Language',
         tabSummary: 'Summary',
         tabStatus: 'Policy Status',
@@ -1720,10 +1724,10 @@
         summaryDimTitle: 'Dimension-focused quick recap',
         summaryDimDesc: 'The items below summarize current codification strength across labeling, election, non-consensual deepfakes, platform liability, and penalties.',
         summary: 'Summary',
-        preview: 'Document preview',
-        open: 'Open',
-        previewBtn: 'Preview',
-        previewHint: 'PDF/MD/TXT/HTML files support inline preview.',
+        preview: 'Original source',
+        open: 'Official source',
+        previewBtn: 'Official source',
+        previewHint: 'Instead of inline file preview, open the official website or official search result in a new tab.',
         noDocs: 'No documents.',
         loading: 'Loading...',
         noCountry: 'Missing country parameter.'
@@ -2641,6 +2645,77 @@
       if (v === 'ko') return `${base} (KO)`;
       return base;
     }
+    function cleanOfficialSearchText(doc) {
+      return String((doc && (doc.name || doc.legacy_relative_path || doc.relative_path)) || '')
+        .replace(/\.[a-z0-9]+$/i, '')
+        .replace(/^\w+(?:-\d{4})?[-_ ]+/i, '')
+        .replace(/[-_]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+    function officialSourceUrl(doc) {
+      const direct = String((doc && (doc.source_url || doc.official_url || doc.original_url || doc.web_url)) || '').trim();
+      if (/^https?:\/\//i.test(direct)) return direct;
+      const dir = String((doc && doc.resource_dir) || '').toLowerCase();
+      const q = encodeURIComponent(cleanOfficialSearchText(doc));
+      const fallback = {
+        argentina: `https://www.boletinoficial.gob.ar/busquedaAvanzada/all?palabra=${q}`,
+        australia: `https://www.legislation.gov.au/search?searchText=${q}`,
+        eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
+        france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
+        india: `https://www.indiacode.nic.in/search?keyword=${q}`,
+        pakistan: `https://na.gov.pk/en/bills.php`,
+        'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
+        singapore: `https://sso.agc.gov.sg/Search/Results?Phrase=${q}`,
+        korea: `https://www.law.go.kr/LSW/lsSc.do?query=${q}`,
+        'united-arab-emirates': `https://uaelegislation.gov.ae/en/search?query=${q}`,
+        'united-kingdom': `https://www.legislation.gov.uk/all?title=${q}`,
+        'united-states': `https://www.congress.gov/search?q=${q}`,
+        china: `https://www.cac.gov.cn/was5/web/search?searchword=${q}`,
+      };
+      return fallback[dir] || `https://www.google.com/search?q=${encodeURIComponent(`${cleanOfficialSearchText(doc)} official law`)}`;
+    }
+    function officialSourceHost(doc) {
+      try {
+        return new URL(officialSourceUrl(doc)).hostname.replace(/^www\./, '');
+      } catch (_) {
+        return '';
+      }
+    }
+    function renderOfficialSourcePanel(doc) {
+      setCurrentPreviewDoc(null);
+      docxPreviewEl.style.display = 'none';
+      docxPreviewEl.innerHTML = '';
+      xlsxPreviewEl.style.display = 'none';
+      xlsxPreviewEl.innerHTML = '';
+      epubPreviewEl.style.display = 'none';
+      epubPreviewEl.innerHTML = '';
+      preview.style.display = '';
+      preview.src = '';
+      const t = T[lang()];
+      if (!doc) {
+        preview.srcdoc = `<html><body style="font-family:Segoe UI,Noto Sans KR,sans-serif;padding:18px;color:#374151;background:#fff;">${escapeHtml(t.previewHint)}</body></html>`;
+        return;
+      }
+      const url = officialSourceUrl(doc);
+      const host = officialSourceHost(doc);
+      preview.srcdoc = `<!doctype html><html><head><meta charset="utf-8" /><style>
+        body{margin:0;font-family:Segoe UI,Noto Sans KR,sans-serif;background:#fff;color:#111827}
+        .box{padding:22px;line-height:1.65}
+        .kicker{display:inline-flex;padding:5px 9px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:12px;font-weight:800}
+        h1{font-size:20px;margin:14px 0 8px}
+        p{color:#4b5563;margin:0 0 12px}
+        a{display:inline-flex;margin-top:8px;padding:10px 13px;border-radius:12px;background:#1d4ed8;color:#fff;text-decoration:none;font-weight:800}
+        .host{font-size:12px;color:#64748b;margin-top:10px}
+      </style></head><body><div class="box">
+        <span class="kicker">${escapeHtml(t.preview)}</span>
+        <h1>${escapeHtml(doc.name || cleanOfficialSearchText(doc) || t.open)}</h1>
+        <p>${escapeHtml(t.previewHint)}</p>
+        <a href="${escapeHtml(url)}" target="_blank" rel="noopener">${escapeHtml(t.open)}</a>
+        ${host ? `<div class="host">${escapeHtml(host)}</div>` : ''}
+      </div></body></html>`;
+    }
     function cacheKeyByDoc(doc) {
       return String((doc && doc.url) || '');
     }
@@ -3189,6 +3264,7 @@
       if (!docs.length) {
         host.innerHTML = `<p class="muted">${escapeHtml(t.noDocs)}</p>`;
         preview.src = '';
+        renderOfficialSourcePanel(null);
         return;
       }
       const groups = groupLawFamilies(docs);
@@ -3240,16 +3316,16 @@
           const mainBody = g.has_volumes
             ? `<div class="volume-strip">${g.entries.map((entry) => {
               const entryDefault = entry.files && entry.files[0] ? entry.files[0] : null;
-              const formatButtons = (entry.files || []).map((f) => `<button type="button" class="format-btn" data-format-url="${escapeHtml(f.url)}" data-format-ext="${escapeHtml(f.extension || '')}">${escapeHtml(formatButtonLabel(f, entry.files || []))}</button>`).join('');
+              const formatButtons = (entry.files || []).map((f) => `<a class="format-btn" data-format-url="${escapeHtml(officialSourceUrl(f))}" data-format-ext="${escapeHtml(f.extension || '')}" href="${escapeHtml(officialSourceUrl(f))}" target="_blank" rel="noopener" title="${escapeHtml(officialSourceHost(f))}">${escapeHtml(formatButtonLabel(f, entry.files || []))}</a>`).join('');
               return `<div class="volume-item">
                 <div class="volume-head">
                   <span class="volume-title">${escapeHtml(entryDisplayLabel(entry))}</span>
-                  ${entryDefault ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(entryDefault.url)}">${escapeHtml(t.open)}</a>` : ''}
+                  ${entryDefault ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(officialSourceUrl(entryDefault))}">${escapeHtml(t.open)}</a>` : ''}
                 </div>
                 <div class="doc-formats volume-formats">${formatButtons}</div>
               </div>`;
             }).join('')}</div>`
-            : `<div class="doc-formats">${(g.entries[0] && g.entries[0].files ? g.entries[0].files : []).map((f) => `<button type="button" class="format-btn" data-format-url="${escapeHtml(f.url)}" data-format-ext="${escapeHtml(f.extension || '')}">${escapeHtml(formatButtonLabel(f, (g.entries[0] && g.entries[0].files) || []))}</button>`).join('')}</div>`;
+            : `<div class="doc-formats">${(g.entries[0] && g.entries[0].files ? g.entries[0].files : []).map((f) => `<a class="format-btn" data-format-url="${escapeHtml(officialSourceUrl(f))}" data-format-ext="${escapeHtml(f.extension || '')}" href="${escapeHtml(officialSourceUrl(f))}" target="_blank" rel="noopener" title="${escapeHtml(officialSourceHost(f))}">${escapeHtml(formatButtonLabel(f, (g.entries[0] && g.entries[0].files) || []))}</a>`).join('')}</div>`;
           return `<div class="doc-item ${escapeHtml(stageCardClass)} ${escapeHtml(typeColorClass(g.document_type))}">
             <div class="doc-top">
               <div class="doc-title-row">
@@ -3257,30 +3333,23 @@
                 <span class="tag ${escapeHtml(typeTag.cls)}">${escapeHtml(typeTag.label)}</span>
                 ${stage.needs_review ? `<span class="tag tag-review">${escapeHtml(T[lang()].reviewNeeded)}</span>` : ''}
               </div>
-              ${defaultFile ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(defaultFile.url)}">${escapeHtml(t.open)}</a>` : ''}
+              ${defaultFile ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(officialSourceUrl(defaultFile))}">${escapeHtml(t.open)}</a>` : ''}
             </div>
             ${mainBody}
           </div>`;
         }).join('')}</section>`;
       }).join('');
-      host.querySelectorAll('button[data-format-url]').forEach((btn) => {
-        btn.addEventListener('mouseenter', () => {
-          const u = btn.getAttribute('data-format-url') || '';
-          const ext = btn.getAttribute('data-format-ext') || '';
-          prefetchDoc({ url: u, extension: ext });
-        });
-        btn.addEventListener('click', async () => {
-          const u = btn.getAttribute('data-format-url') || '';
-          const ext = btn.getAttribute('data-format-ext') || '';
-          const picked = { url: u, extension: ext };
-          await setPreviewByDoc(picked);
+      host.querySelectorAll('a[data-format-url]').forEach((link) => {
+        link.addEventListener('mouseenter', () => {
+          const url = link.getAttribute('href') || '';
+          const ext = link.getAttribute('data-format-ext') || '';
+          renderOfficialSourcePanel({ name: link.textContent || t.open, source_url: url, extension: ext });
         });
       });
       const firstFile = groups.length && groups[0].entries && groups[0].entries[0] && groups[0].entries[0].files
         ? groups[0].entries[0].files[0]
         : null;
-      scheduleDocPrefetch(docs);
-      setPreviewByDoc(firstFile);
+      renderOfficialSourcePanel(firstFile);
     }
 
     function updateDocsModeOptions() {
