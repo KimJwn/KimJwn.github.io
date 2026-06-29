@@ -650,9 +650,26 @@
       return t.continentOther;
     }
     function countryLabel(c) { return (LABELS[lang()] || {})[c] || c; }
+    const COUNTRY_SLUGS = {
+      '독일': 'germany',
+      '미국': 'united-states',
+      '사우디': 'saudi-arabia',
+      '싱가폴': 'singapore',
+      '아랍에미리에이트': 'united-arab-emirates',
+      '아르헨티나': 'argentina',
+      '영국': 'united-kingdom',
+      '인도': 'india',
+      '중국': 'china',
+      '파키스탄': 'pakistan',
+      '프랑스': 'france',
+      '한국': 'korea',
+      '호주': 'australia',
+      EU: 'eu',
+    };
     function openCountry(country) {
-      const q = new URLSearchParams({ country, lang: lang() }).toString();
-      window.location.href = `/country.html?${q}`;
+      const slug = COUNTRY_SLUGS[country] || encodeURIComponent(country);
+      const q = new URLSearchParams({ lang: lang() }).toString();
+      window.location.href = `/country/${slug}/?${q}`;
     }
 
     function emptyStats() { return { total: 0, in_force: 0, proposed: 0, guidelines: 0, review: 0 }; }
