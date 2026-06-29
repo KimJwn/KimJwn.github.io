@@ -736,12 +736,12 @@
     }
     .law-coding-summary {
       display: grid;
-      gap: 8px;
-      margin: 10px 0 8px;
-      padding: 10px;
+      gap: 7px;
+      margin: 8px 0 0;
+      padding: 9px 10px;
       border: 1px solid #dbe5f2;
-      border-radius: 14px;
-      background: rgba(248, 251, 255, 0.86);
+      border-radius: 12px;
+      background: rgba(248, 251, 255, 0.7);
     }
     .law-coding-head {
       display: flex;
@@ -751,8 +751,7 @@
       color: #334155;
       font-size: 11px;
       font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: .01em;
     }
     .coded-count {
       padding: 3px 7px;
@@ -763,7 +762,7 @@
     }
     .coding-facet {
       display: grid;
-      grid-template-columns: 132px minmax(0, 1fr);
+      grid-template-columns: 116px minmax(0, 1fr);
       gap: 8px;
       align-items: start;
       font-size: 11px;
@@ -3453,8 +3452,8 @@
               </div>
               ${defaultFile ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(officialSourceUrl(defaultFile))}">${escapeHtml(t.open)}</a>` : ''}
             </div>
-            ${renderLawCodingSummary(g)}
             ${mainBody}
+            ${renderLawCodingSummary(g)}
           </div>`;
         }).join('')}</section>`;
       }).join('');
