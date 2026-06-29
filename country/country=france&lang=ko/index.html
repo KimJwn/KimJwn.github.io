@@ -921,6 +921,35 @@
       background: linear-gradient(180deg, #ffffff 0%, #eaf1ff 100%);
       box-shadow: 0 3px 10px rgba(37, 99, 235, 0.14);
     }
+    .docs-list-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 7px;
+    }
+    .country-search-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid #b7ccff;
+      background: linear-gradient(180deg, #ffffff 0%, #eef4ff 100%);
+      color: #17407d;
+      font-size: 11px;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 5px 14px rgba(15, 94, 234, 0.10);
+    }
+    .country-search-btn:hover {
+      border-color: #7aa6fb;
+      background: linear-gradient(180deg, #ffffff 0%, #e2ecff 100%);
+      color: #0f3f93;
+      text-decoration: none;
+    }
     .docs-flow-arrow {
       position: absolute;
       right: -22px;
@@ -1463,6 +1492,7 @@
       .docs-split { grid-template-columns: 1fr; }
       .docs-flow-arrow { display: none; }
       .docs-select-wrap { width: 100%; max-width: 100%; }
+      .docs-list-head { align-items: flex-start; flex-direction: column; }
       .viewer-box { height: 84vh; }
       .vtl-select { max-width: 100%; }
       .timeline-lane-label { display: none; }
@@ -1555,7 +1585,10 @@
           </section>
           <div class="docs-split">
             <div class="docs-select-wrap">
-              <h2 id="docsListHeader" class="docs-list-header"></h2>
+              <div class="docs-list-head">
+                <h2 id="docsListHeader" class="docs-list-header"></h2>
+                <a id="countryOfficialSearchBtn" class="country-search-btn" href="#" target="_blank" rel="noopener"></a>
+              </div>
               <div class="docs-select-pane">
                 <input id="docSearch" class="search-input" type="search" />
                 <div class="doc-toolbar">
@@ -1611,6 +1644,8 @@
         governanceContextRows: 'B1/B2 context rows',
         governanceGuidance: 'Voluntary guidance',
         docSearchPlaceholder: '상세 검색 (파일명/유형/상태/언어/연도)',
+        countryOfficialSearch: '공식 사이트에서 검색',
+        countryOfficialSearchTitle: '이 국가의 공식 법령/정책 사이트에서 딥페이크·생성형 AI 관련 규정을 검색합니다.',
         docViewLabel: '문서 보기',
         docViewOriginal: '원문(비영어)',
         docViewEnglish: '영어 버전',
@@ -1721,6 +1756,8 @@
         governanceContextRows: 'B1/B2 context rows',
         governanceGuidance: 'Voluntary guidance',
         docSearchPlaceholder: 'Detail search (file/type/stage/lang/year)',
+        countryOfficialSearch: 'Search official site',
+        countryOfficialSearchTitle: 'Search this country’s official legal or policy portal for deepfake and generative-AI regulation.',
         docViewLabel: 'Doc view',
         docViewOriginal: 'Original (non-English)',
         docViewEnglish: 'English version',
@@ -1901,6 +1938,7 @@
     const preview = document.getElementById('preview');
     const docsModeSwitchEl = document.getElementById('docsModeSwitch');
     const docSearchEl = document.getElementById('docSearch');
+    const countryOfficialSearchBtn = document.getElementById('countryOfficialSearchBtn');
     const timelineUnified = document.getElementById('timelineUnified');
     const timelineCompareStack = document.getElementById('timelineCompareStack');
     const timelineCompareControls = document.getElementById('timelineCompareControls');
@@ -2818,6 +2856,54 @@
         china: `https://www.cac.gov.cn/was5/web/search?searchword=${q}`,
       };
       return fallback[dir] || `https://www.google.com/search?q=${encodeURIComponent(`${cleanOfficialSearchText(doc)} official law`)}`;
+    }
+    function countryOfficialSearchQuery() {
+      const localized = {
+        '한국': '딥페이크 생성형 인공지능 합성미디어 인공지능 생성 콘텐츠 표시 라벨링 워터마크 투명성 책무성 선거 동의 개인정보 비동의 성적 이미지 플랫폼 책임',
+        '중국': '深度合成 生成式人工智能 人工智能生成内容 标识 水印 透明度 责任 选举 同意 隐私 平台责任',
+      };
+      if (localized[country]) return localized[country];
+      return [
+        '"synthetic media"',
+        '"synthetic content"',
+        '"deep synthesis"',
+        'deepfake',
+        '"AI-generated content"',
+        '"AI-generated synthetic content"',
+        '"generative AI"',
+        'disclosure',
+        'labeling',
+        'watermark',
+        'transparency',
+        'accountability',
+        'election',
+        'consent',
+        'privacy',
+        '"non-consensual intimate imagery"',
+        'NCII',
+        '"platform liability"'
+      ].join(' OR ');
+    }
+    function countryOfficialSearchUrl() {
+      const slug = COUNTRY_SLUGS[country] || '';
+      const q = encodeURIComponent(countryOfficialSearchQuery());
+      const urls = {
+        argentina: `https://www.boletinoficial.gob.ar/busquedaAvanzada/all?palabra=${q}`,
+        australia: `https://www.legislation.gov.au/search?searchText=${q}`,
+        eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
+        france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
+        india: `https://www.indiacode.nic.in/search?keyword=${q}`,
+        pakistan: 'https://na.gov.pk/en/bills.php',
+        'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
+        singapore: `https://sso.agc.gov.sg/Search/Results?Phrase=${q}`,
+        korea: `https://www.law.go.kr/LSW/lsSc.do?query=${q}`,
+        'united-arab-emirates': `https://uaelegislation.gov.ae/en/search?query=${q}`,
+        'united-kingdom': `https://www.legislation.gov.uk/all?title=${q}`,
+        'united-states': `https://www.congress.gov/search?q=${q}`,
+        china: `https://www.cac.gov.cn/was5/web/search?searchword=${q}`,
+      };
+      return urls[slug] || `https://www.google.com/search?q=${encodeURIComponent(`${countryDisplayLabel(country)} deepfake AI-generated content law official`)}`;
     }
     function officialSourceHost(doc) {
       try {
@@ -3767,6 +3853,11 @@
       document.getElementById('backLink').href = withLang('/deepfake-policy/countries/');
       document.getElementById('docsHeader').textContent = t.docs;
       document.getElementById('docsListHeader').textContent = t.docsCollection;
+      if (countryOfficialSearchBtn) {
+        countryOfficialSearchBtn.textContent = t.countryOfficialSearch;
+        countryOfficialSearchBtn.title = `${t.countryOfficialSearchTitle}\n${countryOfficialSearchQuery()}`;
+        countryOfficialSearchBtn.href = countryOfficialSearchUrl();
+      }
       renderWordcloud();
       renderGovernanceScores();
       docSearchEl.placeholder = t.docSearchPlaceholder;
