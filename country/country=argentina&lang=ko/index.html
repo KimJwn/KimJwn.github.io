@@ -3540,7 +3540,7 @@
           const mainBody = g.has_volumes
             ? `<div class="volume-strip">${g.entries.map((entry) => {
               const entryDefault = entry.files && entry.files[0] ? entry.files[0] : null;
-              const formatButtons = (entry.files || []).map((f) => `<a class="format-btn" data-law-key="${escapeHtml(g.key)}" data-format-url="${escapeHtml(officialSourceUrl(f))}" data-format-ext="${escapeHtml(f.extension || '')}" href="${escapeHtml(officialSourceUrl(f))}" target="_blank" rel="noopener" title="${escapeHtml(officialSourceHost(f))}">${escapeHtml(formatButtonLabel(f, entry.files || []))}</a>`).join('');
+              const formatButtons = (entry.files || []).map((f) => `<button type="button" class="format-btn" data-law-key="${escapeHtml(g.key)}" data-format-url="${escapeHtml(officialSourceUrl(f))}" data-format-ext="${escapeHtml(f.extension || '')}" title="${escapeHtml(officialSourceHost(f))}">${escapeHtml(formatButtonLabel(f, entry.files || []))}</button>`).join('');
               return `<div class="volume-item">
                 <div class="volume-head">
                   <span class="volume-title">${escapeHtml(entryDisplayLabel(entry))}</span>
@@ -3549,7 +3549,7 @@
                 <div class="doc-formats volume-formats">${formatButtons}</div>
               </div>`;
             }).join('')}</div>`
-            : `<div class="doc-formats">${(g.entries[0] && g.entries[0].files ? g.entries[0].files : []).map((f) => `<a class="format-btn" data-law-key="${escapeHtml(g.key)}" data-format-url="${escapeHtml(officialSourceUrl(f))}" data-format-ext="${escapeHtml(f.extension || '')}" href="${escapeHtml(officialSourceUrl(f))}" target="_blank" rel="noopener" title="${escapeHtml(officialSourceHost(f))}">${escapeHtml(formatButtonLabel(f, (g.entries[0] && g.entries[0].files) || []))}</a>`).join('')}</div>`;
+            : `<div class="doc-formats">${(g.entries[0] && g.entries[0].files ? g.entries[0].files : []).map((f) => `<button type="button" class="format-btn" data-law-key="${escapeHtml(g.key)}" data-format-url="${escapeHtml(officialSourceUrl(f))}" data-format-ext="${escapeHtml(f.extension || '')}" title="${escapeHtml(officialSourceHost(f))}">${escapeHtml(formatButtonLabel(f, (g.entries[0] && g.entries[0].files) || []))}</button>`).join('')}</div>`;
           return `<div class="doc-item ${escapeHtml(stageCardClass)} ${escapeHtml(typeColorClass(g.document_type))}">
             <div class="doc-top">
               <div class="doc-title-row">
@@ -3563,13 +3563,16 @@
           </div>`;
         }).join('')}</section>`;
       }).join('');
-      host.querySelectorAll('a[data-format-url]').forEach((link) => {
-        link.addEventListener('mouseenter', () => {
-          const url = link.getAttribute('href') || '';
+      host.querySelectorAll('[data-format-url]').forEach((link) => {
+        const previewFormat = () => {
+          const url = link.getAttribute('data-format-url') || '';
           const ext = link.getAttribute('data-format-ext') || '';
           const key = link.getAttribute('data-law-key') || '';
           renderOfficialSourcePanel({ name: link.textContent || t.open, source_url: url, extension: ext, law_key: key });
-        });
+        };
+        link.addEventListener('mouseenter', previewFormat);
+        link.addEventListener('focus', previewFormat);
+        link.addEventListener('click', previewFormat);
       });
       const firstGroup = groups.length ? groups[0] : null;
       const firstFile = firstGroup && firstGroup.entries && firstGroup.entries[0] && firstGroup.entries[0].files
