@@ -2844,7 +2844,7 @@
         australia: `https://www.legislation.gov.au/search?searchText=${q}`,
         eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
         france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
-        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=or&words=${q}`,
         india: `https://www.indiacode.nic.in/search?keyword=${q}`,
         pakistan: `https://na.gov.pk/en/bills.php`,
         'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
@@ -2864,13 +2864,13 @@
       };
       if (localized[country]) return localized[country];
       return [
-        '"synthetic media"',
-        '"synthetic content"',
-        '"deep synthesis"',
+        'synthetic media',
+        'synthetic content',
+        'deep synthesis',
         'deepfake',
-        '"AI-generated content"',
-        '"AI-generated synthetic content"',
-        '"generative AI"',
+        'AI-generated content',
+        'AI-generated synthetic content',
+        'generative AI',
         'disclosure',
         'labeling',
         'watermark',
@@ -2879,10 +2879,10 @@
         'election',
         'consent',
         'privacy',
-        '"non-consensual intimate imagery"',
+        'non-consensual intimate imagery',
         'NCII',
-        '"platform liability"'
-      ].join(' OR ');
+        'platform liability'
+      ].join(' ');
     }
     function countryOfficialSearchUrl() {
       const slug = COUNTRY_SLUGS[country] || '';
@@ -2892,7 +2892,7 @@
         australia: `https://www.legislation.gov.au/search?searchText=${q}`,
         eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
         france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
-        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=or&words=${q}`,
         india: `https://www.indiacode.nic.in/search?keyword=${q}`,
         pakistan: 'https://na.gov.pk/en/bills.php',
         'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
