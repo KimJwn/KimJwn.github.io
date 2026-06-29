@@ -734,6 +734,64 @@
       flex-wrap: wrap;
       margin-top: 6px;
     }
+    .law-coding-summary {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 8px;
+      padding: 10px;
+      border: 1px solid #dbe5f2;
+      border-radius: 14px;
+      background: rgba(248, 251, 255, 0.86);
+    }
+    .law-coding-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #334155;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .coded-count {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: #eaf1ff;
+      color: #1d4ed8;
+      white-space: nowrap;
+    }
+    .coding-facet {
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      font-size: 11px;
+    }
+    .coding-facet-label {
+      color: #64748b;
+      font-weight: 800;
+    }
+    .coding-chipline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .coding-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #d6e0ee;
+      color: #1f334d;
+      font-weight: 700;
+    }
+    .coding-chip-count {
+      color: #64748b;
+      font-weight: 800;
+    }
     .volume-strip {
       display: flex;
       gap: 8px;
@@ -1624,6 +1682,12 @@
         open: '원문 사이트',
         previewBtn: '원문 사이트',
         previewHint: '원문 파일 미리보기 대신 공식 웹사이트 또는 공식 검색 결과를 새 탭으로 엽니다.',
+        codingSummary: 'Clause-based Coding',
+        codedRows: 'Coded rows',
+        primaryPolicyDimensions: 'Primary policy dimensions',
+        riskTags: 'Risk tags',
+        lifeCycleTags: 'Life-cycle tags',
+        defenseLayers: 'Defense layers',
         noDocs: '문서가 없습니다.',
         loading: '불러오는 중...',
         noCountry: '국가 파라미터가 없습니다.'
@@ -1728,6 +1792,12 @@
         open: 'Official source',
         previewBtn: 'Official source',
         previewHint: 'Instead of inline file preview, open the official website or official search result in a new tab.',
+        codingSummary: 'Clause-based Coding',
+        codedRows: 'Coded rows',
+        primaryPolicyDimensions: 'Primary policy dimensions',
+        riskTags: 'Risk tags',
+        lifeCycleTags: 'Life-cycle tags',
+        defenseLayers: 'Defense layers',
         noDocs: 'No documents.',
         loading: 'Loading...',
         noCountry: 'Missing country parameter.'
@@ -1805,6 +1875,7 @@
     let epubBook = null;
     let epubRendition = null;
     let docsCache = [];
+    let lawCodingSummary = null;
     const compareDocsCache = {};
     let dashboardSummary = {};
     let globalTimelineAgg = {};
@@ -3256,6 +3327,53 @@
       if (hasEpub) return 'Consolidated EPUB';
       return (entry && entry.display_name) || '';
     }
+    async function loadLawCodingSummary() {
+      if (lawCodingSummary) return lawCodingSummary;
+      try {
+        const res = await fetch('/api-static/law-coding-summary.json');
+        if (!res.ok) throw new Error('coding summary fetch failed');
+        lawCodingSummary = await res.json();
+      } catch (_) {
+        lawCodingSummary = { laws: {} };
+      }
+      return lawCodingSummary;
+    }
+    function currentCodingCountryKey() {
+      return WORDCLOUD_COUNTRY_KEYS[country] || COUNTRY_LABELS.en[country] || country;
+    }
+    function codingSummaryForGroup(group) {
+      const laws = (lawCodingSummary && lawCodingSummary.laws) || {};
+      const bucket = laws[currentCodingCountryKey()] || laws[country] || {};
+      if (!group || !bucket) return null;
+      if (bucket[group.key]) return bucket[group.key];
+      const entries = group.entries || [];
+      for (const entry of entries) {
+        const primary = entry && entry.primary;
+        const key = canonicalLawKey(docLawKey(primary && (primary.relative_path || primary.legacy_relative_path || primary.name)));
+        if (bucket[key]) return bucket[key];
+      }
+      return null;
+    }
+    function renderCodingChips(items) {
+      const arr = Array.isArray(items) ? items.filter((item) => item && item.label) : [];
+      if (!arr.length) return '<span class="muted">-</span>';
+      return `<span class="coding-chipline">${arr.slice(0, 4).map((item) => `<span class="coding-chip">${escapeHtml(item.label)} <span class="coding-chip-count">${Number(item.count || 0).toLocaleString()}</span></span>`).join('')}</span>`;
+    }
+    function renderLawCodingSummary(group) {
+      const summary = codingSummaryForGroup(group);
+      if (!summary || !Number(summary.coded_rows || 0)) return '';
+      const t = T[lang()];
+      return `<div class="law-coding-summary">
+        <div class="law-coding-head">
+          <span>${escapeHtml(t.codingSummary)}</span>
+          <span class="coded-count">${escapeHtml(t.codedRows)} ${Number(summary.coded_rows || 0).toLocaleString(lang() === 'ko' ? 'ko-KR' : 'en-US')}</span>
+        </div>
+        <div class="coding-facet"><span class="coding-facet-label">${escapeHtml(t.primaryPolicyDimensions)}</span>${renderCodingChips(summary.primary_policy_dimensions)}</div>
+        <div class="coding-facet"><span class="coding-facet-label">${escapeHtml(t.riskTags)}</span>${renderCodingChips(summary.risk_tags)}</div>
+        <div class="coding-facet"><span class="coding-facet-label">${escapeHtml(t.lifeCycleTags)}</span>${renderCodingChips(summary.life_cycle_tags)}</div>
+        <div class="coding-facet"><span class="coding-facet-label">${escapeHtml(t.defenseLayers)}</span>${renderCodingChips(summary.defense_layers)}</div>
+      </div>`;
+    }
     function renderDocsList(selection) {
       const t = T[lang()];
       const docs = selection && Array.isArray(selection.docs) ? selection.docs : [];
@@ -3335,6 +3453,7 @@
               </div>
               ${defaultFile ? `<a class="open-mini" target="_blank" rel="noopener" href="${escapeHtml(officialSourceUrl(defaultFile))}">${escapeHtml(t.open)}</a>` : ''}
             </div>
+            ${renderLawCodingSummary(g)}
             ${mainBody}
           </div>`;
         }).join('')}</section>`;
@@ -3828,6 +3947,7 @@
       if (!res.ok) { host.innerHTML = `<p class="muted">${escapeHtml(t.noDocs)}</p>`; return; }
       const data = await res.json();
       docsCache = data.documents || [];
+      await loadLawCodingSummary();
       updateDocsModeOptions();
       renderDocsList(selectVisibleDocs(docsCache));
     }
