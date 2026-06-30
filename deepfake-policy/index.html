@@ -121,6 +121,20 @@
       flex-wrap: wrap;
       margin: 34px auto 0;
     }
+    .paper-figure {
+      width: 100%;
+      margin: 0 auto;
+    }
+    .paper-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+    .hero-figure {
+      max-width: 860px;
+      margin: 48px auto 0;
+    }
     .project-btn {
       min-width: 210px;
       display: inline-flex;
@@ -176,8 +190,8 @@
     .teaser {
       margin: 74px 0 0;
       display: grid;
-      grid-template-columns: minmax(0, 1.06fr) minmax(340px, .94fr);
-      gap: 18px;
+      grid-template-columns: 1fr;
+      gap: 64px;
       align-items: stretch;
     }
     .figure-panel,
@@ -190,8 +204,8 @@
       overflow: hidden;
     }
     .figure-panel {
-      min-height: 480px;
-      padding: 26px;
+      min-height: 0;
+      padding: 34px;
       display: grid;
       align-content: space-between;
       background:
@@ -214,7 +228,7 @@
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
-      margin: 24px 0;
+      margin: 34px 0;
     }
     .pipeline-node {
       min-height: 132px;
@@ -279,8 +293,8 @@
       font-weight: 700;
     }
     .quote-panel {
-      min-height: 480px;
-      padding: 24px;
+      min-height: 430px;
+      padding: 34px;
       display: grid;
       grid-template-rows: auto 1fr auto;
       gap: 18px;
@@ -323,6 +337,10 @@
       min-height: 300px;
       padding: 8px 2px;
       transition: opacity .34s ease, transform .34s ease;
+    }
+    .wordcloud-figure {
+      max-width: 920px;
+      padding: 0 10px;
     }
     .quote-card.is-fading {
       opacity: 0;
@@ -401,6 +419,11 @@
       margin-top: 34px;
       text-align: left;
     }
+    .section-figure {
+      max-width: 880px;
+      margin-top: 48px;
+      margin-bottom: 46px;
+    }
     .method-card {
       border: 1px solid transparent;
       border-radius: 20px;
@@ -441,8 +464,12 @@
       .hero { padding: 40px 0 34px; }
       .hero h1 { font-size: 40px; }
       .project-btn { width: 100%; }
+      .hero-figure { margin-top: 34px; }
+      .teaser { gap: 46px; }
+      .figure-panel, .quote-panel { padding: 24px; }
       .abstract-band { padding: 60px 16px; }
       .section { padding: 60px 16px; }
+      .section-figure { margin-top: 36px; margin-bottom: 34px; }
       .abstract-content { text-align: left; font-size: 15px; }
       .pipeline { grid-template-columns: 1fr; }
       .stat-row { grid-template-columns: 1fr; }
@@ -467,6 +494,9 @@
       <h1 id="projectTitle"></h1>
       <p class="authors" id="authorsText"></p>
       <p class="affiliation" id="affiliationText"></p>
+      <figure class="paper-figure hero-figure">
+        <img src="./figures/deepfake_method-output.png" alt="Deepfake policy methodology overview" loading="eager" />
+      </figure>
       <div class="project-links" aria-label="Project navigation">
         <a class="project-btn primary" id="countriesBtn" href="/deepfake-policy/countries/"></a>
         <a class="project-btn secondary" id="codingBtn" href="/deepfake-policy/coding/"></a>
@@ -494,6 +524,10 @@
         <div class="stat-row" id="stats"></div>
       </article>
 
+      <figure class="paper-figure wordcloud-figure">
+        <img src="./figures/global-official-law-english-wordcloud-python.png" alt="Word cloud of English terms in official deepfake law documents" loading="lazy" />
+      </figure>
+
       <article class="quote-panel" aria-label="Rotating legal provisions">
         <div class="quote-head">
           <span class="quote-badge" id="quoteBadge"></span>
@@ -514,6 +548,9 @@
       <div class="section-inner">
         <h2 id="summaryTitle"></h2>
         <p id="summaryText"></p>
+        <figure class="paper-figure section-figure">
+          <img src="./figures/image.png" alt="Corpus and analysis scope figure" loading="lazy" />
+        </figure>
         <div class="method-grid" id="methodGrid"></div>
       </div>
     </section>
