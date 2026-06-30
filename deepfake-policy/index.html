@@ -190,8 +190,8 @@
     .teaser {
       margin: 74px 0 0;
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 64px;
+      grid-template-columns: minmax(0, 1.06fr) minmax(340px, .94fr);
+      gap: 24px;
       align-items: stretch;
     }
     .figure-panel,
@@ -207,6 +207,7 @@
       min-height: 0;
       padding: 34px;
       display: grid;
+      gap: 34px;
       align-content: space-between;
       background:
         linear-gradient(135deg, rgba(255,255,255,.92), rgba(241,246,255,.9)),
@@ -339,8 +340,12 @@
       transition: opacity .34s ease, transform .34s ease;
     }
     .wordcloud-figure {
-      max-width: 920px;
-      padding: 0 10px;
+      max-width: 100%;
+      padding: 0;
+    }
+    .wordcloud-figure img {
+      aspect-ratio: 16 / 10;
+      object-fit: contain;
     }
     .quote-card.is-fading {
       opacity: 0;
@@ -521,12 +526,11 @@
           <p class="figure-subtitle" id="figureSubtitle"></p>
         </div>
         <div class="pipeline" id="pipeline"></div>
+        <figure class="paper-figure wordcloud-figure">
+          <img src="./figures/global-official-law-english-wordcloud-python.png" alt="Word cloud of English terms in official deepfake law documents" loading="lazy" />
+        </figure>
         <div class="stat-row" id="stats"></div>
       </article>
-
-      <figure class="paper-figure wordcloud-figure">
-        <img src="./figures/global-official-law-english-wordcloud-python.png" alt="Word cloud of English terms in official deepfake law documents" loading="lazy" />
-      </figure>
 
       <article class="quote-panel" aria-label="Rotating legal provisions">
         <div class="quote-head">
