@@ -371,9 +371,17 @@
       background: #2457d6;
     }
     .section {
-      max-width: 940px;
-      margin: 42px auto 0;
+      width: 100vw;
+      margin: 42px 0 0 calc(50% - 50vw);
+      padding: 46px 22px;
       text-align: center;
+      background: linear-gradient(180deg, #f3f5f8 0%, #edf1f6 100%);
+      border-top: 1px solid #d9e1ec;
+      border-bottom: 1px solid #d9e1ec;
+    }
+    .section-inner {
+      max-width: 940px;
+      margin: 0 auto;
     }
     .section h2 {
       margin: 0 0 12px;
@@ -434,6 +442,7 @@
       .hero h1 { font-size: 40px; }
       .project-btn { width: 100%; }
       .abstract-band { padding: 34px 16px; }
+      .section { padding: 34px 16px; }
       .abstract-content { text-align: left; font-size: 15px; }
       .pipeline { grid-template-columns: 1fr; }
       .stat-row { grid-template-columns: 1fr; }
@@ -502,9 +511,11 @@
     </section>
 
     <section class="section" aria-labelledby="summaryTitle">
-      <h2 id="summaryTitle"></h2>
-      <p id="summaryText"></p>
-      <div class="method-grid" id="methodGrid"></div>
+      <div class="section-inner">
+        <h2 id="summaryTitle"></h2>
+        <p id="summaryText"></p>
+        <div class="method-grid" id="methodGrid"></div>
+      </div>
     </section>
 
     <footer class="footer" id="footerText"></footer>
