@@ -94,22 +94,9 @@
       text-align: center;
       padding: 28px 0 20px;
     }
-    .venue {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid #c8d6f5;
-      color: var(--paper-blue-dark);
-      background: #eef4ff;
-      font: 800 12px/1 "Poppins", "Noto Sans KR", sans-serif;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
     .hero h1 {
       max-width: 940px;
-      margin: 20px auto 10px;
+      margin: 6px auto 10px;
       color: #111827;
       font-size: clamp(40px, 7vw, 78px);
       line-height: .98;
@@ -161,15 +148,34 @@
       background: #fff;
       border-color: #cfd9eb;
     }
-    .abstract {
+    .abstract-band {
+      width: 100vw;
+      margin: 30px 0 0 calc(50% - 50vw);
+      padding: 46px 22px;
+      background: linear-gradient(180deg, #f3f5f8 0%, #edf1f6 100%);
+      border-top: 1px solid #d9e1ec;
+      border-bottom: 1px solid #d9e1ec;
+    }
+    .abstract-inner {
       max-width: 900px;
-      margin: 28px auto 0;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .abstract-inner h2 {
+      margin: 0 0 18px;
+      color: #111827;
+      font: 900 34px/1 "Poppins", "Noto Sans KR", sans-serif;
+      letter-spacing: -.05em;
+    }
+    .abstract-content {
       color: #334155;
       font-size: 17px;
-      line-height: 1.72;
+      line-height: 1.78;
+      text-align: justify;
+      text-justify: inter-word;
     }
     .teaser {
-      margin: 34px 0 0;
+      margin: 38px 0 0;
       display: grid;
       grid-template-columns: minmax(0, 1.06fr) minmax(340px, .94fr);
       gap: 18px;
@@ -427,6 +433,8 @@
       .topbar { align-items: flex-start; }
       .hero h1 { font-size: 40px; }
       .project-btn { width: 100%; }
+      .abstract-band { padding: 34px 16px; }
+      .abstract-content { text-align: left; font-size: 15px; }
       .pipeline { grid-template-columns: 1fr; }
       .stat-row { grid-template-columns: 1fr; }
       .quote-text { font-size: 13px; }
@@ -447,7 +455,6 @@
     </header>
 
     <section class="hero" aria-labelledby="projectTitle">
-      <span class="venue" id="venueText"></span>
       <h1 id="projectTitle"></h1>
       <p class="authors" id="authorsText"></p>
       <p class="affiliation" id="affiliationText"></p>
@@ -455,8 +462,18 @@
         <a class="project-btn primary" id="countriesBtn" href="/deepfake-policy/countries/"></a>
         <a class="project-btn secondary" id="codingBtn" href="/deepfake-policy/coding/"></a>
       </div>
-      <p class="abstract" id="abstractText"></p>
     </section>
+
+    <!-- Paper abstract -->
+    <section class="abstract-band" aria-labelledby="abstractTitle">
+      <div class="abstract-inner">
+        <h2 id="abstractTitle"></h2>
+        <div class="abstract-content">
+          <p id="abstractText"></p>
+        </div>
+      </div>
+    </section>
+    <!-- End paper abstract -->
 
     <section class="teaser" aria-label="Project teaser">
       <article class="figure-panel">
@@ -499,7 +516,7 @@
     const T = {
       en: {
         lang: 'Language',
-        venue: 'Academic project page',
+        abstractTitle: 'Abstract',
         title: 'Deepfake Policy Observatory',
         authors: 'Jiwon Kim',
         affiliation: 'Vision AI + Security · Sungkyunkwan University · CSIRO visiting research context',
@@ -532,7 +549,7 @@
       },
       ko: {
         lang: '언어',
-        venue: 'Academic project page',
+        abstractTitle: 'Abstract',
         title: 'Deepfake Policy Observatory',
         authors: '김지원 (Jiwon Kim)',
         affiliation: 'Vision AI + Security · 성균관대학교 · CSIRO 방문연구 맥락',
@@ -651,12 +668,12 @@
 
     const els = {
       langLabel: document.getElementById('langLabel'),
-      venueText: document.getElementById('venueText'),
       projectTitle: document.getElementById('projectTitle'),
       authorsText: document.getElementById('authorsText'),
       affiliationText: document.getElementById('affiliationText'),
       countriesBtn: document.getElementById('countriesBtn'),
       codingBtn: document.getElementById('codingBtn'),
+      abstractTitle: document.getElementById('abstractTitle'),
       abstractText: document.getElementById('abstractText'),
       figureTitle: document.getElementById('figureTitle'),
       figureSubtitle: document.getElementById('figureSubtitle'),
@@ -714,7 +731,6 @@
       const x = t();
       document.documentElement.lang = lang();
       els.langLabel.textContent = `${x.lang}:`;
-      els.venueText.textContent = x.venue;
       els.projectTitle.textContent = x.title;
       els.authorsText.textContent = x.authors;
       els.affiliationText.textContent = x.affiliation;
@@ -722,6 +738,7 @@
       els.countriesBtn.href = withLang('/deepfake-policy/countries/');
       els.codingBtn.textContent = x.codingBtn;
       els.codingBtn.href = withLang('/deepfake-policy/coding/');
+      els.abstractTitle.textContent = x.abstractTitle;
       els.abstractText.textContent = x.abstract;
       els.figureTitle.textContent = x.figureTitle;
       els.figureSubtitle.textContent = x.figureSubtitle;
