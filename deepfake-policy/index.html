@@ -42,30 +42,10 @@
     .topbar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 16px;
       margin-bottom: 26px;
       font-family: "Poppins", "Noto Sans KR", sans-serif;
-    }
-    .brand {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      color: #1e293b;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .brand-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      display: inline-grid;
-      place-items: center;
-      color: #fff;
-      background: linear-gradient(135deg, #173b8f 0%, #2457d6 70%, #f97316 100%);
-      box-shadow: none;
     }
     .langbox {
       display: inline-flex;
@@ -486,7 +466,6 @@
 <body>
   <main class="page">
     <header class="topbar">
-      <div class="brand"><span class="brand-mark">D</span><span>Deepfake Policy Observatory</span></div>
       <div class="langbox">
         <label for="uiLang" id="langLabel">Language:</label>
         <select id="uiLang">
