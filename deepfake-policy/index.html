@@ -39,15 +39,17 @@
       margin: 0 auto;
       padding: 30px 22px 72px;
     }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 16px;
-      margin-bottom: 26px;
+    .hero-title-row {
+      position: relative;
+      max-width: 1600px;
+      margin: 0 auto;
       font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
     .langbox {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -446,8 +448,15 @@
     }
     @media (max-width: 640px) {
       .page { padding: 22px 14px 52px; }
-      .topbar { align-items: flex-start; }
       .hero { padding: 40px 0 34px; }
+      .hero-title-row {
+        display: grid;
+        gap: 16px;
+      }
+      .langbox {
+        position: static;
+        justify-self: end;
+      }
       .hero h1 { font-size: 40px; }
       .project-btn { width: 100%; }
       .hero-figure { margin-top: 34px; }
@@ -465,18 +474,17 @@
 </head>
 <body>
   <main class="page">
-    <header class="topbar">
-      <div class="langbox">
-        <label for="uiLang" id="langLabel">Language:</label>
-        <select id="uiLang">
-          <option value="en">English</option>
-          <option value="ko">한국어</option>
-        </select>
-      </div>
-    </header>
-
     <section class="hero" aria-labelledby="projectTitle">
-      <h1 id="projectTitle"></h1>
+      <div class="hero-title-row">
+        <h1 id="projectTitle"></h1>
+        <div class="langbox">
+          <label for="uiLang" id="langLabel">Language:</label>
+          <select id="uiLang">
+            <option value="en">English</option>
+            <option value="ko">한국어</option>
+          </select>
+        </div>
+      </div>
       <p class="authors" id="authorsText"></p>
       <p class="affiliation" id="affiliationText"></p>
       <figure class="paper-figure hero-figure">
