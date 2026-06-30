@@ -16,12 +16,12 @@
     :root {
       --paper-ink: #142033;
       --paper-muted: #64748b;
-      --paper-line: #d8e1ef;
+      --paper-line: rgba(20, 32, 51, 0.08);
       --paper-blue: #2457d6;
       --paper-blue-dark: #163b91;
       --paper-warm: #fff7ed;
       --paper-card: rgba(255, 255, 255, 0.9);
-      --paper-shadow: 0 24px 70px rgba(15, 23, 42, 0.11);
+      --paper-shadow: none;
     }
     html { scroll-behavior: smooth; }
     body {
@@ -65,7 +65,7 @@
       place-items: center;
       color: #fff;
       background: linear-gradient(135deg, #173b8f 0%, #2457d6 70%, #f97316 100%);
-      box-shadow: 0 10px 26px rgba(36, 87, 214, .22);
+      box-shadow: none;
     }
     .langbox {
       display: inline-flex;
@@ -132,21 +132,21 @@
       text-decoration: none;
       font: 800 14px/1 "Poppins", "Noto Sans KR", sans-serif;
       border: 1px solid transparent;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      transition: transform .2s ease, background .2s ease;
     }
     .project-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 14px 30px rgba(15, 23, 42, .13);
+      box-shadow: none;
     }
     .project-btn.primary {
       color: #fff;
       background: linear-gradient(180deg, #2d66f0 0%, #174ed0 100%);
-      box-shadow: 0 12px 30px rgba(36, 87, 214, .24);
+      box-shadow: none;
     }
     .project-btn.secondary {
       color: #10213f;
       background: #fff;
-      border-color: #cfd9eb;
+      border-color: rgba(16, 33, 63, .12);
     }
     .abstract-band {
       width: 100vw;
@@ -184,7 +184,7 @@
     .figure-panel,
     .quote-panel {
       position: relative;
-      border: 1px solid var(--paper-line);
+      border: 1px solid transparent;
       border-radius: 26px;
       background: var(--paper-card);
       box-shadow: var(--paper-shadow);
@@ -219,7 +219,7 @@
     }
     .pipeline-node {
       min-height: 132px;
-      border: 1px solid #d7e1f1;
+      border: 1px solid transparent;
       border-radius: 18px;
       padding: 14px;
       background: rgba(255,255,255,.78);
@@ -259,7 +259,7 @@
     }
     .stat {
       border-radius: 18px;
-      border: 1px solid #d7e1f1;
+      border: 1px solid transparent;
       background: #fff;
       padding: 14px 12px;
       text-align: center;
@@ -305,7 +305,7 @@
       border-radius: 999px;
       color: #173b8f;
       background: #eef4ff;
-      border: 1px solid #c8d6f5;
+      border: 1px solid transparent;
       font-size: 11px;
       font-weight: 900;
       letter-spacing: .04em;
@@ -403,11 +403,11 @@
       text-align: left;
     }
     .method-card {
-      border: 1px solid var(--paper-line);
+      border: 1px solid transparent;
       border-radius: 20px;
       padding: 18px;
       background: rgba(255,255,255,.82);
-      box-shadow: 0 14px 38px rgba(15,23,42,.06);
+      box-shadow: none;
       font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
     .method-card h3 {
