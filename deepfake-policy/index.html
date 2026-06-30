@@ -3,571 +3,645 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Deepfake Policy Observatory: compare country-level deepfake laws, clause-based coding, penalties, and official legal sources." />
+  <meta name="description" content="Deepfake Policy Observatory: an academic project page for comparing deepfake and synthetic-media regulation through country dashboards and clause-based coding." />
   <link rel="canonical" href="https://kimjwn.github.io/deepfake-policy/" />
   <meta property="og:title" content="Deepfake Policy Observatory" />
-  <meta property="og:description" content="Compare country-level deepfake laws, clause-based coding, penalties, and official legal sources." />
+  <meta property="og:description" content="Compare deepfake and synthetic-media regulation through country dashboards, legal text, corpus data, and clause-based coding results." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://kimjwn.github.io/deepfake-policy/" />
-  <title>Deepfake Policy Research</title>
+  <title>Deepfake Policy Observatory</title>
   <link rel="stylesheet" href="../assets/palette.css" />
   <style>
     * { box-sizing: border-box; }
+    :root {
+      --paper-ink: #142033;
+      --paper-muted: #64748b;
+      --paper-line: #d8e1ef;
+      --paper-blue: #2457d6;
+      --paper-blue-dark: #163b91;
+      --paper-warm: #fff7ed;
+      --paper-card: rgba(255, 255, 255, 0.9);
+      --paper-shadow: 0 24px 70px rgba(15, 23, 42, 0.11);
+    }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Poppins","Noto Sans KR","Segoe UI",sans-serif;
-      color: #0f172a;
+      color: var(--paper-ink);
+      font-family: Georgia, "Times New Roman", "Noto Serif KR", serif;
       background:
-        radial-gradient(circle at top left, rgba(15,94,234,0.12), transparent 28%),
-        radial-gradient(circle at 85% 20%, rgba(148,163,184,0.18), transparent 22%),
-        linear-gradient(180deg, #f8fbff 0%, #f8fafc 44%, #ffffff 100%);
+        radial-gradient(circle at 16% 8%, rgba(36, 87, 214, 0.14), transparent 30%),
+        radial-gradient(circle at 90% 18%, rgba(251, 146, 60, 0.16), transparent 24%),
+        linear-gradient(180deg, #fbfdff 0%, #f7f9fc 46%, #ffffff 100%);
     }
-    .wrap {
-      min-height: 100vh;
-      max-width: var(--layout-page-max-width);
+    a { color: inherit; }
+    .page {
+      max-width: 1120px;
       margin: 0 auto;
-      padding: var(--layout-page-padding-top) var(--layout-page-padding-x) var(--layout-page-padding-bottom);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 20px;
+      padding: 26px 22px 56px;
     }
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 26px;
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
     .brand {
-      display: grid;
-      gap: 4px;
-    }
-    .brand-kicker {
-      margin: 0;
-      color: #0f5eea;
-      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #1e293b;
+      font-size: 13px;
       font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
-    .brand-title {
-      margin: 0;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -.03em;
+    .brand-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      display: inline-grid;
+      place-items: center;
+      color: #fff;
+      background: linear-gradient(135deg, #173b8f 0%, #2457d6 70%, #f97316 100%);
+      box-shadow: 0 10px 26px rgba(36, 87, 214, .22);
     }
     .langbox {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 8px 10px;
+      border: 1px solid var(--paper-line);
       border-radius: 999px;
-      border: 1px solid #d6deea;
-      background: rgba(255,255,255,0.82);
+      background: rgba(255,255,255,.78);
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
-    .langbox label { font-size: 13px; color: #475569; }
+    .langbox label {
+      color: var(--paper-muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
     .langbox select {
       border: 0;
+      outline: 0;
       background: transparent;
-      color: #0f172a;
-      font-size: 13px;
-      font-weight: 700;
-      outline: none;
+      color: var(--paper-ink);
+      font-size: 12px;
+      font-weight: 800;
     }
     .hero {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 22px;
-      align-items: start;
-      padding: 30px 24px;
-      border: 1px solid #d9e3f2;
-      border-radius: 24px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.80) 48%, rgba(244,248,255,0.92) 100%);
-      box-shadow: 0 22px 60px rgba(15,23,42,0.08);
-      overflow: hidden;
+      text-align: center;
+      padding: 28px 0 20px;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(120deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.5) 100%);
-      pointer-events: none;
-    }
-    .hero > * { position: relative; z-index: 1; }
-    .bg-quotes {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .bg-quote {
-      position: absolute;
-      max-width: 240px;
-      font: 600 11px/1.6 "IBM Plex Mono","Consolas",monospace;
-      color: rgba(15,23,42,0.10);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      user-select: none;
-    }
-    .copy {
-      display: grid;
-      gap: 16px;
-      max-width: 780px;
-    }
-    .eyebrow {
+    .venue {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      width: fit-content;
-      padding: 6px 10px;
+      padding: 7px 12px;
       border-radius: 999px;
+      border: 1px solid #c8d6f5;
+      color: var(--paper-blue-dark);
       background: #eef4ff;
-      border: 1px solid #c9d8fa;
-      color: #17407d;
-      font-size: 11px;
-      font-weight: 800;
+      font: 800 12px/1 "Poppins", "Noto Sans KR", sans-serif;
       letter-spacing: .04em;
       text-transform: uppercase;
     }
-    .eyebrow::before {
-      content: '§';
-      width: 18px;
-      height: 18px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 999px;
-      background: #0f5eea;
-      color: #fff;
-      font-size: 11px;
+    .hero h1 {
+      max-width: 940px;
+      margin: 20px auto 10px;
+      color: #111827;
+      font-size: clamp(40px, 7vw, 78px);
+      line-height: .98;
+      letter-spacing: -.07em;
+      font-weight: 900;
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
-    .copy h1 {
-      margin: 0;
-      font-size: 44px;
-      line-height: 1.05;
-      letter-spacing: -.05em;
+    .authors {
+      margin: 12px 0 0;
+      color: #334155;
+      font: 600 16px/1.55 "Poppins", "Noto Sans KR", sans-serif;
     }
-    .copy h1 .accent { color: #0f5eea; }
-    .copy p {
-      margin: 0;
-      color: #475569;
-      font-size: 16px;
-      line-height: 1.65;
-      max-width: 38ch;
+    .affiliation {
+      margin: 5px 0 0;
+      color: var(--paper-muted);
+      font: 500 13px/1.6 "Poppins", "Noto Sans KR", sans-serif;
     }
-    .actions {
+    .project-links {
       display: flex;
+      justify-content: center;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
+      margin: 24px auto 0;
     }
-    .btn, .btn-subtle, .portal {
+    .project-btn {
+      min-width: 210px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 999px;
       text-decoration: none;
+      font: 800 14px/1 "Poppins", "Noto Sans KR", sans-serif;
+      border: 1px solid transparent;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
     }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 16px;
-      border-radius: 12px;
-      background: linear-gradient(180deg, #2d75f0 0%, #0f5eea 100%);
+    .project-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, .13);
+    }
+    .project-btn.primary {
       color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      box-shadow: 0 10px 24px rgba(15,94,234,.22);
+      background: linear-gradient(180deg, #2d66f0 0%, #174ed0 100%);
+      box-shadow: 0 12px 30px rgba(36, 87, 214, .24);
     }
-    .btn-subtle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 11px 16px;
-      border-radius: 12px;
-      border: 1px solid #d6deea;
-      background: rgba(255,255,255,0.86);
-      color: #0f172a;
-      font-size: 14px;
-      font-weight: 700;
+    .project-btn.secondary {
+      color: #10213f;
+      background: #fff;
+      border-color: #cfd9eb;
     }
-    .quote-stage {
+    .abstract {
+      max-width: 900px;
+      margin: 28px auto 0;
+      color: #334155;
+      font-size: 17px;
+      line-height: 1.72;
+    }
+    .teaser {
+      margin: 34px 0 0;
       display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(340px, .94fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .figure-panel,
+    .quote-panel {
+      position: relative;
+      border: 1px solid var(--paper-line);
+      border-radius: 26px;
+      background: var(--paper-card);
+      box-shadow: var(--paper-shadow);
+      overflow: hidden;
+    }
+    .figure-panel {
+      min-height: 480px;
+      padding: 26px;
+      display: grid;
+      align-content: space-between;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.92), rgba(241,246,255,.9)),
+        repeating-linear-gradient(90deg, rgba(36,87,214,.06) 0 1px, transparent 1px 60px);
+    }
+    .figure-title {
+      margin: 0;
+      font: 900 25px/1.1 "Poppins", "Noto Sans KR", sans-serif;
+      letter-spacing: -.04em;
+    }
+    .figure-subtitle {
+      max-width: 46ch;
+      margin: 10px auto 0;
+      color: var(--paper-muted);
+      font: 500 13px/1.6 "Poppins", "Noto Sans KR", sans-serif;
+      text-align: center;
+    }
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 24px 0;
+    }
+    .pipeline-node {
+      min-height: 132px;
+      border: 1px solid #d7e1f1;
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255,255,255,.78);
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      text-align: left;
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
+    }
+    .node-num {
+      width: 28px;
+      height: 28px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      color: #fff;
+      background: #173b8f;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .node-title {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 900;
+      color: #172554;
+    }
+    .node-copy {
+      margin: 0;
+      color: #64748b;
+      font-size: 11px;
+      line-height: 1.55;
+    }
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
-    .quote-card {
-      position: relative;
-      padding: 18px 18px 16px;
-      border-radius: 20px;
-      border: 1px solid rgba(207,217,236,0.96);
-      background: rgba(255,255,255,0.88);
-      box-shadow: 0 18px 48px rgba(15,23,42,0.10);
-      backdrop-filter: blur(8px);
-      transition: opacity .42s ease, transform .42s ease;
+    .stat {
+      border-radius: 18px;
+      border: 1px solid #d7e1f1;
+      background: #fff;
+      padding: 14px 12px;
+      text-align: center;
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
-    .quote-card.is-fading {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    .quote-card::before {
-      content: '"';
-      position: absolute;
-      left: 18px;
-      top: -14px;
-      color: rgba(15,94,234,0.14);
-      font-size: 72px;
+    .stat strong {
+      display: block;
+      color: #0f3b91;
+      font-size: 25px;
       line-height: 1;
-      font-family: "Times New Roman",serif;
+      letter-spacing: -.04em;
     }
-    .quote-meta, .quote-footer {
+    .stat span {
+      display: block;
+      margin-top: 5px;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .quote-panel {
+      min-height: 480px;
+      padding: 24px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+      background:
+        radial-gradient(circle at 20% 5%, rgba(36, 87, 214, .12), transparent 26%),
+        linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,247,237,.74));
+    }
+    .quote-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
-    .quote-meta { margin-bottom: 12px; }
-    .indicator {
+    .quote-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 5px 10px;
+      gap: 8px;
+      padding: 7px 10px;
       border-radius: 999px;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      color: #17407d;
+      color: #173b8f;
+      background: #eef4ff;
+      border: 1px solid #c8d6f5;
       font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .03em;
+      font-weight: 900;
+      letter-spacing: .04em;
       text-transform: uppercase;
     }
-    .source {
+    .quote-source {
       color: #64748b;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 800;
     }
-    .quote {
+    .quote-card {
+      position: relative;
+      display: grid;
+      align-content: center;
+      gap: 14px;
+      min-height: 300px;
+      padding: 8px 2px;
+      transition: opacity .34s ease, transform .34s ease;
+    }
+    .quote-card.is-fading {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .quote-text {
       margin: 0;
-      padding-left: 14px;
-      color: #0f172a;
-      font: 500 15px/1.72 "IBM Plex Mono","Consolas",monospace;
+      color: #111827;
+      font: 500 16px/1.72 "IBM Plex Mono", "Consolas", "Noto Sans Mono CJK KR", monospace;
       white-space: pre-line;
     }
-    .quote-footer {
-      margin-top: 14px;
-      color: #64748b;
-      font-size: 12px;
+    .quote-meta {
+      display: grid;
+      gap: 4px;
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
-    .quote-footer strong {
-      color: #0f172a;
+    .quote-meta strong {
+      color: #0f3b91;
       font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .quote-meta span {
+      color: #334155;
+      font-size: 13px;
+      font-weight: 700;
     }
     .dots {
       display: flex;
       justify-content: center;
-      gap: 6px;
+      gap: 7px;
       flex-wrap: wrap;
     }
     .dot {
-      width: 8px;
-      height: 8px;
-      padding: 0;
+      width: 9px;
+      height: 9px;
       border: 0;
       border-radius: 999px;
-      background: rgba(100,116,139,0.24);
+      background: rgba(100,116,139,.28);
       cursor: pointer;
-      transition: width .22s ease, background-color .22s ease;
+      transition: width .2s ease, background .2s ease;
     }
     .dot.active {
-      width: 28px;
-      background: #0f5eea;
+      width: 34px;
+      background: #2457d6;
     }
-    .portal-grid {
+    .section {
+      max-width: 940px;
+      margin: 42px auto 0;
+      text-align: center;
+    }
+    .section h2 {
+      margin: 0 0 12px;
+      color: #111827;
+      font: 900 31px/1.08 "Poppins", "Noto Sans KR", sans-serif;
+      letter-spacing: -.05em;
+    }
+    .section p {
+      margin: 0 auto;
+      color: #475569;
+      font-size: 16px;
+      line-height: 1.72;
+    }
+    .method-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+      text-align: left;
     }
-    .portal {
-      display: grid;
-      gap: 8px;
-      padding: 16px 14px;
-      border-radius: 16px;
-      border: 1px solid #d9e3f2;
-      background: rgba(255,255,255,0.82);
-      color: inherit;
-      box-shadow: 0 10px 28px rgba(15,23,42,0.05);
+    .method-card {
+      border: 1px solid var(--paper-line);
+      border-radius: 20px;
+      padding: 18px;
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 14px 38px rgba(15,23,42,.06);
+      font-family: "Poppins", "Noto Sans KR", sans-serif;
     }
-    .portal-kicker {
-      color: #0f5eea;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .05em;
-      text-transform: uppercase;
+    .method-card h3 {
+      margin: 0 0 8px;
+      color: #172554;
+      font-size: 15px;
+      letter-spacing: -.02em;
     }
-    .portal-title {
-      margin: 0;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: -.03em;
-    }
-    .portal-copy {
+    .method-card p {
       margin: 0;
       color: #64748b;
       font-size: 13px;
-      line-height: 1.55;
+      line-height: 1.58;
     }
-    .footer-note {
+    .footer {
+      margin-top: 42px;
+      padding-top: 20px;
+      border-top: 1px solid var(--paper-line);
       color: #64748b;
-      font-size: 12px;
       text-align: center;
+      font: 600 12px/1.6 "Poppins", "Noto Sans KR", sans-serif;
     }
-    @media (max-width: 960px) {
-      .hero { grid-template-columns: 1fr; }
-      .portal-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .copy h1 { font-size: 38px; }
+    @media (max-width: 940px) {
+      .teaser { grid-template-columns: 1fr; }
+      .figure-panel, .quote-panel { min-height: auto; }
+      .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .method-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .wrap { padding: 14px 12px 22px; }
-      .hero { padding: 18px 14px; border-radius: 20px; }
-      .copy h1 { font-size: 31px; }
-      .copy p { font-size: 15px; }
-      .quote { font-size: 13px; line-height: 1.68; }
-      .portal-grid { grid-template-columns: 1fr; }
-      .bg-quote:nth-child(n+5) { display: none; }
+      .page { padding: 18px 14px 42px; }
+      .topbar { align-items: flex-start; }
+      .hero h1 { font-size: 40px; }
+      .project-btn { width: 100%; }
+      .pipeline { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr; }
+      .quote-text { font-size: 13px; }
     }
   </style>
 </head>
 <body>
-  <main class="wrap">
+  <main class="page">
     <header class="topbar">
-      <div class="brand">
-        <p class="brand-kicker">Deepfake Policy Observatory</p>
-        <h1 class="brand-title" id="siteTitle"></h1>
-      </div>
+      <div class="brand"><span class="brand-mark">D</span><span>Deepfake Policy Observatory</span></div>
       <div class="langbox">
-        <label for="uiLang" id="langLabel"></label>
-      <select id="uiLang">
-          <option value="en" selected>English</option>
+        <label for="uiLang" id="langLabel">Language:</label>
+        <select id="uiLang">
+          <option value="en">English</option>
           <option value="ko">한국어</option>
         </select>
       </div>
     </header>
 
-    <section class="hero" aria-labelledby="homeTitle">
-      <div class="bg-quotes" id="bgQuotes" aria-hidden="true"></div>
-      <div class="copy">
-        <span class="eyebrow" id="eyebrow"></span>
-        <div>
-          <h2 id="homeTitle"></h2>
-          <p id="homeDesc"></p>
-        </div>
-        <div class="actions">
-          <a class="btn" href="/deepfake-policy/countries/" id="primaryCta"></a>
-          <a class="btn-subtle" href="/deepfake-policy/coding/" id="secondaryCta"></a>
-        </div>
+    <section class="hero" aria-labelledby="projectTitle">
+      <span class="venue" id="venueText"></span>
+      <h1 id="projectTitle"></h1>
+      <p class="authors" id="authorsText"></p>
+      <p class="affiliation" id="affiliationText"></p>
+      <div class="project-links" aria-label="Project navigation">
+        <a class="project-btn primary" id="countriesBtn" href="/deepfake-policy/countries/"></a>
+        <a class="project-btn secondary" id="codingBtn" href="/deepfake-policy/coding/"></a>
       </div>
+      <p class="abstract" id="abstractText"></p>
     </section>
 
-    <section class="portal-grid">
-      <a class="portal" href="/deepfake-policy/countries/">
-        <span class="portal-kicker" id="portal1Kick"></span>
-        <p class="portal-title" id="portal1Title"></p>
-        <p class="portal-copy" id="portal1Copy"></p>
-      </a>
-      <a class="portal" href="/deepfake-policy/coding/">
-        <span class="portal-kicker" id="portal2Kick"></span>
-        <p class="portal-title" id="portal2Title"></p>
-        <p class="portal-copy" id="portal2Copy"></p>
-      </a>
-      <a class="portal" href="/deepfake-policy/penalties/">
-        <span class="portal-kicker" id="portal3Kick"></span>
-        <p class="portal-title" id="portal3Title"></p>
-        <p class="portal-copy" id="portal3Copy"></p>
-      </a>
-      <a class="portal" href="/deepfake-policy/countries/#countryDirectory">
-        <span class="portal-kicker" id="portal4Kick"></span>
-        <p class="portal-title" id="portal4Title"></p>
-        <p class="portal-copy" id="portal4Copy"></p>
-      </a>
-    </section>
-
-    <section class="quote-stage" aria-label="Legal provisions">
-      <article class="quote-card" id="quoteCard">
-        <div class="quote-meta">
-          <span class="indicator" id="quoteIndicator"></span>
-          <span class="source" id="quoteSource"></span>
+    <section class="teaser" aria-label="Project teaser">
+      <article class="figure-panel">
+        <div>
+          <h2 class="figure-title" id="figureTitle"></h2>
+          <p class="figure-subtitle" id="figureSubtitle"></p>
         </div>
-        <p class="quote" id="quoteBody"></p>
-        <div class="quote-footer">
-          <strong id="quoteCountry"></strong>
-          <span id="quoteLaw"></span>
-        </div>
+        <div class="pipeline" id="pipeline"></div>
+        <div class="stat-row" id="stats"></div>
       </article>
-      <div class="dots" id="quoteDots"></div>
+
+      <article class="quote-panel" aria-label="Rotating legal provisions">
+        <div class="quote-head">
+          <span class="quote-badge" id="quoteBadge"></span>
+          <span class="quote-source" id="quoteSource"></span>
+        </div>
+        <div class="quote-card" id="quoteCard">
+          <p class="quote-text" id="quoteText"></p>
+          <div class="quote-meta">
+            <strong id="quoteCountry"></strong>
+            <span id="quoteLaw"></span>
+          </div>
+        </div>
+        <div class="dots" id="quoteDots"></div>
+      </article>
     </section>
 
-    <p class="footer-note" id="footerNote"></p>
+    <section class="section" aria-labelledby="summaryTitle">
+      <h2 id="summaryTitle"></h2>
+      <p id="summaryText"></p>
+      <div class="method-grid" id="methodGrid"></div>
+    </section>
+
+    <footer class="footer" id="footerText"></footer>
   </main>
 
   <script>
+    const LANG_STORAGE_KEY = 'deepfakePolicyLang';
+
     const T = {
-      ko: {
-        siteTitle: '딥페이크 법제 비교',
-        lang: '언어',
-        eyebrow: 'Legal Provisions',
-        title: '실제 법률 조문으로 읽는\n딥페이크 규제',
-        accent: '실제 법률 조문',
-        desc: '첫 화면은 요약 대시보드가 아니라 입구용 홈으로 분리했습니다. 상단 조문 카드에서 각국 법률 문구를 먼저 읽고, 그다음 국가별 비교와 세부 페이지로 들어갈 수 있습니다.',
-        primary: '국가별 대시보드 열기',
-        secondary: 'Clause-based Coding 보기',
-        indicator: '조문',
-        portal1Kick: 'Directory',
-        portal1Title: '국가별 비교',
-        portal1Copy: '국가별 카드, 차원별 수준, 상세 페이지 진입점을 한 번에 봅니다.',
-        portal2Kick: 'Coding',
-        portal2Title: 'Clause-based Coding',
-        portal2Copy: 'Policy dimensions, risk tags, life-cycle tags, defense layers를 코딩 결과 중심으로 봅니다.',
-        portal3Kick: 'Sanctions',
-        portal3Title: 'Penalty 비교',
-        portal3Copy: '제재 유형과 법적 근거를 중심으로 처벌 구조를 비교합니다.',
-        portal4Kick: 'Sources',
-        portal4Title: '원문 문서 링크',
-        portal4Copy: '국가별 문서 목록에서 법/문서 제목과 Official source 링크를 확인합니다.',
-        footer: '메인 홈은 조문 중심 진입 화면이고, 비교 기능은 각 하위 페이지에서 유지됩니다.',
-      },
       en: {
-        siteTitle: 'Deepfake Law Comparison',
         lang: 'Language',
-        eyebrow: 'Legal Provisions',
-        title: 'Read Deepfake Regulation\nThrough Actual Legal Text',
-        accent: 'Actual Legal Text',
-        desc: 'The first page is now a separate home screen rather than the dashboard itself. Users can start from rotating statutory language, then move into country comparison and detail pages.',
-        primary: 'Open country dashboard',
-        secondary: 'Open clause-based coding',
-        indicator: 'Provision',
-        portal1Kick: 'Directory',
-        portal1Title: 'Country Comparison',
-        portal1Copy: 'Browse country cards, dimension levels, and country detail entry points.',
-        portal2Kick: 'Coding',
-        portal2Title: 'Clause-based Coding',
-        portal2Copy: 'Review policy dimensions, risk tags, life-cycle tags, and defense layers as coded outputs.',
-        portal3Kick: 'Sanctions',
-        portal3Title: 'Penalty Comparison',
-        portal3Copy: 'Review sanction structures with normalized offense and legal-basis views.',
-        portal4Kick: 'Sources',
-        portal4Title: 'Official Source Links',
-        portal4Copy: 'Open country document lists with law titles and official source links.',
-        footer: 'The home page is now a legal-text entry point; comparison functions remain in the subpages.',
+        venue: 'Academic project page',
+        title: 'Deepfake Policy Observatory',
+        authors: 'Jiwon Kim',
+        affiliation: 'Vision AI + Security · Sungkyunkwan University · CSIRO visiting research context',
+        countriesBtn: 'Open Country Dashboard',
+        codingBtn: 'View Corpus & Analysis Results',
+        abstract: 'This project compares how jurisdictions make deepfake and synthetic-media harms legally visible. Instead of asking only whether a country has a deepfake-specific law, the site reconstructs enforceable pathways across labeling, elections, non-consensual harms, platform responsibility, penalties, and clause-level policy coding.',
+        figureTitle: 'From legal text to comparable policy evidence',
+        figureSubtitle: 'The landing page follows an academic project-page structure: a concise research abstract, two primary entry points, a rotating legal-text teaser, and a compact summary of the corpus workflow.',
+        quoteBadge: 'Actual legal provision',
+        summaryTitle: 'Corpus and analysis scope',
+        summaryText: 'The corpus keeps original legal documents separate from coding outputs. Country pages provide document-level legal sources and summaries; the coding page exposes policy dimensions, risk tags, life-cycle tags, defense layers, and coded rows.',
+        footer: 'Deepfake Policy Observatory · static research project page · country dashboards and clause-based coding remain in the subpages.',
+        pipeline: [
+          ['Legal corpus', 'Official statutes, rules, notices, reports, and guidance are grouped by country and legal force.'],
+          ['Clause coding', 'Rows are coded for policy dimensions, risk tags, life-cycle stage, and defense layer.'],
+          ['Country dashboard', 'Each jurisdiction is summarized through legal status, documents, penalties, and source links.'],
+          ['Comparative view', 'The analysis emphasizes fragmentation, institutional pathways, and enforcement assumptions.']
+        ],
+        stats: [
+          ['14+', 'jurisdictions'],
+          ['5', 'policy dimensions'],
+          ['1,000+', 'coded rows']
+        ],
+        methods: [
+          ['Country-level dashboard', 'Use this path when the question is jurisdictional: what rules exist, where the source documents are, and how the country is coded.'],
+          ['Clause-based coding', 'Use this path when the question is analytical: how legal clauses map to policy dimensions, risk tags, and defense layers.'],
+          ['Legal-text carousel', 'The rotating card preserves direct statutory language from Korea, the EU, the United States, and China as the entry point to the project.']
+        ],
+        quoteIndicator: 'Provision'
       },
+      ko: {
+        lang: '언어',
+        venue: 'Academic project page',
+        title: 'Deepfake Policy Observatory',
+        authors: '김지원 (Jiwon Kim)',
+        affiliation: 'Vision AI + Security · 성균관대학교 · CSIRO 방문연구 맥락',
+        countriesBtn: '국가별 대시보드 열기',
+        codingBtn: 'Corpus와 분석 결과 보기',
+        abstract: '이 프로젝트는 딥페이크와 합성미디어 위해가 각 관할권에서 어떻게 법적으로 가시화되는지 비교합니다. 단순히 “딥페이크 전용법이 있는가”를 묻는 대신, 표시·라벨링, 선거, 비동의 피해, 플랫폼 책임, 처벌, 조문 단위 정책 코딩을 통해 실제 집행 가능한 경로를 재구성합니다.',
+        figureTitle: '법 조문에서 비교 가능한 정책 근거로',
+        figureSubtitle: '홈은 논문 프로젝트 페이지 형식으로 구성했습니다. 짧은 연구 초록, 두 개의 핵심 진입점, 실제 법 조문 teaser, corpus workflow 요약만 남깁니다.',
+        quoteBadge: '실제 법 조문',
+        summaryTitle: 'Corpus와 분석 범위',
+        summaryText: '원문 법률 문서와 코딩 결과를 분리해 보여줍니다. 국가 페이지는 법률 출처·요약·처벌·공식 링크를 제공하고, coding 페이지는 Policy Dimensions, Risk tags, Life-cycle tags, Defense layers, Coded rows를 보여줍니다.',
+        footer: 'Deepfake Policy Observatory · static research project page · 국가별 대시보드와 clause-based coding은 하위 페이지에서 유지됩니다.',
+        pipeline: [
+          ['Legal corpus', '공식 법률, 규칙, 고시, 보고서, 가이드라인을 국가와 법적 강도별로 정리합니다.'],
+          ['Clause coding', '조문을 policy dimension, risk tag, life-cycle stage, defense layer로 코딩합니다.'],
+          ['Country dashboard', '각 국가는 법제화 상태, 문서 목록, 처벌, 공식 출처 링크로 요약됩니다.'],
+          ['Comparative view', '비교의 초점은 법 형식의 파편화, 제도 경로, 집행 전제의 차이에 있습니다.']
+        ],
+        stats: [
+          ['14+', '관할권'],
+          ['5', '정책 차원'],
+          ['1,000+', 'coded rows']
+        ],
+        methods: [
+          ['국가별 대시보드', '국가별로 어떤 규칙이 있고, 원문 문서는 어디에 있으며, 해당 국가가 어떻게 코딩되는지 볼 때 사용합니다.'],
+          ['Clause-based Coding', '조문이 policy dimensions, risk tags, defense layers로 어떻게 매핑되는지 볼 때 사용합니다.'],
+          ['법 조문 carousel', '한국, EU, 미국, 중국의 실제 법 조문을 자동 순환으로 보여주는 기존 기능을 유지합니다.']
+        ],
+        quoteIndicator: '조문'
+      }
     };
 
     const QUOTES = [
       {
-        country: { ko: '한국', en: 'Korea' },
-        law: { ko: '인공지능기본법 제31조', en: 'AI Basic Act, Article 31' },
-        source: { ko: 'Korean original', en: 'Official Korean text' },
+        country: { en: 'Korea', ko: '한국' },
+        law: { en: 'AI Basic Act, Article 31', ko: '인공지능기본법 제31조' },
+        source: { en: 'Official Korean legal text', ko: '대한민국 공식 법령 조문' },
         provision: {
-          ko: `제31조(인공지능 투명성 확보 의무)\n① 인공지능사업자는 고영향 인공지능이나 생성형 인공지능을 이용한 제품 또는 서비스를 제공하려는 경우 제품 또는 서비스가 해당 인공지능에 기반하여 운용된다는 사실을 이용자에게 사전에 고지하여야 한다.\n② 인공지능사업자는 생성형 인공지능 또는 이를 이용한 제품 또는 서비스를 제공하는 경우 그 결과물이 생성형 인공지능에 의하여 생성되었다는 사실을 표시하여야 한다.`,
-          en: `Article 31 (Transparency obligations)\n(1) Where an AI business operator intends to provide a product or service using high-impact AI or generative AI, the operator shall notify users in advance that the product or service is operated on that AI basis.\n(2) Where an operator provides generative AI or a product or service using it, the operator shall indicate that the output was generated by generative AI.`,
-        },
+          en: 'Article 31 (Obligation to secure transparency of artificial intelligence)\nAn artificial intelligence business operator shall notify users in advance where it provides products or services using high-impact artificial intelligence or generative artificial intelligence. Where the operator provides generative artificial intelligence, or products or services using it, the operator shall indicate that the output has been generated by generative artificial intelligence.',
+          ko: '제31조(인공지능 투명성 확보 의무)\n인공지능사업자는 고영향 인공지능이나 생성형 인공지능을 이용한 제품 또는 서비스를 제공하는 경우 그 제품 또는 서비스가 해당 인공지능에 기반하여 운용된다는 사실을 이용자에게 사전에 고지하여야 한다.\n인공지능사업자는 생성형 인공지능 또는 이를 이용한 제품 또는 서비스를 제공하는 경우 그 결과물이 생성형 인공지능에 의하여 생성되었다는 사실을 표시하여야 한다.'
+        }
       },
       {
-        country: { ko: '한국', en: 'Korea' },
-        law: { ko: '인공지능기본법 제31조', en: 'AI Basic Act, Article 31' },
-        source: { ko: 'Korean original', en: 'Official Korean text' },
+        country: { en: 'Korea', ko: '한국' },
+        law: { en: 'Public Official Election Management Rules, Annex 1-3', ko: '공직선거관리규칙 별표 1의3' },
+        source: { en: 'Official Korean election rule', ko: '대한민국 공식 선거 규칙' },
         provision: {
-          ko: `제31조(인공지능 투명성 확보 의무)\n③ 인공지능사업자는 인공지능시스템을 이용하여 실제와 구분하기 어려운 가상의 음향, 이미지 또는 영상 등의 결과물을 제공하는 경우 해당 결과물이 인공지능시스템에 의하여 생성되었다는 사실을 이용자가 명확하게 인식할 수 있는 방식으로 고지 또는 표시하여야 한다.`,
-          en: `Article 31 (3) Where an operator provides virtual audio, images, video, or similar outputs that are difficult to distinguish from reality, the operator shall notify or label in a manner that allows users to clearly recognize that the output was generated by an AI system.`,
-        },
+          en: 'Deepfake video labeling and display method\nFor images, the notice states that the image is virtual information produced using artificial intelligence technology and is not real. It must be displayed so that anyone can easily recognize it, within a border occupying at least 10 percent of the full size and clearly distinguished from the background.',
+          ko: '딥페이크영상등 표시사항 및 표시방법\n이미지는 실제가 아닌 인공지능 기술 등을 이용하여 만든 가상의 정보입니다.\n누구든지 쉽게 인식할 수 있도록 전체 크기의 100분의 10 이상의 테두리 안에 배경과 구분되도록 표시한다.'
+        }
       },
       {
-        country: { ko: '한국', en: 'Korea' },
-        law: { ko: '표시광고법 제4조·제7조', en: 'Fair Labeling and Advertising Act, Articles 4 and 7' },
-        source: { ko: 'Korean original', en: 'Official Korean text' },
+        country: { en: 'European Union', ko: 'EU' },
+        law: { en: 'EU AI Act, Article 50(2)', ko: 'EU AI Act 제50조 제2항' },
+        source: { en: 'Official EU legal text', ko: 'EU 공식 법령 조문' },
         provision: {
-          ko: `제4조(중요정보의 고시 및 통합공고)\n⑤ 사업자등은 표시ㆍ광고 행위를 하는 경우에는 제1항에 따라 고시된 중요정보를 표시ㆍ광고하여야 한다.\n\n제7조(시정조치)\n① 공정거래위원회는 사업자등이 제3조제1항을 위반하여 부당한 표시ㆍ광고 행위를 하는 경우에는 그 사업자등에 대하여 그 시정을 위한 조치를 명할 수 있다.`,
-          en: `Article 4(5)\nWhen engaging in labeling or advertising, business entities shall include the important information publicly notified under paragraph (1).\n\nArticle 7(1)\nWhere a business entity engages in unfair labeling or advertising in violation of Article 3(1), the Fair Trade Commission may order corrective measures.`,
-        },
+          en: 'Providers of AI systems, including general-purpose AI systems, generating synthetic audio, image, video or text content, shall ensure that the outputs of the AI system are marked in a machine-readable format and detectable as artificially generated or manipulated.',
+          ko: '합성 음성, 이미지, 영상 또는 텍스트 콘텐츠를 생성하는 AI 시스템 제공자는 그 AI 시스템의 출력물이 기계 판독 가능한 형식으로 표시되고 인위적으로 생성 또는 조작된 것으로 탐지될 수 있도록 보장하여야 한다.'
+        }
       },
       {
-        country: { ko: '한국', en: 'Korea' },
-        law: { ko: '공직선거관리규칙 [별표 1의3]', en: 'Public Official Election Management Rules, Annex 1-3' },
-        source: { ko: 'Korean original', en: 'Official Korean text' },
+        country: { en: 'European Union', ko: 'EU' },
+        law: { en: 'EU AI Act, Article 50(4)', ko: 'EU AI Act 제50조 제4항' },
+        source: { en: 'Official EU legal text', ko: 'EU 공식 법령 조문' },
         provision: {
-          ko: `딥페이크영상등 표시사항 및 표시방법\n\n이 이미지는 실제가 아닌 인공지능 기술 등을 이용하여 만든 가상의 정보입니다.\n\n누구든지 쉽게 인식할 수 있도록 전체크기의 100분의 10 이상의 테두리 안에 배경과 구분되도록 표시한다.`,
-          en: `For image content, the notice states: "This image is virtual information produced using artificial intelligence technology and is not real." It must be displayed so that anyone can easily recognize it, within a border occupying at least 10 percent of the full size and clearly distinguished from the background.`,
-        },
+          en: 'Deployers of an AI system that generates or manipulates image, audio or video content constituting a deep fake shall disclose that the content has been artificially generated or manipulated.',
+          ko: '딥페이크에 해당하는 이미지, 음성 또는 영상 콘텐츠를 생성하거나 조작하는 AI 시스템의 배포자는 해당 콘텐츠가 인위적으로 생성 또는 조작되었다는 사실을 공개하여야 한다.'
+        }
       },
       {
-        country: { ko: '한국', en: 'Korea' },
-        law: { ko: '공직선거관리규칙 [별표 1의3]', en: 'Public Official Election Management Rules, Annex 1-3' },
-        source: { ko: 'Korean original', en: 'Official Korean text' },
+        country: { en: 'United States', ko: '미국' },
+        law: { en: 'California Civil Code Section 1708.86', ko: 'California Civil Code Section 1708.86' },
+        source: { en: 'Official U.S. state legal text', ko: '미국 주 법령 조문' },
         provision: {
-          ko: `딥페이크영상등 표시사항 및 표시방법\n\n이 영상은 실제가 아닌 인공지능 기술 등을 이용하여 만든 가상의 정보입니다.\n\n누구든지 쉽게 인식할 수 있도록 전체크기의 100분의 10 이상의 테두리 안에 배경과 구분되도록 상시 표시한다.`,
-          en: `For video content, the notice states: "This video is virtual information produced using artificial intelligence technology and is not real." It must be displayed at all times so that anyone can easily recognize it, within a border occupying at least 10 percent of the full size and clearly distinguished from the background.`,
-        },
+          en: 'It shall not be a defense to an action under this section that a deepfake pornography service has a disclaimer or statement that states that users are prohibited from generating digitized sexually explicit material of a depicted individual without the individual’s consent.',
+          ko: '딥페이크 포르노그래피 서비스가 이용자에게 개인의 동의 없이 묘사된 개인의 디지털화된 성적으로 노골적인 자료를 생성하는 것을 금지한다는 고지문 또는 진술을 두고 있다는 점은 이 조에 따른 소송에 대한 항변이 되지 않는다.'
+        }
       },
       {
-        country: { ko: '중국', en: 'China' },
-        law: { ko: '인터넷정보서비스 딥페이크 관리 규정 제16조', en: 'Deep Synthesis Provisions, Article 16' },
-        source: { ko: 'Korean translation file', en: 'Korean translation file' },
+        country: { en: 'United States', ko: '미국' },
+        law: { en: 'California Civil Code Section 1708.86', ko: 'California Civil Code Section 1708.86' },
+        source: { en: 'Official U.S. state legal text', ko: '미국 주 법령 조문' },
         provision: {
-          ko: `제16조\n딥페이크서비스 제공자는 해당 서비스를 사용해 생성하거나 편집한 정보 내용에 대해 기술적 조치를 하여 고용주의 사용에 영향을 미치지 않는 표시를 추가하고 법률, 행정법규 및 관련 국가 규정에 따라 로그 정보를 보관하여야 한다.`,
-          en: `Article 16\nDeep synthesis service providers shall add identifiers, through technical measures that do not affect user use, to information content generated or edited through their services, and shall preserve log information in accordance with law and relevant state provisions.`,
-        },
+          en: 'The person fails to take all necessary steps to stop providing services that enable the ongoing operation of a deepfake pornography service within 30 days of receiving the evidence described in subparagraph (A).',
+          ko: '그 사람이 관련 증거를 받은 날부터 30일 이내에 딥페이크 포르노그래피 서비스의 계속 운영을 가능하게 하는 서비스 제공을 중단하기 위한 모든 필요한 조치를 취하지 않는 경우가 문제된다.'
+        }
       },
       {
-        country: { ko: '중국', en: 'China' },
-        law: { ko: '인터넷정보서비스 딥페이크 관리 규정 제17조', en: 'Deep Synthesis Provisions, Article 17' },
-        source: { ko: 'Korean translation file', en: 'Korean translation file' },
+        country: { en: 'China', ko: '중국' },
+        law: { en: 'Deep Synthesis Provisions, Article 16', ko: '인터넷정보서비스 딥페이크 관리 규정 제16조' },
+        source: { en: 'Official Chinese rule, translated in corpus', ko: '중국 공식 규정 번역본' },
         provision: {
-          ko: `제17조\n딥페이크서비스 제공자가 다음과 같은 딥페이크서비스를 제공하여 대중의 혼동 또는 착각을 유발할 수 있는 경우, 생성 또는 편집된 정보 내용의 합리적인 위치나 영역에 명시하여 대중에게 딥페이크 상황임을 알려야 한다.\n\n딥페이크서비스 제공자가 위 문단의 규정 이외의 딥페이크서비스를 제공하는 경우, 눈에 띄는 식별 기능을 제공하고 딥페이크서비스 고용주가 눈에 띄는 표시를 할 수 있음을 안내하여야 한다.`,
-          en: `Article 17\nWhere a deep synthesis service may cause public confusion or misidentification, the provider shall place a conspicuous identifier in an appropriate position or area of the generated or edited content to alert the public that the content is deep-synthesised.\n\nFor other deep synthesis services, providers shall offer a conspicuous labeling function and inform users that they may apply such visible labeling.`,
-        },
+          en: 'Deep synthesis service providers shall add identifiers, through technical measures that do not affect user use, to information content generated or edited through their services, and shall preserve log information in accordance with law and relevant state provisions.',
+          ko: '딥페이크서비스 제공자는 해당 서비스를 사용하여 생성하거나 편집한 정보 내용에 대하여 이용자의 사용에 영향을 미치지 않는 기술적 조치를 통해 표시를 추가하고, 법률 및 관련 국가 규정에 따라 로그 정보를 보관하여야 한다.'
+        }
       },
       {
-        country: { ko: 'EU', en: 'EU' },
-        law: { ko: 'EU AI Act 제50조', en: 'EU AI Act, Article 50' },
-        source: { ko: null, en: 'Official text' },
+        country: { en: 'China', ko: '중국' },
+        law: { en: 'Deep Synthesis Provisions, Article 17', ko: '인터넷정보서비스 딥페이크 관리 규정 제17조' },
+        source: { en: 'Official Chinese rule, translated in corpus', ko: '중국 공식 규정 번역본' },
         provision: {
-          ko: null,
-          en: `Article 50 (2) Providers of AI systems generating synthetic audio, image, video or text content shall ensure that the outputs are marked in a machine-readable format and detectable as artificially generated or manipulated.`,
-        },
-      },
-      {
-        country: { ko: 'EU', en: 'EU' },
-        law: { ko: 'EU AI Act 제50조', en: 'EU AI Act, Article 50' },
-        source: { ko: null, en: 'Official text' },
-        provision: {
-          ko: null,
-          en: `Article 50 (4) Deployers of an AI system that generates or manipulates image, audio or video content constituting a deep fake shall disclose that the content has been artificially generated or manipulated.`,
-        },
-      },
+          en: 'Where a deep synthesis service may cause public confusion or misidentification, the provider shall place a conspicuous identifier in an appropriate position or area of the generated or edited content to alert the public that the content is deep-synthesised.',
+          ko: '딥페이크서비스 제공자가 대중의 혼동 또는 오인을 유발할 수 있는 딥페이크서비스를 제공하는 경우, 생성 또는 편집한 정보 내용의 합리적인 위치나 영역에 명시적 표시를 하여 대중에게 딥페이크 상황임을 알려야 한다.'
+        }
+      }
     ];
 
-    const LANG_STORAGE_KEY = 'deepfakePolicyLang';
     const qs = new URLSearchParams(location.search);
     const uiLang = document.getElementById('uiLang');
-    const siteTitleEl = document.getElementById('siteTitle');
-    const langLabelEl = document.getElementById('langLabel');
-    const eyebrowEl = document.getElementById('eyebrow');
-    const homeTitleEl = document.getElementById('homeTitle');
-    const homeDescEl = document.getElementById('homeDesc');
-    const primaryCtaEl = document.getElementById('primaryCta');
-    const secondaryCtaEl = document.getElementById('secondaryCta');
-    const quoteCardEl = document.getElementById('quoteCard');
-    const quoteIndicatorEl = document.getElementById('quoteIndicator');
-    const quoteSourceEl = document.getElementById('quoteSource');
-    const quoteBodyEl = document.getElementById('quoteBody');
-    const quoteCountryEl = document.getElementById('quoteCountry');
-    const quoteLawEl = document.getElementById('quoteLaw');
-    const quoteDotsEl = document.getElementById('quoteDots');
-    const bgQuotesEl = document.getElementById('bgQuotes');
-    const footerNoteEl = document.getElementById('footerNote');
-
-    let currentIndex = 0;
-    let rotateTimer = null;
-    let fadeTimer = null;
     uiLang.value = qs.get('lang') === 'ko'
       ? 'ko'
       : (() => {
@@ -575,8 +649,41 @@
           catch (_) { return 'en'; }
         })();
 
+    const els = {
+      langLabel: document.getElementById('langLabel'),
+      venueText: document.getElementById('venueText'),
+      projectTitle: document.getElementById('projectTitle'),
+      authorsText: document.getElementById('authorsText'),
+      affiliationText: document.getElementById('affiliationText'),
+      countriesBtn: document.getElementById('countriesBtn'),
+      codingBtn: document.getElementById('codingBtn'),
+      abstractText: document.getElementById('abstractText'),
+      figureTitle: document.getElementById('figureTitle'),
+      figureSubtitle: document.getElementById('figureSubtitle'),
+      pipeline: document.getElementById('pipeline'),
+      stats: document.getElementById('stats'),
+      quoteBadge: document.getElementById('quoteBadge'),
+      quoteSource: document.getElementById('quoteSource'),
+      quoteCard: document.getElementById('quoteCard'),
+      quoteText: document.getElementById('quoteText'),
+      quoteCountry: document.getElementById('quoteCountry'),
+      quoteLaw: document.getElementById('quoteLaw'),
+      quoteDots: document.getElementById('quoteDots'),
+      summaryTitle: document.getElementById('summaryTitle'),
+      summaryText: document.getElementById('summaryText'),
+      methodGrid: document.getElementById('methodGrid'),
+      footerText: document.getElementById('footerText')
+    };
+
+    let currentQuote = 0;
+    let rotateTimer = null;
+    let fadeTimer = null;
+
     function lang() {
-      return uiLang.value === 'en' ? 'en' : 'ko';
+      return uiLang.value === 'ko' ? 'ko' : 'en';
+    }
+    function t() {
+      return T[lang()];
     }
     function saveLang() {
       try { localStorage.setItem(LANG_STORAGE_KEY, lang()); }
@@ -587,14 +694,6 @@
       url.searchParams.set('lang', lang());
       return url.pathname + url.search + url.hash;
     }
-    function refreshLinks() {
-      document.querySelectorAll('a[href^="/deepfake-policy/"]').forEach((a) => {
-        a.setAttribute('href', withLang(a.getAttribute('href')));
-      });
-    }
-    function text() {
-      return T[lang()];
-    }
     function escapeHtml(value) {
       return String(value || '')
         .replace(/&/g, '&amp;')
@@ -603,100 +702,97 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
-    function quotes() {
-      return QUOTES
-        .map((q) => ({
-          country: q.country[lang()] || q.country.en,
-          law: q.law[lang()] || q.law.en,
-          source: q.source[lang()] || q.source.en,
-          provision: q.provision[lang()] || null,
-        }))
-        .filter((q) => q.provision);
+    function visibleQuotes() {
+      return QUOTES.map((q) => ({
+        country: q.country[lang()] || q.country.en,
+        law: q.law[lang()] || q.law.en,
+        source: q.source[lang()] || q.source.en,
+        provision: q.provision[lang()] || q.provision.en
+      }));
     }
-    function renderBgQuotes() {
-      const positions = [
-        { top: '10%', left: '4%', rotate: '-5deg' },
-        { top: '22%', right: '6%', rotate: '4deg' },
-        { top: '42%', left: '7%', rotate: '-2deg' },
-        { top: '58%', right: '8%', rotate: '3deg' },
-        { top: '76%', left: '13%', rotate: '-4deg' },
-        { top: '84%', right: '4%', rotate: '2deg' },
-      ];
-      bgQuotesEl.innerHTML = quotes().slice(0, 6).map((q, idx) => {
-        const pos = positions[idx];
-        const side = pos.left ? `left:${pos.left};` : `right:${pos.right};`;
-        return `<span class="bg-quote" style="top:${pos.top};${side}transform:rotate(${pos.rotate});">${escapeHtml(q.provision.replace(/\s+/g, ' '))}</span>`;
-      }).join('');
+    function renderStaticText() {
+      const x = t();
+      document.documentElement.lang = lang();
+      els.langLabel.textContent = `${x.lang}:`;
+      els.venueText.textContent = x.venue;
+      els.projectTitle.textContent = x.title;
+      els.authorsText.textContent = x.authors;
+      els.affiliationText.textContent = x.affiliation;
+      els.countriesBtn.textContent = x.countriesBtn;
+      els.countriesBtn.href = withLang('/deepfake-policy/countries/');
+      els.codingBtn.textContent = x.codingBtn;
+      els.codingBtn.href = withLang('/deepfake-policy/coding/');
+      els.abstractText.textContent = x.abstract;
+      els.figureTitle.textContent = x.figureTitle;
+      els.figureSubtitle.textContent = x.figureSubtitle;
+      els.quoteBadge.textContent = x.quoteBadge;
+      els.summaryTitle.textContent = x.summaryTitle;
+      els.summaryText.textContent = x.summaryText;
+      els.footerText.textContent = x.footer;
+      els.pipeline.innerHTML = x.pipeline.map((item, idx) => `
+        <div class="pipeline-node">
+          <span class="node-num">${idx + 1}</span>
+          <p class="node-title">${escapeHtml(item[0])}</p>
+          <p class="node-copy">${escapeHtml(item[1])}</p>
+        </div>
+      `).join('');
+      els.stats.innerHTML = x.stats.map((item) => `
+        <div class="stat">
+          <strong>${escapeHtml(item[0])}</strong>
+          <span>${escapeHtml(item[1])}</span>
+        </div>
+      `).join('');
+      els.methodGrid.innerHTML = x.methods.map((item) => `
+        <article class="method-card">
+          <h3>${escapeHtml(item[0])}</h3>
+          <p>${escapeHtml(item[1])}</p>
+        </article>
+      `).join('');
     }
     function renderQuote() {
-      const q = quotes()[currentIndex];
-      const t = text();
-      quoteIndicatorEl.textContent = `${t.indicator} ${currentIndex + 1} / ${quotes().length}`;
-      quoteSourceEl.textContent = q.source;
-      quoteBodyEl.textContent = q.provision;
-      quoteCountryEl.textContent = q.country;
-      quoteLawEl.textContent = q.law;
-      quoteDotsEl.innerHTML = quotes().map((_, idx) => `<button class="dot${idx === currentIndex ? ' active' : ''}" type="button" data-idx="${idx}" aria-label="${escapeHtml(`${t.indicator} ${idx + 1}`)}"></button>`).join('');
-      quoteDotsEl.querySelectorAll('.dot').forEach((btn) => {
-        btn.addEventListener('click', () => setQuote(Number(btn.getAttribute('data-idx')), true));
+      const list = visibleQuotes();
+      const q = list[currentQuote % list.length];
+      els.quoteBadge.textContent = `${t().quoteIndicator} ${currentQuote + 1} / ${list.length}`;
+      els.quoteSource.textContent = q.source;
+      els.quoteText.textContent = q.provision;
+      els.quoteCountry.textContent = q.country;
+      els.quoteLaw.textContent = q.law;
+      els.quoteDots.innerHTML = list.map((_, idx) => `
+        <button class="dot${idx === currentQuote ? ' active' : ''}" type="button" data-quote="${idx}" aria-label="${escapeHtml(`${t().quoteIndicator} ${idx + 1}`)}"></button>
+      `).join('');
+      els.quoteDots.querySelectorAll('button[data-quote]').forEach((btn) => {
+        btn.addEventListener('click', () => setQuote(Number(btn.getAttribute('data-quote')), true));
       });
     }
     function scheduleRotation() {
       clearInterval(rotateTimer);
-      rotateTimer = setInterval(() => {
-        setQuote((currentIndex + 1) % quotes().length, true);
-      }, 5200);
+      rotateTimer = setInterval(() => setQuote(currentQuote + 1, true), 5600);
     }
-    function setQuote(nextIndex, animate) {
-      currentIndex = ((nextIndex % quotes().length) + quotes().length) % quotes().length;
+    function setQuote(next, animate) {
+      const list = visibleQuotes();
+      currentQuote = ((next % list.length) + list.length) % list.length;
       clearTimeout(fadeTimer);
-      if (animate) {
-        quoteCardEl.classList.add('is-fading');
-        fadeTimer = setTimeout(() => {
-          renderQuote();
-          quoteCardEl.classList.remove('is-fading');
-        }, 220);
-      } else {
-        quoteCardEl.classList.remove('is-fading');
+      if (!animate) {
+        els.quoteCard.classList.remove('is-fading');
         renderQuote();
+        scheduleRotation();
+        return;
       }
+      els.quoteCard.classList.add('is-fading');
+      fadeTimer = setTimeout(() => {
+        renderQuote();
+        els.quoteCard.classList.remove('is-fading');
+      }, 180);
       scheduleRotation();
     }
-    function renderText() {
-      const t = text();
-      document.documentElement.lang = lang();
-      siteTitleEl.textContent = t.siteTitle;
-      langLabelEl.textContent = `${t.lang}:`;
-      eyebrowEl.textContent = t.eyebrow;
-      const accent = escapeHtml(t.accent);
-      homeTitleEl.innerHTML = escapeHtml(t.title).replace(accent, `<span class="accent">${accent}</span>`).replace(/\n/g, '<br />');
-      homeDescEl.textContent = t.desc;
-      primaryCtaEl.textContent = t.primary;
-      secondaryCtaEl.textContent = t.secondary;
-      document.getElementById('portal1Kick').textContent = t.portal1Kick;
-      document.getElementById('portal1Title').textContent = t.portal1Title;
-      document.getElementById('portal1Copy').textContent = t.portal1Copy;
-      document.getElementById('portal2Kick').textContent = t.portal2Kick;
-      document.getElementById('portal2Title').textContent = t.portal2Title;
-      document.getElementById('portal2Copy').textContent = t.portal2Copy;
-      document.getElementById('portal3Kick').textContent = t.portal3Kick;
-      document.getElementById('portal3Title').textContent = t.portal3Title;
-      document.getElementById('portal3Copy').textContent = t.portal3Copy;
-      document.getElementById('portal4Kick').textContent = t.portal4Kick;
-      document.getElementById('portal4Title').textContent = t.portal4Title;
-      document.getElementById('portal4Copy').textContent = t.portal4Copy;
-      footerNoteEl.textContent = t.footer;
-      refreshLinks();
-      renderBgQuotes();
-      setQuote(currentIndex, false);
+    function renderAll() {
+      saveLang();
+      renderStaticText();
+      setQuote(Math.min(currentQuote, visibleQuotes().length - 1), false);
     }
 
-    uiLang.addEventListener('change', () => {
-      saveLang();
-      renderText();
-    });
-    saveLang();
-    renderText();
+    uiLang.addEventListener('change', renderAll);
+    renderAll();
   </script>
 </body>
 </html>
