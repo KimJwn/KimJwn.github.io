@@ -1,4 +1,4 @@
-<!doctype html>
+ï»¿<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
@@ -11,7 +11,6 @@
   <meta property="og:url" content="https://kimjwn.github.io/deepfake-policy/country/" />
   <title>Deepfake Policy Country Dashboard</title>
   <link rel="stylesheet" href="/assets/palette.css" />
-  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css?v=20260701-sidebar5" />
   <style>
     * { box-sizing: border-box; }
     body {
@@ -1506,6 +1505,7 @@
       .score-grid { grid-template-columns: 1fr; }
     }
   </style>
+  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css?v=20260701-sidebar5" />
 </head>
 <body>
   <main class="wrap">
@@ -1523,7 +1523,7 @@
           <label for="lang" id="langLabel"></label>
           <select id="lang">
             <option value="en" selected>English</option>
-            <option value="ko">ÇÑ±¹¾î</option>
+            <option value="ko">í•œêµ­ì–´</option>
           </select>
         </div>
       </div>
@@ -1556,7 +1556,7 @@
               <button type="button" id="timelineCompareToggle" class="timeline-compare-toggle"></button>
               <div id="timelineCompareControls" class="timeline-compare-controls">
                 <select id="timelineCompareSelect" class="vtl-select"></select>
-                <button type="button" id="timelineCompareClose" class="timeline-compare-close" aria-label="Close compare">¡¿</button>
+                <button type="button" id="timelineCompareClose" class="timeline-compare-close" aria-label="Close compare">Ã—</button>
               </div>
             </div>
           </div>
@@ -1598,7 +1598,7 @@
                 </div>
                 <div id="docList" class="doc-list"></div>
               </div>
-              <div class="docs-flow-arrow" aria-hidden="true">?</div>
+              <div class="docs-flow-arrow" aria-hidden="true">âœ</div>
             </div>
             <div class="docs-preview-pane">
               <h2 id="previewHeader" class="section-chip"></h2>
@@ -1622,116 +1622,116 @@
   <script>
     const T = {
       ko: {
-        title: '±¹°¡ »ó¼¼ ÆäÀÌÁö',
-        subtitle: '¹ı·ü ¹®¼­ ¸ñ·ÏÀ» ¿­¶÷ÇÏ°í, ¿ø¹®Àº °ø½Ä À¥»çÀÌÆ®¿¡¼­ »õ ÅÇÀ¸·Î È®ÀÎÇÒ ¼ö ÀÖ½À´Ï´Ù.',
-        lang: '¾ğ¾î',
+        title: 'êµ­ê°€ ìƒì„¸ í˜ì´ì§€',
+        subtitle: 'ë²•ë¥  ë¬¸ì„œ ëª©ë¡ì„ ì—´ëŒí•˜ê³ , ì›ë¬¸ì€ ê³µì‹ ì›¹ì‚¬ì´íŠ¸ì—ì„œ ìƒˆ íƒ­ìœ¼ë¡œ í™•ì¸í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.',
+        lang: 'ì–¸ì–´',
         tabSummary: 'Summary',
         tabStatus: 'Policy Status',
         tabDocuments: 'Documents',
         tabPenalties: 'Penalties',
-        back: '< µÚ·Î',
+        back: '< ë’¤ë¡œ',
         docs: 'Timeline',
-        docsCollection: '¹ı·ü ¹®¼­ ¸ğÀ½',
-        wordcloudTitle: '±¹°¡º° Word Cloud',
-        wordcloudMeta: 'Official Law/ActÀÇ clause coding ´ë»ó ¹®Àå ±âÁØ ¡¤ {rows}°³ segment',
-        wordcloudSourceFallback: 'ÇÑ±¹¾î termÀÌ ºñ¾î ÀÖ¾î ¿ø¹®/¿µ¾î ±âÁØÀ¸·Î Ç¥½Ã Áß',
-        wordcloudKorean: 'ÇÑ±¹¾î',
-        wordcloudSource: '¿ø¹®/¿µ¾î',
-        wordcloudEmpty: 'ÀÌ ±¹°¡ÀÇ official law word cloud µ¥ÀÌÅÍ°¡ ¾ÆÁ÷ ¾ø½À´Ï´Ù.',
-        governanceTitle: '°Å¹ö³Í½º À¯Çü ¡¤ Dimension Score',
-        governanceMeta: 'Official Law/Act core evidence ±âÁØ + B1/B2 context guidance ¹İ¿µ',
-        governanceEmpty: 'ÀÌ ±¹°¡ÀÇ dimension score µ¥ÀÌÅÍ°¡ ¾ÆÁ÷ ¾ø½À´Ï´Ù.',
-        governanceEvidence: '±Ù°Å °­µµ',
+        docsCollection: 'ë²•ë¥  ë¬¸ì„œ ëª¨ìŒ',
+        wordcloudTitle: 'êµ­ê°€ë³„ Word Cloud',
+        wordcloudMeta: 'Official Law/Actì˜ clause coding ëŒ€ìƒ ë¬¸ì¥ ê¸°ì¤€ Â· {rows}ê°œ segment',
+        wordcloudSourceFallback: 'í•œêµ­ì–´ termì´ ë¹„ì–´ ìˆì–´ ì›ë¬¸/ì˜ì–´ ê¸°ì¤€ìœ¼ë¡œ í‘œì‹œ ì¤‘',
+        wordcloudKorean: 'í•œêµ­ì–´',
+        wordcloudSource: 'ì›ë¬¸/ì˜ì–´',
+        wordcloudEmpty: 'ì´ êµ­ê°€ì˜ official law word cloud ë°ì´í„°ê°€ ì•„ì§ ì—†ìŠµë‹ˆë‹¤.',
+        governanceTitle: 'ê±°ë²„ë„ŒìŠ¤ ìœ í˜• Â· Dimension Score',
+        governanceMeta: 'Official Law/Act core evidence ê¸°ì¤€ + B1/B2 context guidance ë°˜ì˜',
+        governanceEmpty: 'ì´ êµ­ê°€ì˜ dimension score ë°ì´í„°ê°€ ì•„ì§ ì—†ìŠµë‹ˆë‹¤.',
+        governanceEvidence: 'ê·¼ê±° ê°•ë„',
         governanceContextRows: 'B1/B2 context rows',
         governanceGuidance: 'Voluntary guidance',
-        docSearchPlaceholder: '»ó¼¼ °Ë»ö (ÆÄÀÏ¸í/À¯Çü/»óÅÂ/¾ğ¾î/¿¬µµ)',
-        countryOfficialSearch: '°ø½Ä »çÀÌÆ®¿¡¼­ °Ë»ö',
-        countryOfficialSearchTitle: 'ÀÌ ±¹°¡ÀÇ °ø½Ä ¹ı·É/Á¤Ã¥ »çÀÌÆ®¿¡¼­ µöÆäÀÌÅ©¡¤»ı¼ºÇü AI °ü·Ã ±ÔÁ¤À» °Ë»öÇÕ´Ï´Ù.',
-        docViewLabel: '¹®¼­ º¸±â',
-        docViewOriginal: '¿ø¹®(ºñ¿µ¾î)',
-        docViewEnglish: '¿µ¾î ¹öÀü',
-        docViewKorean: 'ÇÑ±¹¾î ¹öÀü',
-        docViewAll: 'ÀüÃ¼ ¾ğ¾î',
+        docSearchPlaceholder: 'ìƒì„¸ ê²€ìƒ‰ (íŒŒì¼ëª…/ìœ í˜•/ìƒíƒœ/ì–¸ì–´/ì—°ë„)',
+        countryOfficialSearch: 'ê³µì‹ ì‚¬ì´íŠ¸ì—ì„œ ê²€ìƒ‰',
+        countryOfficialSearchTitle: 'ì´ êµ­ê°€ì˜ ê³µì‹ ë²•ë ¹/ì •ì±… ì‚¬ì´íŠ¸ì—ì„œ ë”¥í˜ì´í¬Â·ìƒì„±í˜• AI ê´€ë ¨ ê·œì •ì„ ê²€ìƒ‰í•©ë‹ˆë‹¤.',
+        docViewLabel: 'ë¬¸ì„œ ë³´ê¸°',
+        docViewOriginal: 'ì›ë¬¸(ë¹„ì˜ì–´)',
+        docViewEnglish: 'ì˜ì–´ ë²„ì „',
+        docViewKorean: 'í•œêµ­ì–´ ë²„ì „',
+        docViewAll: 'ì „ì²´ ì–¸ì–´',
         timeline: 'Timeline',
-        timelineCountryTitle: '±¹°¡',
-        timelineGlobalLabel: '±Û·Î¹ú',
+        timelineCountryTitle: 'êµ­ê°€',
+        timelineGlobalLabel: 'ê¸€ë¡œë²Œ',
         timelineGlobalTitle: 'Year',
-        timelineCompareTitle: '±¹°¡ ºñ±³',
-        timelineComparePick: 'ºñ±³ÇÒ ±¹°¡ ¼±ÅÃ',
-        timelineCompareShow: 'ºñ±³',
-        timelineCompareHide: '´İ±â',
-        timelineNoEvent: 'ÀÌº¥Æ® ¾øÀ½',
-        timelineEmpty: '¿¬µµ Á¤º¸¸¦ Ã£Áö ¸øÇß½À´Ï´Ù.',
-        timelineFlowReady: 'ÀÔ¹ı Èå¸§: ÃÊ¾È/Á¦¾È {from} -> ½ÃÇà {to}',
-        timelineFlowProposedOnly: 'ÀÔ¹ı Èå¸§: ÃÊ¾È/Á¦¾È ´Ü°è Áß½É',
-        timelineFlowInForceOnly: 'ÀÔ¹ı Èå¸§: ½ÃÇà ´Ü°è ¹®¼­ Áß½É',
-        timelineFlowUnknown: 'ÀÔ¹ı Èå¸§: ´Ü°è ÆÇ´Ü¿ë ±Ù°Å°¡ ¾ÆÁ÷ Á¦ÇÑÀû',
-        timelineMultiHint: 'º¹¼ö ¹®¼­ ¿¬µµ',
-        tlInForce: '½ÃÇà',
-        tlProposed: 'ÃÊ¾È/Á¦¾È',
-        tlGuidelines: '°¡ÀÌµå',
-        tlMixed: 'È¥ÇÕ',
-        tlUnknown: 'ºÒ¸íÈ®',
+        timelineCompareTitle: 'êµ­ê°€ ë¹„êµ',
+        timelineComparePick: 'ë¹„êµí•  êµ­ê°€ ì„ íƒ',
+        timelineCompareShow: 'ë¹„êµ',
+        timelineCompareHide: 'ë‹«ê¸°',
+        timelineNoEvent: 'ì´ë²¤íŠ¸ ì—†ìŒ',
+        timelineEmpty: 'ì—°ë„ ì •ë³´ë¥¼ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.',
+        timelineFlowReady: 'ì…ë²• íë¦„: ì´ˆì•ˆ/ì œì•ˆ {from} -> ì‹œí–‰ {to}',
+        timelineFlowProposedOnly: 'ì…ë²• íë¦„: ì´ˆì•ˆ/ì œì•ˆ ë‹¨ê³„ ì¤‘ì‹¬',
+        timelineFlowInForceOnly: 'ì…ë²• íë¦„: ì‹œí–‰ ë‹¨ê³„ ë¬¸ì„œ ì¤‘ì‹¬',
+        timelineFlowUnknown: 'ì…ë²• íë¦„: ë‹¨ê³„ íŒë‹¨ìš© ê·¼ê±°ê°€ ì•„ì§ ì œí•œì ',
+        timelineMultiHint: 'ë³µìˆ˜ ë¬¸ì„œ ì—°ë„',
+        tlInForce: 'ì‹œí–‰',
+        tlProposed: 'ì´ˆì•ˆ/ì œì•ˆ',
+        tlGuidelines: 'ê°€ì´ë“œ',
+        tlMixed: 'í˜¼í•©',
+        tlUnknown: 'ë¶ˆëª…í™•',
         tagLaw: 'Official Law/Act',
         tagDraft: 'Draft',
         tagGuidance: 'Official Guidance/Warning',
         tagReport: 'Official Report/Assessment',
         tagOther: 'Official Other',
-        status: '¹ıÁ¦È­ »óÅÂ',
-        statusLabeling: '¶óº§¸µ',
-        statusElection: '¼±°Å °ü·Ã',
-        statusNon: 'µ¿ÀÇ ¾ø´Â µöÆäÀÌÅ©',
-        statusProvider: '¼­ºñ½º/ÇÃ·§Æû Ã¥ÀÓ',
-        statusPenalty: 'Ã³¹ú ¹ıÁ¦È­',
-        compareTitle: 'ÇØ´ç ±¹°¡ vs ÀüÃ¼ Æò±Õ',
-        compareNote: 'Á¡¼ö ±âÁØ: °­ÇÔ=4, Áß°£=3, ¾àÇÔ=2, ºÒ¸íÈ®=1, ¹ı·ü ¾øÀ½=0',
-        compareCountry: 'ÇØ´ç ±¹°¡',
-        compareAverage: 'ÀüÃ¼ Æò±Õ',
-        articleHintPrefix: '±ÇÀå È®ÀÎ',
-        hintLabeling: '¶óº§¸µ/Ç¥½Ã ÀÇ¹« °ü·Ã Á¶¹® ¶Ç´Â ¹®´Ü',
-        hintElection: '¼±°Å/°øÁ÷¼±°Å ¹«°á¼º °ü·Ã Á¶¹® ¶Ç´Â ¹®´Ü',
-        hintNon: 'ºñµ¿ÀÇ ÇÕ¼º¹°(¼ºÀû ÀÌ¹ÌÁö Æ÷ÇÔ) ¹× ÀÎ°İ±Ç Ä§ÇØ °ü·Ã Á¶¹® ¶Ç´Â ¹®´Ü',
-        hintProvider: 'ÇÃ·§Æû/¼­ºñ½º Á¦°øÀÚ ÀÇ¹«(»èÁ¦¡¤ÅëÁö¡¤±â·Ïº¸°ü µî) °ü·Ã Á¶¹® ¶Ç´Â ¹®´Ü',
-        hintPenalty: 'Çü»çÃ³¹ú¡¤°úÂ¡±İ¡¤¹ú±İ¡¤°¡ÁßÃ³¹ú °ü·Ã Á¶¹® ¶Ç´Â ¹®´Ü',
+        status: 'ë²•ì œí™” ìƒíƒœ',
+        statusLabeling: 'ë¼ë²¨ë§',
+        statusElection: 'ì„ ê±° ê´€ë ¨',
+        statusNon: 'ë™ì˜ ì—†ëŠ” ë”¥í˜ì´í¬',
+        statusProvider: 'ì„œë¹„ìŠ¤/í”Œë«í¼ ì±…ì„',
+        statusPenalty: 'ì²˜ë²Œ ë²•ì œí™”',
+        compareTitle: 'í•´ë‹¹ êµ­ê°€ vs ì „ì²´ í‰ê· ',
+        compareNote: 'ì ìˆ˜ ê¸°ì¤€: ê°•í•¨=4, ì¤‘ê°„=3, ì•½í•¨=2, ë¶ˆëª…í™•=1, ë²•ë¥  ì—†ìŒ=0',
+        compareCountry: 'í•´ë‹¹ êµ­ê°€',
+        compareAverage: 'ì „ì²´ í‰ê· ',
+        articleHintPrefix: 'ê¶Œì¥ í™•ì¸',
+        hintLabeling: 'ë¼ë²¨ë§/í‘œì‹œ ì˜ë¬´ ê´€ë ¨ ì¡°ë¬¸ ë˜ëŠ” ë¬¸ë‹¨',
+        hintElection: 'ì„ ê±°/ê³µì§ì„ ê±° ë¬´ê²°ì„± ê´€ë ¨ ì¡°ë¬¸ ë˜ëŠ” ë¬¸ë‹¨',
+        hintNon: 'ë¹„ë™ì˜ í•©ì„±ë¬¼(ì„±ì  ì´ë¯¸ì§€ í¬í•¨) ë° ì¸ê²©ê¶Œ ì¹¨í•´ ê´€ë ¨ ì¡°ë¬¸ ë˜ëŠ” ë¬¸ë‹¨',
+        hintProvider: 'í”Œë«í¼/ì„œë¹„ìŠ¤ ì œê³µì ì˜ë¬´(ì‚­ì œÂ·í†µì§€Â·ê¸°ë¡ë³´ê´€ ë“±) ê´€ë ¨ ì¡°ë¬¸ ë˜ëŠ” ë¬¸ë‹¨',
+        hintPenalty: 'í˜•ì‚¬ì²˜ë²ŒÂ·ê³¼ì§•ê¸ˆÂ·ë²Œê¸ˆÂ·ê°€ì¤‘ì²˜ë²Œ ê´€ë ¨ ì¡°ë¬¸ ë˜ëŠ” ë¬¸ë‹¨',
         penaltyTitle: 'Penalties/Fines',
-        penaltyNormHint: 'Á¤±ÔÈ­ ½ºÅ°¸¶ º¸±â',
-        penaltyCsv: 'Á¤±ÔÈ­ CSV',
-        pOffense: '¹üÁË À¯Çü',
-        pScope: 'µöÆäÀÌÅ© ¹üÀ§',
-        pType: 'Çü¹ú/ÇàÁ¤',
-        pStatus: '½ÃÇà»óÅÂ',
-        pLaw: '¹ı·É/Á¶¹®',
-        pFine: '¹ú±İ',
-        pPrison: 'Â¡¿ª',
-        pSummary: 'Á¦Àç ¿ä¾à',
-        pAggrCond: '°¡ÁßÃ³¹ú ¿ä°Ç',
-        pAggrPen: '°¡ÁßÃ³¹ú ³»¿ë',
-        pRefs: '±Ù°Å',
-        pVerified: 'ÃÖÁ¾ È®ÀÎÀÏ',
-        reviewNeeded: 'È®ÀÎ ÇÊ¿ä',
-        noPenalty: '¹úÄ¢ µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.',
-        strong: '°­ÇÔ',
-        medium: 'Áß°£',
-        weak: '¾àÇÔ',
-        unclear: 'ºÒ¸íÈ®',
-        noLaw: '¹ı·ü ¾øÀ½',
-        noStatus: '»óÅÂ Á¤º¸°¡ ¾ø½À´Ï´Ù.',
-        summaryDimTitle: 'Dimension Áß½É ºü¸¥ ¿ä¾à',
-        summaryDimDesc: '¾Æ·¡ Ç×¸ñÀº ¶óº§¸µ, ¼±°Å, ºñµ¿ÀÇ µöÆäÀÌÅ©, ÇÃ·§Æû Ã¥ÀÓ, Ã³¹úÀÇ ÇöÀç ¹ıÁ¦È­ °­µµ¸¦ ¿ä¾àÇÕ´Ï´Ù.',
-        summary: '¿ä¾à',
-        preview: '¿ø¹® À¥»çÀÌÆ®',
-        open: '¿ø¹® »çÀÌÆ®',
-        previewBtn: '¿ø¹® »çÀÌÆ®',
-        previewHint: '¿ø¹® ÆÄÀÏ ¹Ì¸®º¸±â ´ë½Å °ø½Ä À¥»çÀÌÆ® ¶Ç´Â °ø½Ä °Ë»ö °á°ú¸¦ »õ ÅÇÀ¸·Î ¿±´Ï´Ù.',
+        penaltyNormHint: 'ì •ê·œí™” ìŠ¤í‚¤ë§ˆ ë³´ê¸°',
+        penaltyCsv: 'ì •ê·œí™” CSV',
+        pOffense: 'ë²”ì£„ ìœ í˜•',
+        pScope: 'ë”¥í˜ì´í¬ ë²”ìœ„',
+        pType: 'í˜•ë²Œ/í–‰ì •',
+        pStatus: 'ì‹œí–‰ìƒíƒœ',
+        pLaw: 'ë²•ë ¹/ì¡°ë¬¸',
+        pFine: 'ë²Œê¸ˆ',
+        pPrison: 'ì§•ì—­',
+        pSummary: 'ì œì¬ ìš”ì•½',
+        pAggrCond: 'ê°€ì¤‘ì²˜ë²Œ ìš”ê±´',
+        pAggrPen: 'ê°€ì¤‘ì²˜ë²Œ ë‚´ìš©',
+        pRefs: 'ê·¼ê±°',
+        pVerified: 'ìµœì¢… í™•ì¸ì¼',
+        reviewNeeded: 'í™•ì¸ í•„ìš”',
+        noPenalty: 'ë²Œì¹™ ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.',
+        strong: 'ê°•í•¨',
+        medium: 'ì¤‘ê°„',
+        weak: 'ì•½í•¨',
+        unclear: 'ë¶ˆëª…í™•',
+        noLaw: 'ë²•ë¥  ì—†ìŒ',
+        noStatus: 'ìƒíƒœ ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.',
+        summaryDimTitle: 'Dimension ì¤‘ì‹¬ ë¹ ë¥¸ ìš”ì•½',
+        summaryDimDesc: 'ì•„ë˜ í•­ëª©ì€ ë¼ë²¨ë§, ì„ ê±°, ë¹„ë™ì˜ ë”¥í˜ì´í¬, í”Œë«í¼ ì±…ì„, ì²˜ë²Œì˜ í˜„ì¬ ë²•ì œí™” ê°•ë„ë¥¼ ìš”ì•½í•©ë‹ˆë‹¤.',
+        summary: 'ìš”ì•½',
+        preview: 'ì›ë¬¸ ì›¹ì‚¬ì´íŠ¸',
+        open: 'ì›ë¬¸ ì‚¬ì´íŠ¸',
+        previewBtn: 'ì›ë¬¸ ì‚¬ì´íŠ¸',
+        previewHint: 'ì›ë¬¸ íŒŒì¼ ë¯¸ë¦¬ë³´ê¸° ëŒ€ì‹  ê³µì‹ ì›¹ì‚¬ì´íŠ¸ ë˜ëŠ” ê³µì‹ ê²€ìƒ‰ ê²°ê³¼ë¥¼ ìƒˆ íƒ­ìœ¼ë¡œ ì—½ë‹ˆë‹¤.',
         codingSummary: 'Clause-based Coding',
         codedRows: 'Coded rows',
         primaryPolicyDimensions: 'Policy Dimensions',
         riskTags: 'Risk tags',
         lifeCycleTags: 'Life-cycle tags',
         defenseLayers: 'Defense layers',
-        noDocs: '¹®¼­°¡ ¾ø½À´Ï´Ù.',
-        loading: 'ºÒ·¯¿À´Â Áß...',
-        noCountry: '±¹°¡ ÆÄ¶ó¹ÌÅÍ°¡ ¾ø½À´Ï´Ù.'
+        noDocs: 'ë¬¸ì„œê°€ ì—†ìŠµë‹ˆë‹¤.',
+        loading: 'ë¶ˆëŸ¬ì˜¤ëŠ” ì¤‘...',
+        noCountry: 'êµ­ê°€ íŒŒë¼ë¯¸í„°ê°€ ì—†ìŠµë‹ˆë‹¤.'
       },
       en: {
         title: 'Country Detail Page',
@@ -1745,12 +1745,12 @@
         docs: 'Timeline',
         docsCollection: 'Document list',
         wordcloudTitle: 'Country Word Cloud',
-        wordcloudMeta: 'Based on clause-coding rows from Official Law/Act ¡¤ {rows} segments',
+        wordcloudMeta: 'Based on clause-coding rows from Official Law/Act Â· {rows} segments',
         wordcloudSourceFallback: 'Showing source/English terms because Korean terms are empty',
         wordcloudKorean: 'Korean',
         wordcloudSource: 'Source/English',
         wordcloudEmpty: 'No official-law word cloud data is available for this country yet.',
-        governanceTitle: 'Governance Type ¡¤ Dimension Score',
+        governanceTitle: 'Governance Type Â· Dimension Score',
         governanceMeta: 'Official Law/Act core evidence plus B1/B2 context guidance',
         governanceEmpty: 'No dimension score data is available for this country yet.',
         governanceEvidence: 'Evidence strength',
@@ -1758,7 +1758,7 @@
         governanceGuidance: 'Voluntary guidance',
         docSearchPlaceholder: 'Detail search (file/type/stage/lang/year)',
         countryOfficialSearch: 'Search official site',
-        countryOfficialSearchTitle: 'Search this country¡¯s official legal or policy portal for deepfake and generative-AI regulation.',
+        countryOfficialSearchTitle: 'Search this countryâ€™s official legal or policy portal for deepfake and generative-AI regulation.',
         docViewLabel: 'Doc view',
         docViewOriginal: 'Original (non-English)',
         docViewEnglish: 'English version',
@@ -1848,39 +1848,39 @@
     };
 
     const COUNTRY_LABELS = {
-      ko: { 'ÇÑ±¹': 'ÇÑ±¹', '¿µ±¹': '¿µ±¹', 'È£ÁÖ': 'È£ÁÖ', 'EU': 'EU', '¹Ì±¹': '¹Ì±¹', 'Áß±¹': 'Áß±¹', '»ç¿ìµğ': '»ç¿ìµğ¾Æ¶óºñ¾Æ', 'µ¶ÀÏ': 'µ¶ÀÏ', 'ÇÁ¶û½º': 'ÇÁ¶û½º', 'ÀÎµµ': 'ÀÎµµ', 'ÆÄÅ°½ºÅº': 'ÆÄÅ°½ºÅº', '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®': '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®', '½Ì°¡Æú': '½Ì°¡Æú', '¾Æ¸£ÇîÆ¼³ª': '¾Æ¸£ÇîÆ¼³ª' },
-      en: { 'ÇÑ±¹': 'Korea', '¿µ±¹': 'United Kingdom', 'È£ÁÖ': 'Australia', 'EU': 'EU', '¹Ì±¹': 'United States', 'Áß±¹': 'China', '»ç¿ìµğ': 'Saudi Arabia', 'µ¶ÀÏ': 'Germany', 'ÇÁ¶û½º': 'France', 'ÀÎµµ': 'India', 'ÆÄÅ°½ºÅº': 'Pakistan', '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®': 'United Arab Emirates', '½Ì°¡Æú': 'Singapore', '¾Æ¸£ÇîÆ¼³ª': 'Argentina' }
+      ko: { 'í•œêµ­': 'í•œêµ­', 'ì˜êµ­': 'ì˜êµ­', 'í˜¸ì£¼': 'í˜¸ì£¼', 'EU': 'EU', 'ë¯¸êµ­': 'ë¯¸êµ­', 'ì¤‘êµ­': 'ì¤‘êµ­', 'ì‚¬ìš°ë””': 'ì‚¬ìš°ë””ì•„ë¼ë¹„ì•„', 'ë…ì¼': 'ë…ì¼', 'í”„ë‘ìŠ¤': 'í”„ë‘ìŠ¤', 'ì¸ë„': 'ì¸ë„', 'íŒŒí‚¤ìŠ¤íƒ„': 'íŒŒí‚¤ìŠ¤íƒ„', 'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸': 'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸', 'ì‹±ê°€í´': 'ì‹±ê°€í´', 'ì•„ë¥´í—¨í‹°ë‚˜': 'ì•„ë¥´í—¨í‹°ë‚˜' },
+      en: { 'í•œêµ­': 'Korea', 'ì˜êµ­': 'United Kingdom', 'í˜¸ì£¼': 'Australia', 'EU': 'EU', 'ë¯¸êµ­': 'United States', 'ì¤‘êµ­': 'China', 'ì‚¬ìš°ë””': 'Saudi Arabia', 'ë…ì¼': 'Germany', 'í”„ë‘ìŠ¤': 'France', 'ì¸ë„': 'India', 'íŒŒí‚¤ìŠ¤íƒ„': 'Pakistan', 'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸': 'United Arab Emirates', 'ì‹±ê°€í´': 'Singapore', 'ì•„ë¥´í—¨í‹°ë‚˜': 'Argentina' }
     };
     const WORDCLOUD_COUNTRY_KEYS = {
-      'ÇÑ±¹': 'South Korea',
-      '¿µ±¹': 'United Kingdom',
-      'È£ÁÖ': 'Australia',
+      'í•œêµ­': 'South Korea',
+      'ì˜êµ­': 'United Kingdom',
+      'í˜¸ì£¼': 'Australia',
       'EU': 'EU',
-      '¹Ì±¹': 'United States',
-      'Áß±¹': 'China',
-      '»ç¿ìµğ': 'Saudi Arabia',
-      'µ¶ÀÏ': 'Germany',
-      'ÇÁ¶û½º': 'France',
-      'ÀÎµµ': 'India',
-      'ÆÄÅ°½ºÅº': 'Pakistan',
-      '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®': 'United Arab Emirates',
-      '½Ì°¡Æú': 'Singapore',
-      '¾Æ¸£ÇîÆ¼³ª': 'Argentina'
+      'ë¯¸êµ­': 'United States',
+      'ì¤‘êµ­': 'China',
+      'ì‚¬ìš°ë””': 'Saudi Arabia',
+      'ë…ì¼': 'Germany',
+      'í”„ë‘ìŠ¤': 'France',
+      'ì¸ë„': 'India',
+      'íŒŒí‚¤ìŠ¤íƒ„': 'Pakistan',
+      'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸': 'United Arab Emirates',
+      'ì‹±ê°€í´': 'Singapore',
+      'ì•„ë¥´í—¨í‹°ë‚˜': 'Argentina'
     };
     const COUNTRY_SLUGS = {
-      'µ¶ÀÏ': 'germany',
-      '¹Ì±¹': 'united-states',
-      '»ç¿ìµğ': 'saudi-arabia',
-      '½Ì°¡Æú': 'singapore',
-      '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®': 'united-arab-emirates',
-      '¾Æ¸£ÇîÆ¼³ª': 'argentina',
-      '¿µ±¹': 'united-kingdom',
-      'ÀÎµµ': 'india',
-      'Áß±¹': 'china',
-      'ÆÄÅ°½ºÅº': 'pakistan',
-      'ÇÁ¶û½º': 'france',
-      'ÇÑ±¹': 'korea',
-      'È£ÁÖ': 'australia',
+      'ë…ì¼': 'germany',
+      'ë¯¸êµ­': 'united-states',
+      'ì‚¬ìš°ë””': 'saudi-arabia',
+      'ì‹±ê°€í´': 'singapore',
+      'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸': 'united-arab-emirates',
+      'ì•„ë¥´í—¨í‹°ë‚˜': 'argentina',
+      'ì˜êµ­': 'united-kingdom',
+      'ì¸ë„': 'india',
+      'ì¤‘êµ­': 'china',
+      'íŒŒí‚¤ìŠ¤íƒ„': 'pakistan',
+      'í”„ë‘ìŠ¤': 'france',
+      'í•œêµ­': 'korea',
+      'í˜¸ì£¼': 'australia',
       EU: 'eu',
     };
     const COUNTRY_BY_SLUG = Object.fromEntries(Object.entries(COUNTRY_SLUGS).map(([label, slug]) => [slug, label]));
@@ -1978,19 +1978,19 @@
     let dimensionScorePayload = null;
     let currentWordcloudView = 'kor';
     const COUNTRY_DOC_MODE = {
-      'ÇÑ±¹': 'known_non_en',
-      'Áß±¹': 'known_non_en',
-      'µ¶ÀÏ': 'known_non_en',
-      'ÇÁ¶û½º': 'known_non_en',
-      '»ç¿ìµğ': 'known_non_en',
-      '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®': 'english_primary',
-      '¹Ì±¹': 'english_primary',
-      '¿µ±¹': 'english_primary',
-      'È£ÁÖ': 'english_primary',
-      '¾Æ¸£ÇîÆ¼³ª': 'known_non_en',
-      '½Ì°¡Æú': 'unknown',
-      'ÀÎµµ': 'unknown',
-      'ÆÄÅ°½ºÅº': 'unknown',
+      'í•œêµ­': 'known_non_en',
+      'ì¤‘êµ­': 'known_non_en',
+      'ë…ì¼': 'known_non_en',
+      'í”„ë‘ìŠ¤': 'known_non_en',
+      'ì‚¬ìš°ë””': 'known_non_en',
+      'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸': 'english_primary',
+      'ë¯¸êµ­': 'english_primary',
+      'ì˜êµ­': 'english_primary',
+      'í˜¸ì£¼': 'english_primary',
+      'ì•„ë¥´í—¨í‹°ë‚˜': 'known_non_en',
+      'ì‹±ê°€í´': 'unknown',
+      'ì¸ë„': 'unknown',
+      'íŒŒí‚¤ìŠ¤íƒ„': 'unknown',
       'EU': 'english_primary'
     };
 
@@ -2085,7 +2085,7 @@
       }
       const rows = bucket && Number.isFinite(Number(bucket.rows)) ? Number(bucket.rows) : 0;
       wordcloudMetaEl.textContent = terms.length
-        ? `${t.wordcloudMeta.replace('{rows}', rows.toLocaleString(lang() === 'ko' ? 'ko-KR' : 'en-US'))}${fallbackToSource ? ` ¡¤ ${t.wordcloudSourceFallback}` : ''}`
+        ? `${t.wordcloudMeta.replace('{rows}', rows.toLocaleString(lang() === 'ko' ? 'ko-KR' : 'en-US'))}${fallbackToSource ? ` Â· ${t.wordcloudSourceFallback}` : ''}`
         : '';
       if (!terms.length) {
         wordcloudTermsEl.className = 'wordcloud-empty';
@@ -2120,12 +2120,12 @@
 
     function dimensionLabel(value) {
       const labelsKo = {
-        'scope/coverage': '¹üÀ§/Àû¿ë´ë»ó',
-        'disclosure/labeling': '°ø½Ã/¶óº§¸µ',
-        'remedies/consent': '±¸Á¦/µ¿ÀÇ',
-        elections: '¼±°Å',
-        'criminalize/penalty': '¹üÁËÈ­/Ã³¹ú',
-        'platform duties': 'ÇÃ·§Æû ÀÇ¹«',
+        'scope/coverage': 'ë²”ìœ„/ì ìš©ëŒ€ìƒ',
+        'disclosure/labeling': 'ê³µì‹œ/ë¼ë²¨ë§',
+        'remedies/consent': 'êµ¬ì œ/ë™ì˜',
+        elections: 'ì„ ê±°',
+        'criminalize/penalty': 'ë²”ì£„í™”/ì²˜ë²Œ',
+        'platform duties': 'í”Œë«í¼ ì˜ë¬´',
       };
       const labelsEn = {
         'scope/coverage': 'Scope/Coverage',
@@ -2224,19 +2224,19 @@
       return [hi, base];
     }
     function countryFlagAsset(c) {
-      if (c === 'ÇÑ±¹') return { code: 'KR', tw: '1f1f0-1f1f7' };
-      if (c === '¿µ±¹') return { code: 'UK', tw: '1f1ec-1f1e7' };
-      if (c === 'È£ÁÖ') return { code: 'AU', tw: '1f1e6-1f1fa' };
+      if (c === 'í•œêµ­') return { code: 'KR', tw: '1f1f0-1f1f7' };
+      if (c === 'ì˜êµ­') return { code: 'UK', tw: '1f1ec-1f1e7' };
+      if (c === 'í˜¸ì£¼') return { code: 'AU', tw: '1f1e6-1f1fa' };
       if (c === 'EU') return { code: 'EU', tw: '1f1ea-1f1fa' };
-      if (c === '¹Ì±¹') return { code: 'US', tw: '1f1fa-1f1f8' };
-      if (c === 'Áß±¹') return { code: 'CN', tw: '1f1e8-1f1f3' };
-      if (c === '»ç¿ìµğ') return { code: 'SA', tw: '1f1f8-1f1e6' };
-      if (c === 'µ¶ÀÏ') return { code: 'DE', tw: '1f1e9-1f1ea' };
-      if (c === 'ÇÁ¶û½º') return { code: 'FR', tw: '1f1eb-1f1f7' };
-      if (c === 'ÀÎµµ') return { code: 'IN', tw: '1f1ee-1f1f3' };
-      if (c === 'ÆÄÅ°½ºÅº') return { code: 'PK', tw: '1f1f5-1f1f0' };
-      if (c === '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®') return { code: 'AE', tw: '1f1e6-1f1ea' };
-      if (c === '½Ì°¡Æú') return { code: 'SG', tw: '1f1f8-1f1ec' };
+      if (c === 'ë¯¸êµ­') return { code: 'US', tw: '1f1fa-1f1f8' };
+      if (c === 'ì¤‘êµ­') return { code: 'CN', tw: '1f1e8-1f1f3' };
+      if (c === 'ì‚¬ìš°ë””') return { code: 'SA', tw: '1f1f8-1f1e6' };
+      if (c === 'ë…ì¼') return { code: 'DE', tw: '1f1e9-1f1ea' };
+      if (c === 'í”„ë‘ìŠ¤') return { code: 'FR', tw: '1f1eb-1f1f7' };
+      if (c === 'ì¸ë„') return { code: 'IN', tw: '1f1ee-1f1f3' };
+      if (c === 'íŒŒí‚¤ìŠ¤íƒ„') return { code: 'PK', tw: '1f1f5-1f1f0' };
+      if (c === 'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸') return { code: 'AE', tw: '1f1e6-1f1ea' };
+      if (c === 'ì‹±ê°€í´') return { code: 'SG', tw: '1f1f8-1f1ec' };
       return { code: 'NA', tw: '' };
     }
     function countryFlagHtml(c) {
@@ -2246,21 +2246,21 @@
       return `<img class="flag-icon" src="${escapeHtml(src)}" alt="${escapeHtml(f.code)}" loading="lazy" />`;
     }
     function dimensionIcon(key) {
-      if (key === 'labeling') return '???';
-      if (key === 'election') return '???';
-      if (key === 'non_consensual') return '???';
-      if (key === 'provider_liability') return '??';
-      if (key === 'penalty') return '??';
-      return '?';
+      if (key === 'labeling') return 'ğŸ·ï¸';
+      if (key === 'election') return 'ğŸ—³ï¸';
+      if (key === 'non_consensual') return 'ğŸ›¡ï¸';
+      if (key === 'provider_liability') return 'ğŸ“¡';
+      if (key === 'penalty') return 'âš–ï¸';
+      return 'â€¢';
     }
 
     function policyLevelForLine(content, statusObj) {
       if (!statusObj) return 'na';
-      if (content.startsWith('`¶óº§¸µ(Ç¥½Ã) ¹ıÁ¦È­ »óÅÂ`:') || content.startsWith('`Labeling status`:')) return statusObj.labeling_level || 'na';
-      if (content.startsWith('`¼±°Å °ü·Ã ¹ıÁ¦È­ »óÅÂ`:') || content.startsWith('`Election-related status`:')) return statusObj.election_level || 'na';
-      if (content.startsWith('`µ¿ÀÇ ¾ø´Â µöÆäÀÌÅ© ¹ıÁ¦È­ »óÅÂ`:') || content.startsWith('`Non-consensual deepfake status`:')) return statusObj.non_consensual_level || 'na';
-      if (content.startsWith('`¼­ºñ½º Á¦°øÀÚ ¹× ÇÃ·§Æû Ã¥ÀÓ ¹ıÁ¦È­ »óÅÂ`:') || content.startsWith('`Service-provider/platform liability status`:')) return statusObj.provider_liability_level || 'na';
-      if (content.startsWith('`Ã³¹ú ¹ıÁ¦È­ »óÅÂ`:') || content.startsWith('`Penalty/sanctions codification status`:')) return statusObj.penalty_level || 'na';
+      if (content.startsWith('`ë¼ë²¨ë§(í‘œì‹œ) ë²•ì œí™” ìƒíƒœ`:') || content.startsWith('`Labeling status`:')) return statusObj.labeling_level || 'na';
+      if (content.startsWith('`ì„ ê±° ê´€ë ¨ ë²•ì œí™” ìƒíƒœ`:') || content.startsWith('`Election-related status`:')) return statusObj.election_level || 'na';
+      if (content.startsWith('`ë™ì˜ ì—†ëŠ” ë”¥í˜ì´í¬ ë²•ì œí™” ìƒíƒœ`:') || content.startsWith('`Non-consensual deepfake status`:')) return statusObj.non_consensual_level || 'na';
+      if (content.startsWith('`ì„œë¹„ìŠ¤ ì œê³µì ë° í”Œë«í¼ ì±…ì„ ë²•ì œí™” ìƒíƒœ`:') || content.startsWith('`Service-provider/platform liability status`:')) return statusObj.provider_liability_level || 'na';
+      if (content.startsWith('`ì²˜ë²Œ ë²•ì œí™” ìƒíƒœ`:') || content.startsWith('`Penalty/sanctions codification status`:')) return statusObj.penalty_level || 'na';
       return 'na';
     }
 
@@ -2284,17 +2284,17 @@
 
     function detectDocVariant(doc) {
       const p = (doc.relative_path || doc.name || '').toLowerCase();
-      if (country === 'ÇÑ±¹') {
+      if (country === 'í•œêµ­') {
         if (p.includes('ai basic act of the republic of korea')) return 'en';
         if (p.includes('framework-act-on-the-development-of-artificial-intelligence-and-the-creation-of-a-foundation-for-trust')) return 'en';
         if (p.includes('tacteen')) return 'en';
         if (p.includes('korea-2025-ai-basic-act-subordinate')) return 'original';
         if (p.includes('korea-election-rule-deepfake-labeling-annex')) return 'original';
       }
-      if (p.includes('korean-translation') || p.includes('korean') || p.includes('¹ø¿ª') || p.includes('_ko') || p.includes('-ko.')) return 'ko';
+      if (p.includes('korean-translation') || p.includes('korean') || p.includes('ë²ˆì—­') || p.includes('_ko') || p.includes('-ko.')) return 'ko';
       if (p.includes('state council departmental documents') || p.includes('china government website')) return 'en';
       if (p.includes('english') || p.includes('english-translate') || p.includes('_en') || p.includes('-en-') || p.includes('en_v') || p.includes('guide_en') || p.includes('en-1') || p.includes('en.pdf')) return 'en';
-      if (p.includes('official-cn') || p.includes('original') || p.includes('¿ø¹®') || p.includes('_cn') || p.includes('-cn')) return 'original';
+      if (p.includes('official-cn') || p.includes('original') || p.includes('ì›ë¬¸') || p.includes('_cn') || p.includes('-cn')) return 'original';
       // If this country is known non-English and language is not explicit, treat as original.
       const mode = COUNTRY_DOC_MODE[country] || 'unknown';
       if (mode === 'known_non_en') return 'original';
@@ -2382,19 +2382,19 @@
       return labels[c] || c;
     }
     function countryShortCode(c) {
-      if (c === 'ÇÑ±¹') return 'KOR';
-      if (c === '¿µ±¹') return 'GBR';
-      if (c === 'È£ÁÖ') return 'AUS';
+      if (c === 'í•œêµ­') return 'KOR';
+      if (c === 'ì˜êµ­') return 'GBR';
+      if (c === 'í˜¸ì£¼') return 'AUS';
       if (c === 'EU') return 'EUR';
-      if (c === '¹Ì±¹') return 'USA';
-      if (c === 'Áß±¹') return 'CHN';
-      if (c === '»ç¿ìµğ') return 'SAU';
-      if (c === 'µ¶ÀÏ') return 'DEU';
-      if (c === 'ÇÁ¶û½º') return 'FRA';
-      if (c === 'ÀÎµµ') return 'IND';
-      if (c === 'ÆÄÅ°½ºÅº') return 'PAK';
-      if (c === '¾Æ¶ø¿¡¹Ì¸®¿¡ÀÌÆ®') return 'UAE';
-      if (c === '½Ì°¡Æú') return 'SGP';
+      if (c === 'ë¯¸êµ­') return 'USA';
+      if (c === 'ì¤‘êµ­') return 'CHN';
+      if (c === 'ì‚¬ìš°ë””') return 'SAU';
+      if (c === 'ë…ì¼') return 'DEU';
+      if (c === 'í”„ë‘ìŠ¤') return 'FRA';
+      if (c === 'ì¸ë„') return 'IND';
+      if (c === 'íŒŒí‚¤ìŠ¤íƒ„') return 'PAK';
+      if (c === 'ì•„ëì—ë¯¸ë¦¬ì—ì´íŠ¸') return 'UAE';
+      if (c === 'ì‹±ê°€í´') return 'SGP';
       const raw = String(countryDisplayLabel(c) || c).replace(/[^A-Za-z]/g, '').toUpperCase();
       return raw.slice(0, 3) || 'UNK';
     }
@@ -2624,7 +2624,7 @@
         return;
       }
       const laneTop = `<span class="lane-icon">${countryFlagHtml(country)}</span><span class="lane-name">${escapeHtml(countryDisplayLabel(country))}</span>`;
-      const laneBottom = `<span class="lane-icon" aria-hidden="true">??</span><span class="lane-name">${escapeHtml(t.timelineGlobalLabel || 'Global')}</span>`;
+      const laneBottom = `<span class="lane-icon" aria-hidden="true">ğŸŒ</span><span class="lane-name">${escapeHtml(t.timelineGlobalLabel || 'Global')}</span>`;
       const showComparePins = compareTimelineVisible && compareTimelineCountry;
       if (showComparePins) prefetchCompareCountryDocs(compareTimelineCountry);
       const laneCompare = showComparePins ? `<span class="lane-icon">${countryFlagHtml(compareTimelineCountry)}</span><span class="lane-name">${escapeHtml(countryDisplayLabel(compareTimelineCountry))}</span>` : '';
@@ -2634,7 +2634,7 @@
         ${showComparePins ? `<span class="timeline-lane-label compare">${laneCompare}</span>` : ''}
         <div id="timelineCompareSlot" class="timeline-compare-slot"></div>
         ${gaps.map((g) => `
-        <span class="timeline-gap" style="left:${g.left.toFixed(2)}%" title="${escapeHtml(`${g.from}..${g.to} compressed`)}">¡¦</span>
+        <span class="timeline-gap" style="left:${g.left.toFixed(2)}%" title="${escapeHtml(`${g.from}..${g.to} compressed`)}">â€¦</span>
       `).join('')}${yearTicks.map((p) => `
         <span class="timeline-year-tick" style="left:${p.left.toFixed(2)}%">${p.year}</span>
       `).join('')}${countryPins.map((p) => `
@@ -2807,9 +2807,9 @@
     }
     function docKindLabel(file) {
       const rp = String((file && (file.relative_path || file.name)) || '').toLowerCase();
-      if (rp.includes('errata') || rp.includes('Á¤¿ÀÇ¥')) return 'Errata';
-      if (rp.includes('enforcement-decree') || rp.includes('presidential-decree') || rp.includes('½ÃÇà·É')) return 'Decree';
-      if (rp.includes('law-no') || rp.includes('(¹ı·ü)') || /\bact\b/.test(rp.replace(/[_-]+/g, ' '))) return 'Law';
+      if (rp.includes('errata') || rp.includes('ì •ì˜¤í‘œ')) return 'Errata';
+      if (rp.includes('enforcement-decree') || rp.includes('presidential-decree') || rp.includes('ì‹œí–‰ë ¹')) return 'Decree';
+      if (rp.includes('law-no') || rp.includes('(ë²•ë¥ )') || /\bact\b/.test(rp.replace(/[_-]+/g, ' '))) return 'Law';
       if (rp.includes('guideline') || rp.includes('guide')) return 'Guideline';
       return '';
     }
@@ -2845,7 +2845,7 @@
         australia: `https://www.legislation.gov.au/search?searchText=${q}`,
         eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
         france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
-        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=or&words=${q}`,
         india: `https://www.indiacode.nic.in/search?keyword=${q}`,
         pakistan: `https://na.gov.pk/en/bills.php`,
         'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
@@ -2860,18 +2860,34 @@
     }
     function countryOfficialSearchQuery() {
       const localized = {
-        'ÇÑ±¹': 'µöÆäÀÌÅ© »ı¼ºÇü ÀÎ°øÁö´É ÇÕ¼º¹Ìµğ¾î ÀÎ°øÁö´É »ı¼º ÄÜÅÙÃ÷ Ç¥½Ã ¶óº§¸µ ¿öÅÍ¸¶Å© Åõ¸í¼º Ã¥¹«¼º ¼±°Å µ¿ÀÇ °³ÀÎÁ¤º¸ ºñµ¿ÀÇ ¼ºÀû ÀÌ¹ÌÁö ÇÃ·§Æû Ã¥ÀÓ',
-        'Áß±¹': 'ä¢Óøùêà÷ ßæà÷ãÒìÑÍïòªÒö ìÑÍïòªÒößæà÷?é» ?? â©ìÔ ÷âÙ¥Óø ?ìò ?? ÔÒëò ?Şç øÁ÷»?ìò',
+        'í•œêµ­': [
+          'ë”¥í˜ì´í¬',
+          'ìƒì„±í˜•ì¸ê³µì§€ëŠ¥',
+          'í•©ì„±ë¯¸ë””ì–´',
+          'ì¸ê³µì§€ëŠ¥ìƒì„±ì½˜í…ì¸ ',
+          'í—ˆìœ„ì˜ìƒë¬¼',
+          'í‘œì‹œ',
+          'ë¼ë²¨ë§',
+          'ì›Œí„°ë§ˆí¬',
+          'íˆ¬ëª…ì„±',
+          'ì±…ë¬´ì„±',
+          'ì„ ê±°',
+          'ë™ì˜',
+          'ê°œì¸ì •ë³´',
+          'ë¹„ë™ì˜ì„±ì ì´ë¯¸ì§€',
+          'í”Œë«í¼ì±…ì„'
+        ].join('+'),
+        'ì¤‘êµ­': 'æ·±åº¦åˆæˆ ç”Ÿæˆå¼äººå·¥æ™ºèƒ½ äººå·¥æ™ºèƒ½ç”Ÿæˆå†…å®¹ æ ‡è¯† æ°´å° é€æ˜åº¦ è´£ä»» é€‰ä¸¾ åŒæ„ éšç§ å¹³å°è´£ä»»',
       };
       if (localized[country]) return localized[country];
       return [
-        '"synthetic media"',
-        '"synthetic content"',
-        '"deep synthesis"',
+        'synthetic media',
+        'synthetic content',
+        'deep synthesis',
         'deepfake',
-        '"AI-generated content"',
-        '"AI-generated synthetic content"',
-        '"generative AI"',
+        'AI-generated content',
+        'AI-generated synthetic content',
+        'generative AI',
         'disclosure',
         'labeling',
         'watermark',
@@ -2880,10 +2896,10 @@
         'election',
         'consent',
         'privacy',
-        '"non-consensual intimate imagery"',
+        'non-consensual intimate imagery',
         'NCII',
-        '"platform liability"'
-      ].join(' OR ');
+        'platform liability'
+      ].join(' ');
     }
     function countryOfficialSearchUrl() {
       const slug = COUNTRY_SLUGS[country] || '';
@@ -2893,7 +2909,7 @@
         australia: `https://www.legislation.gov.au/search?searchText=${q}`,
         eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
         france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
-        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=or&words=${q}`,
         india: `https://www.indiacode.nic.in/search?keyword=${q}`,
         pakistan: 'https://na.gov.pk/en/bills.php',
         'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
@@ -3679,7 +3695,7 @@
       if (mode === 'known_non_en') {
         if (hasOriginal) opts.push({ v: 'original', l: t.docViewOriginal });
         if (hasEn) opts.push({ v: 'en', l: t.docViewEnglish });
-        if (country !== 'ÇÑ±¹' && hasKo) opts.push({ v: 'ko', l: t.docViewKorean });
+        if (country !== 'í•œêµ­' && hasKo) opts.push({ v: 'ko', l: t.docViewKorean });
         opts.push({ v: 'all', l: t.docViewAll });
       } else if (mode === 'english_primary') {
         opts.push({ v: 'en', l: t.docViewEnglish });
@@ -3739,7 +3755,7 @@
         if (line.startsWith('## ')) {
           close();
           const h2 = line.slice(3).trim();
-          inPolicyDimensions = (h2 === 'Policy Dimensions' || h2 === '¹ıÁ¦È­ »óÅÂ');
+          inPolicyDimensions = (h2 === 'Policy Dimensions' || h2 === 'ë²•ì œí™” ìƒíƒœ');
           skipPolicySection = inPolicyDimensions;
           if (skipPolicySection) {
             continue;
@@ -4040,11 +4056,11 @@
       }
       const channelLabel = (v) => {
         const x = String(v || '').toLowerCase();
-        if (x === 'criminal') return lang() === 'ko' ? 'Çü»ç' : 'Criminal';
-        if (x === 'administrative') return lang() === 'ko' ? 'ÇàÁ¤' : 'Administrative';
-        if (x === 'mixed') return lang() === 'ko' ? 'È¥ÇÕ' : 'Mixed';
-        if (x === 'other') return lang() === 'ko' ? '±âÅ¸' : 'Other';
-        return lang() === 'ko' ? 'ºÒ¸íÈ®' : 'Unknown';
+        if (x === 'criminal') return lang() === 'ko' ? 'í˜•ì‚¬' : 'Criminal';
+        if (x === 'administrative') return lang() === 'ko' ? 'í–‰ì •' : 'Administrative';
+        if (x === 'mixed') return lang() === 'ko' ? 'í˜¼í•©' : 'Mixed';
+        if (x === 'other') return lang() === 'ko' ? 'ê¸°íƒ€' : 'Other';
+        return lang() === 'ko' ? 'ë¶ˆëª…í™•' : 'Unknown';
       };
       const statusLabel = (v) => {
         const x = String(v || '').toLowerCase();
