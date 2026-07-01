@@ -135,11 +135,11 @@
     document.body.classList.add('has-policy-shell');
     const active = activeKey();
     const nav = pageItems(lang).map((item) => `
-      <a class="${item.key === active ? 'is-active' : ''}" href="${withLang(item.href, lang)}">${item.label}</a>
+      <a class="${item.key === active ? 'is-active' : ''}" data-policy-nav="${item.key}" ${item.key === 'countries' ? `aria-expanded="${active === 'countries' ? 'true' : 'false'}"` : ''} href="${withLang(item.href, lang)}">${item.label}</a>
     `).join('');
 
     const aside = document.createElement('aside');
-    aside.className = 'policy-shell-sidebar';
+    aside.className = `policy-shell-sidebar${active === 'countries' ? ' is-country-menu-open' : ''}`;
     aside.innerHTML = `
       <a class="policy-shell-brand" href="${withLang('/deepfake-policy/', lang)}">
         <strong>DeepfakePolicy</strong>
@@ -183,6 +183,16 @@
 
     const search = aside.querySelector('#policyShellSearch');
     const results = aside.querySelector('#policyShellResults');
+    const countriesNav = aside.querySelector('[data-policy-nav="countries"]');
+    if (countriesNav) {
+      countriesNav.addEventListener('click', (event) => {
+        if (!aside.classList.contains('is-country-menu-open')) {
+          event.preventDefault();
+          aside.classList.add('is-country-menu-open');
+          countriesNav.setAttribute('aria-expanded', 'true');
+        }
+      });
+    }
     search.addEventListener('input', () => renderSearchResults(results, search.value, lang));
     results.addEventListener('click', (event) => {
       const btn = event.target.closest('[data-href]');

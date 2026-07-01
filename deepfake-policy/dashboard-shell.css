@@ -131,10 +131,18 @@ body.has-policy-shell .top > .langbox {
 
 .policy-shell-result:hover { background: var(--dp-alt-soft); }
 
-.policy-shell-nav,
-.policy-shell-country-groups {
+.policy-shell-nav {
   display: grid;
   gap: 8px;
+}
+
+.policy-shell-country-groups {
+  display: none;
+  gap: 8px;
+}
+
+.policy-shell-sidebar.is-country-menu-open .policy-shell-country-groups {
+  display: grid;
 }
 
 .policy-shell-nav a,
