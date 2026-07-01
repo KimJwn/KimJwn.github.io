@@ -11,7 +11,7 @@
   <meta property="og:url" content="https://kimjwn.github.io/deepfake-policy/geography/" />
   <title>Deepfake Policy Geography</title>
   <link rel="stylesheet" href="/assets/palette.css" />
-  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css" />
+  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css?v=20260701-sidebar4" />
   <style>
     * { box-sizing: border-box; }
     body {
@@ -272,7 +272,7 @@
       </div>
       <select id="lang" class="geo-lang" aria-label="Language">
         <option value="en">English</option>
-        <option value="ko">한국어</option>
+        <option value="ko">?�국??/option>
       </select>
     </section>
     <section class="geo-stats" id="stats"></section>
@@ -296,24 +296,24 @@
       <aside class="memo-panel" id="memoPanel"></aside>
     </section>
   </main>
-  <script src="/deepfake-policy/dashboard-shell.js"></script>
+  <script src="/deepfake-policy/dashboard-shell.js?v=20260701-sidebar4"></script>
   <script>
     const LANG_KEY = 'deepfakePolicyLang';
     const countries = [
       { slug:'united-states', code:'US', en:'United States', ko:'미국', region:'Americas', x:18, y:39, status:'Federal / state mix', dims:'Election, NCII, platform', note:'A fragmented model with federal, state, election, and intimate-image pathways.' },
-      { slug:'argentina', code:'AR', en:'Argentina', ko:'아르헨티나', region:'Americas', x:28, y:72, status:'Proposed / partial', dims:'Election, privacy', note:'A South American reference case where deepfake harms are mostly read through layered older categories.' },
-      { slug:'united-kingdom', code:'UK', en:'United Kingdom', ko:'영국', region:'Europe', x:46, y:33, status:'Online safety / criminal law', dims:'NCII, platform, fraud', note:'Regulation relies on online safety duties and targeted criminal-law reforms.' },
-      { slug:'france', code:'FR', en:'France', ko:'프랑스', region:'Europe', x:48, y:38, status:'Criminal / platform', dims:'Disclosure, dignity', note:'The French pathway emphasizes image rights, dignity, and targeted transparency duties.' },
-      { slug:'germany', code:'DE', en:'Germany', ko:'독일', region:'Europe', x:51, y:35, status:'Criminal / media law', dims:'Personality rights, platform', note:'German treatment is tied to personality rights, media governance, and criminal-law categories.' },
-      { slug:'eu', code:'EU', en:'European Union', ko:'유럽연합', region:'Europe', x:53, y:40, status:'AI Act / platform', dims:'Transparency, risk, platform', note:'The EU creates a layered supranational approach through AI Act transparency and platform governance.' },
-      { slug:'saudi-arabia', code:'SA', en:'Saudi Arabia', ko:'사우디아라비아', region:'Africa / Middle East', x:59, y:52, status:'Cybercrime / platform', dims:'Cybercrime, public order', note:'Deepfake harms are mainly visible through cybercrime, fraud, and public-order controls.' },
-      { slug:'united-arab-emirates', code:'UAE', en:'United Arab Emirates', ko:'아랍에미리트', region:'Africa / Middle East', x:63, y:54, status:'Cybercrime / AI governance', dims:'Cybercrime, privacy, AI', note:'The UAE combines cybercrime provisions with AI governance and platform responsibility.' },
-      { slug:'india', code:'IN', en:'India', ko:'인도', region:'Pacific / Asia', x:69, y:55, status:'IT rules / advisories', dims:'Platform, NCII, disclosure', note:'India combines IT rules, platform advisories, and NCII/fraud enforcement pathways.' },
-      { slug:'pakistan', code:'PK', en:'Pakistan', ko:'파키스탄', region:'Pacific / Asia', x:66, y:50, status:'Cybercrime / draft', dims:'Cybercrime, dignity', note:'Pakistan is mainly mapped through cybercrime, dignity, and proposed AI-content rules.' },
+      { slug:'argentina', code:'AR', en:'Argentina', ko:'?�르?�티??, region:'Americas', x:28, y:72, status:'Proposed / partial', dims:'Election, privacy', note:'A South American reference case where deepfake harms are mostly read through layered older categories.' },
+      { slug:'united-kingdom', code:'UK', en:'United Kingdom', ko:'?�국', region:'Europe', x:46, y:33, status:'Online safety / criminal law', dims:'NCII, platform, fraud', note:'Regulation relies on online safety duties and targeted criminal-law reforms.' },
+      { slug:'france', code:'FR', en:'France', ko:'?�랑??, region:'Europe', x:48, y:38, status:'Criminal / platform', dims:'Disclosure, dignity', note:'The French pathway emphasizes image rights, dignity, and targeted transparency duties.' },
+      { slug:'germany', code:'DE', en:'Germany', ko:'?�일', region:'Europe', x:51, y:35, status:'Criminal / media law', dims:'Personality rights, platform', note:'German treatment is tied to personality rights, media governance, and criminal-law categories.' },
+      { slug:'eu', code:'EU', en:'European Union', ko:'?�럽?�합', region:'Europe', x:53, y:40, status:'AI Act / platform', dims:'Transparency, risk, platform', note:'The EU creates a layered supranational approach through AI Act transparency and platform governance.' },
+      { slug:'saudi-arabia', code:'SA', en:'Saudi Arabia', ko:'?�우?�아?�비??, region:'Africa / Middle East', x:59, y:52, status:'Cybercrime / platform', dims:'Cybercrime, public order', note:'Deepfake harms are mainly visible through cybercrime, fraud, and public-order controls.' },
+      { slug:'united-arab-emirates', code:'UAE', en:'United Arab Emirates', ko:'?�랍?��?리트', region:'Africa / Middle East', x:63, y:54, status:'Cybercrime / AI governance', dims:'Cybercrime, privacy, AI', note:'The UAE combines cybercrime provisions with AI governance and platform responsibility.' },
+      { slug:'india', code:'IN', en:'India', ko:'?�도', region:'Pacific / Asia', x:69, y:55, status:'IT rules / advisories', dims:'Platform, NCII, disclosure', note:'India combines IT rules, platform advisories, and NCII/fraud enforcement pathways.' },
+      { slug:'pakistan', code:'PK', en:'Pakistan', ko:'?�키?�탄', region:'Pacific / Asia', x:66, y:50, status:'Cybercrime / draft', dims:'Cybercrime, dignity', note:'Pakistan is mainly mapped through cybercrime, dignity, and proposed AI-content rules.' },
       { slug:'china', code:'CN', en:'China', ko:'중국', region:'Pacific / Asia', x:76, y:43, status:'Deep synthesis rules', dims:'Labeling, platform, security', note:'China has one of the clearest deep-synthesis governance paths with labeling and platform duties.' },
-      { slug:'korea', code:'KR', en:'Korea', ko:'한국', region:'Pacific / Asia', x:82, y:43, status:'Criminal / election / labeling', dims:'NCII, election, labeling', note:'Korea combines criminal law, election rules, platform obligations, and AI labeling debates.' },
-      { slug:'singapore', code:'SG', en:'Singapore', ko:'싱가포르', region:'Pacific / Asia', x:76, y:65, status:'Online falsehoods / elections', dims:'Election, correction, platform', note:'Singapore centers legal visibility around falsehood correction, elections, and online harms.' },
-      { slug:'australia', code:'AU', en:'Australia', ko:'호주', region:'Pacific / Asia', x:82, y:78, status:'Online safety / criminal law', dims:'NCII, platform, safety', note:'Australia uses online safety, NCII, criminal-law, and platform accountability pathways.' }
+      { slug:'korea', code:'KR', en:'Korea', ko:'?�국', region:'Pacific / Asia', x:82, y:43, status:'Criminal / election / labeling', dims:'NCII, election, labeling', note:'Korea combines criminal law, election rules, platform obligations, and AI labeling debates.' },
+      { slug:'singapore', code:'SG', en:'Singapore', ko:'?��??�르', region:'Pacific / Asia', x:76, y:65, status:'Online falsehoods / elections', dims:'Election, correction, platform', note:'Singapore centers legal visibility around falsehood correction, elections, and online harms.' },
+      { slug:'australia', code:'AU', en:'Australia', ko:'?�주', region:'Pacific / Asia', x:82, y:78, status:'Online safety / criminal law', dims:'NCII, platform, safety', note:'Australia uses online safety, NCII, criminal-law, and platform accountability pathways.' }
     ];
     const T = {
       en: {
@@ -330,15 +330,15 @@
       },
       ko: {
         eyebrow:'Geography',
-        title:'지리 기반 정책 지도',
-        lead:'국가 핀을 눌러 최대 4개 메모를 동시에 열 수 있습니다. 각 메모는 해당 국가의 법적 경로를 요약하고 국가 상세 페이지로 연결됩니다.',
-        mapTitle:'지원 국가 지도',
-        mapNote:'핀 위치는 정확한 지도 좌표가 아니라 비교를 위한 개략적 배치입니다.',
-        memoCount:(n)=>`${n}/4 메모 열림`,
-        empty:'국가 핀을 선택하면 메모 카드가 열립니다. 최대 4개 국가를 나란히 비교할 수 있습니다.',
-        detail:'자세히',
-        close:'닫기',
-        stats:[['14','지원 관할권'],['4','메모 비교 슬롯'],['4','지역 그룹']]
+        title:'지�?기반 ?�책 지??,
+        lead:'�?? ?�???�러 최�? 4�?메모�??�시???????�습?�다. �?메모???�당 �????법적 경로�??�약?�고 �?? ?�세 ?�이지�??�결?�니??',
+        mapTitle:'지??�?? 지??,
+        mapNote:'?� ?�치???�확??지??좌표가 ?�니??비교�??�한 개략??배치?�니??',
+        memoCount:(n)=>`${n}/4 메모 ?�림`,
+        empty:'�?? ?�???�택?�면 메모 카드가 ?�립?�다. 최�? 4�?�??�??��???비교?????�습?�다.',
+        detail:'?�세??,
+        close:'?�기',
+        stats:[['14','지??관?�권'],['4','메모 비교 ?�롯'],['4','지??그룹']]
       }
     };
     function lang() {

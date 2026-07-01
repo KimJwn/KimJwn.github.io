@@ -33,11 +33,12 @@ body.has-policy-shell .top > .langbox {
   inset: 14px auto 14px 14px;
   z-index: 50;
   width: var(--dp-sidebar-width);
-  display: grid;
-  grid-template-rows: auto auto auto auto minmax(0, 1fr) auto;
+  display: flex;
+  flex-direction: column;
   gap: 14px;
   padding: 18px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid transparent;
   border-radius: var(--dp-radius-xl);
   background: rgba(255, 255, 255, 0.82);
@@ -136,6 +137,7 @@ body.has-policy-shell .top > .langbox {
 .policy-shell-nav {
   display: grid;
   gap: 8px;
+  min-width: 0;
 }
 
 .policy-shell-country-groups {
@@ -158,8 +160,10 @@ body.has-policy-shell .top > .langbox {
 
 .policy-shell-nav a {
   display: block;
+  width: 100%;
   padding: 10px 11px;
   font-weight: 850;
+  box-sizing: border-box;
 }
 
 .policy-shell-nav a.is-active {
@@ -206,6 +210,7 @@ body.has-policy-shell .top > .langbox {
 .policy-shell-footer {
   display: grid;
   gap: 12px;
+  margin-top: 8px;
 }
 
 .policy-shell-top {
