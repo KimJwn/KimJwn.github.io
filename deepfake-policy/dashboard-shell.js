@@ -150,8 +150,7 @@
         </select>
       </div>
       <div class="policy-shell-search">
-        <label class="policy-shell-label" for="policyShellSearch">${t.search}</label>
-        <input id="policyShellSearch" type="search" placeholder="${t.searchPlaceholder}" autocomplete="off" />
+        <input id="policyShellSearch" type="search" placeholder="${t.searchPlaceholder}" aria-label="${t.search}" autocomplete="off" />
         <div class="policy-shell-results" id="policyShellResults"></div>
       </div>
       <nav class="policy-shell-nav">${nav}</nav>

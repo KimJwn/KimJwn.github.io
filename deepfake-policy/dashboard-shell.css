@@ -75,9 +75,9 @@ body.has-policy-shell .top > .langbox {
 .policy-shell-lang select,
 .policy-shell-search input {
   width: 100%;
-  border: 0;
+  border: 1px solid rgba(17, 24, 39, 0.07);
   border-radius: 999px;
-  background: var(--dp-soft);
+  background: rgba(255, 255, 255, 0.82);
   color: var(--dp-ink);
   font: 700 10px/1.2 "Poppins", "Noto Sans KR", sans-serif;
   outline: 0;
@@ -94,7 +94,7 @@ body.has-policy-shell .top > .langbox {
 .policy-shell-search {
   position: relative;
   display: grid;
-  gap: 7px;
+  gap: 0;
 }
 
 .policy-shell-results {
