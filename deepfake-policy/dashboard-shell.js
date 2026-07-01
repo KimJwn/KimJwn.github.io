@@ -132,9 +132,12 @@
     const t = labels[lang];
     document.body.classList.add('has-policy-shell');
     const active = activeKey();
-    const nav = pageItems(lang).map((item) => `
-      <a class="${item.key === active ? 'is-active' : ''}" data-policy-nav="${item.key}" ${item.key === 'countries' ? `aria-expanded="${active === 'countries' ? 'true' : 'false'}"` : ''} href="${withLang(item.href, lang)}">${item.label}</a>
-    `).join('');
+    const nav = pageItems(lang).map((item) => {
+      const link = `<a class="${item.key === active ? 'is-active' : ''}" data-policy-nav="${item.key}" ${item.key === 'countries' ? `aria-expanded="${active === 'countries' ? 'true' : 'false'}"` : ''} href="${withLang(item.href, lang)}">${item.label}</a>`;
+      return item.key === 'countries'
+        ? `${link}<div class="policy-shell-country-groups">${regionHtml(lang)}</div>`
+        : link;
+    }).join('');
 
     const aside = document.createElement('aside');
     aside.className = `policy-shell-sidebar${active === 'countries' ? ' is-country-menu-open' : ''}`;
@@ -154,7 +157,6 @@
         <div class="policy-shell-results" id="policyShellResults"></div>
       </div>
       <nav class="policy-shell-nav">${nav}</nav>
-      <div class="policy-shell-country-groups">${regionHtml(lang)}</div>
       <div class="policy-shell-footer">
         <a class="policy-shell-top" href="#top">${t.top}</a>
         <div class="policy-shell-marks" aria-label="Research affiliations">
