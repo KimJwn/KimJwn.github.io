@@ -193,6 +193,10 @@ body.has-policy-shell .top > .langbox {
   padding: 0 8px 10px;
 }
 
+.policy-shell-region:not([open]) .policy-shell-country-list {
+  display: none;
+}
+
 .policy-shell-country-link {
   padding: 7px 9px;
   font-weight: 750;

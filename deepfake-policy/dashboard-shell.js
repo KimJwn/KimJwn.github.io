@@ -84,8 +84,8 @@
       (acc[c.region] ||= []).push(c);
       return acc;
     }, {});
-    return Object.entries(grouped).map(([region, list], idx) => `
-      <details class="policy-shell-region" ${idx === 0 ? 'open' : ''}>
+    return Object.entries(grouped).map(([region, list]) => `
+      <details class="policy-shell-region">
         <summary>${region}</summary>
         <div class="policy-shell-country-list">
           ${list.map((c) => `<a class="policy-shell-country-link" href="${withLang('/deepfake-policy/country/' + c.slug + '/', lang)}">${lang === 'ko' ? c.ko : c.en}</a>`).join('')}
