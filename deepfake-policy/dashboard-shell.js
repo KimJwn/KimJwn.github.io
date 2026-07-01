@@ -19,7 +19,6 @@
 
   const labels = {
     en: {
-      homeSub: 'Observatory',
       language: 'Language',
       search: 'Search',
       searchPlaceholder: 'Search country or page',
@@ -32,7 +31,6 @@
       detail: 'Country detail'
     },
     ko: {
-      homeSub: 'Observatory',
       language: '언어',
       search: '검색',
       searchPlaceholder: '국가 또는 페이지 검색',
@@ -143,7 +141,6 @@
     aside.innerHTML = `
       <a class="policy-shell-brand" href="${withLang('/deepfake-policy/', lang)}">
         <strong>DeepfakePolicy</strong>
-        <span>${t.homeSub}</span>
       </a>
       <div class="policy-shell-lang">
         <label class="policy-shell-label" for="policyShellLang">${t.language}</label>

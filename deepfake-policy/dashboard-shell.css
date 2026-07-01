@@ -43,6 +43,7 @@ body.has-policy-shell .top > .langbox {
   background: rgba(255, 255, 255, 0.82);
   color: var(--dp-ink);
   font-family: "Poppins", "Noto Sans KR", "Segoe UI", sans-serif;
+  font-size: 70%;
 }
 
 .policy-shell-brand {
@@ -53,25 +54,21 @@ body.has-policy-shell .top > .langbox {
 }
 
 .policy-shell-brand strong {
-  font-size: 21px;
+  font-size: 15px;
   line-height: 1;
   letter-spacing: -0.05em;
 }
 
-.policy-shell-brand span {
-  color: var(--dp-muted);
-  font-size: 12px;
-  font-weight: 700;
-}
-
 .policy-shell-lang {
-  display: grid;
-  gap: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .policy-shell-label {
   color: var(--dp-muted);
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 800;
 }
 
@@ -82,12 +79,17 @@ body.has-policy-shell .top > .langbox {
   border-radius: 999px;
   background: var(--dp-soft);
   color: var(--dp-ink);
-  font: 700 14px/1.2 "Poppins", "Noto Sans KR", sans-serif;
+  font: 700 10px/1.2 "Poppins", "Noto Sans KR", sans-serif;
   outline: 0;
 }
 
-.policy-shell-lang select { padding: 11px 12px; }
-.policy-shell-search input { padding: 13px 15px; }
+.policy-shell-lang select {
+  width: 132px;
+  flex: 0 0 auto;
+  padding: 6px 10px;
+}
+
+.policy-shell-search input { padding: 10px 12px; }
 
 .policy-shell-search {
   position: relative;
@@ -119,7 +121,7 @@ body.has-policy-shell .top > .langbox {
   background: transparent;
   color: var(--dp-ink);
   cursor: pointer;
-  font: 800 13px/1.25 "Poppins", "Noto Sans KR", sans-serif;
+  font: 800 10px/1.25 "Poppins", "Noto Sans KR", sans-serif;
 }
 
 .policy-shell-result small {
@@ -151,12 +153,12 @@ body.has-policy-shell .top > .langbox {
   text-decoration: none;
   color: var(--dp-ink);
   border-radius: 16px;
-  font-size: 14px;
+  font-size: 10px;
 }
 
 .policy-shell-nav a {
   display: block;
-  padding: 12px 13px;
+  padding: 10px 11px;
   font-weight: 850;
 }
 
@@ -178,7 +180,7 @@ body.has-policy-shell .top > .langbox {
 
 .policy-shell-region summary {
   cursor: pointer;
-  padding: 11px 13px;
+  padding: 10px 11px;
   font-weight: 850;
   list-style: none;
 }
@@ -192,7 +194,7 @@ body.has-policy-shell .top > .langbox {
 }
 
 .policy-shell-country-link {
-  padding: 8px 10px;
+  padding: 7px 9px;
   font-weight: 750;
   color: #344054;
 }
@@ -212,7 +214,7 @@ body.has-policy-shell .top > .langbox {
   background: var(--dp-accent-soft);
   color: var(--dp-accent);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 900;
 }
 
@@ -229,7 +231,7 @@ body.has-policy-shell .top > .langbox {
   border-radius: 15px;
   background: var(--dp-soft);
   color: var(--dp-muted);
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 900;
 }
 
