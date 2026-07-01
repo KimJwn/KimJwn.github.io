@@ -11,6 +11,7 @@
   <meta property="og:url" content="https://kimjwn.github.io/deepfake-policy/country/" />
   <title>Deepfake Policy Country Dashboard</title>
   <link rel="stylesheet" href="/assets/palette.css" />
+  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css" />
   <style>
     * { box-sizing: border-box; }
     body {
@@ -2844,7 +2845,7 @@
         australia: `https://www.legislation.gov.au/search?searchText=${q}`,
         eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
         france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
-        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=or&words=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
         india: `https://www.indiacode.nic.in/search?keyword=${q}`,
         pakistan: `https://na.gov.pk/en/bills.php`,
         'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
@@ -2859,34 +2860,18 @@
     }
     function countryOfficialSearchQuery() {
       const localized = {
-        '한국': [
-          '딥페이크',
-          '생성형인공지능',
-          '합성미디어',
-          '인공지능생성콘텐츠',
-          '허위영상물',
-          '표시',
-          '라벨링',
-          '워터마크',
-          '투명성',
-          '책무성',
-          '선거',
-          '동의',
-          '개인정보',
-          '비동의성적이미지',
-          '플랫폼책임'
-        ].join('+'),
+        '한국': '딥페이크 생성형 인공지능 합성미디어 인공지능 생성 콘텐츠 표시 라벨링 워터마크 투명성 책무성 선거 동의 개인정보 비동의 성적 이미지 플랫폼 책임',
         '중국': '深度合成 生成式人工智能 人工智能生成内容 标识 水印 透明度 责任 选举 同意 隐私 平台责任',
       };
       if (localized[country]) return localized[country];
       return [
-        'synthetic media',
-        'synthetic content',
-        'deep synthesis',
+        '"synthetic media"',
+        '"synthetic content"',
+        '"deep synthesis"',
         'deepfake',
-        'AI-generated content',
-        'AI-generated synthetic content',
-        'generative AI',
+        '"AI-generated content"',
+        '"AI-generated synthetic content"',
+        '"generative AI"',
         'disclosure',
         'labeling',
         'watermark',
@@ -2895,10 +2880,10 @@
         'election',
         'consent',
         'privacy',
-        'non-consensual intimate imagery',
+        '"non-consensual intimate imagery"',
         'NCII',
-        'platform liability'
-      ].join(' ');
+        '"platform liability"'
+      ].join(' OR ');
     }
     function countryOfficialSearchUrl() {
       const slug = COUNTRY_SLUGS[country] || '';
@@ -2908,7 +2893,7 @@
         australia: `https://www.legislation.gov.au/search?searchText=${q}`,
         eu: `https://eur-lex.europa.eu/search.html?text=${q}&scope=EURLEX&type=quick`,
         france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
-        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=or&words=${q}`,
+        germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=and&words=${q}`,
         india: `https://www.indiacode.nic.in/search?keyword=${q}`,
         pakistan: 'https://na.gov.pk/en/bills.php',
         'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
@@ -4220,6 +4205,7 @@
       await loadDocs();
     })();
   </script>
+  <script src="/deepfake-policy/dashboard-shell.js"></script>
 </body>
 </html>
 

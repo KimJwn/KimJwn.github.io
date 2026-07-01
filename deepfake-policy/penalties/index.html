@@ -10,6 +10,7 @@
     }
   </script>
   <link rel="stylesheet" href="/assets/palette.css" />
+  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css" />
   <style>
     * { box-sizing:border-box; }
     body {
@@ -276,5 +277,6 @@
     langSel.addEventListener('change', async ()=>{ saveLang(); applyText(); await load(); });
     (async ()=>{ saveLang(); applyText(); await load(); })();
   </script>
+  <script src="/deepfake-policy/dashboard-shell.js"></script>
 </body>
 </html>
