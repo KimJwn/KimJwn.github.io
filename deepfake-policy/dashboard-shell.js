@@ -25,8 +25,8 @@
       dashboard: 'Dashboard',
       countries: 'Countries',
       coding: 'Corpus & Clause coding',
-      geography: 'Geography',
       penalties: 'What is illegal?',
+      research: 'Research Topic (RQ)',
       top: 'Back to top',
       detail: 'Country detail'
     },
@@ -37,8 +37,8 @@
       dashboard: 'Dashboard',
       countries: 'Countries',
       coding: 'Corpus & Clause coding',
-      geography: 'Geography',
       penalties: 'What is illegal?',
+      research: 'Research Topic (RQ)',
       top: '맨 위로',
       detail: '국가 상세'
     }
@@ -61,20 +61,20 @@
   function pageItems(lang) {
     const t = labels[lang];
     return [
-      { key: 'dashboard', label: t.dashboard, href: '/deepfake-policy/rq/' },
+      { key: 'dashboard', label: t.dashboard, href: '/deepfake-policy/dashboard/' },
       { key: 'countries', label: t.countries, href: '/deepfake-policy/countries/' },
       { key: 'coding', label: t.coding, href: '/deepfake-policy/coding/' },
-      { key: 'geography', label: t.geography, href: '/deepfake-policy/geography/' },
-      { key: 'penalties', label: t.penalties, href: '/deepfake-policy/penalties/' }
+      { key: 'penalties', label: t.penalties, href: '/deepfake-policy/penalties/' },
+      { key: 'research', label: t.research, href: '/deepfake-policy/rq/' }
     ];
   }
 
   function activeKey() {
     const p = location.pathname;
-    if (p.includes('/rq/')) return 'dashboard';
+    if (p.includes('/dashboard/') || p.includes('/geography/')) return 'dashboard';
+    if (p.includes('/rq/')) return 'research';
     if (p.includes('/countries/') || p.includes('/country/')) return 'countries';
     if (p.includes('/coding/')) return 'coding';
-    if (p.includes('/geography/')) return 'geography';
     if (p.includes('/penalties/')) return 'penalties';
     return '';
   }
