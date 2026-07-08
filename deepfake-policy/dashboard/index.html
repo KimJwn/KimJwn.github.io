@@ -146,6 +146,14 @@
       font-weight: 850;
       line-height: 1.42;
     }
+    .kpi-card small {
+      display: block;
+      margin-top: 8px;
+      color: #98a2b3;
+      font-size: 11px;
+      font-weight: 750;
+      line-height: 1.45;
+    }
     .kpi-split {
       display: grid;
       gap: 8px;
@@ -663,6 +671,7 @@
         lead:'A project-level overview of policy scale, legal pathways, geographic coverage, and clause-coding distributions. The map remains comparative, but the page now starts from measurable corpus indicators.',
         kpis: {
           countries:'jurisdictions analyzed',
+          countriesNote:'15 countries plus the EU; Japan is excluded due to insufficient current official-source coverage in the working corpus.',
           docs:'official documents',
           clauses:'coded clauses',
           specificity:'regulatory specificity',
@@ -709,6 +718,7 @@
         lead:'정책 규모, 법적 경로, 지리적 범위, 조문 코딩 분포를 한 화면에서 보는 프로젝트 수준의 대시보드입니다. 지도는 비교용으로 유지하고, 상단에는 corpus 기반 지표를 먼저 배치했습니다.',
         kpis: {
           countries:'분석 국가 수',
+          countriesNote:'15개 국가와 EU를 포함합니다. 일본은 현재 working corpus의 공식 출처 coverage가 부족해 제외했습니다.',
           docs:'공식 문서 수',
           clauses:'coded clause 수',
           specificity:'규제 특정성',
@@ -869,7 +879,7 @@
       const inventoryRows = data.inventory?.rows || [];
       const coding = data.coding || {};
       const codingRows = coding.rows || [];
-      const countryCount = countries.length;
+      const jurisdictionCount = 16;
       const docCount = inventoryRows.length;
       const codedClauses = coding.total_coded_rows || codingRows.length;
       const specificDocs = countSpecificDocs(inventoryRows);
@@ -883,7 +893,7 @@
         <div class="split-row"><span>${t.kpis.forceRows[key]}</span><b>${pct(forceCounts[key] || 0, docCount)}%</b></div>
       `).join('');
       document.getElementById('kpiGrid').innerHTML = [
-        `<article class="kpi-card"><div><strong>${fmt(countryCount)}</strong><span>${t.kpis.countries}</span></div></article>`,
+        `<article class="kpi-card"><div><strong>${fmt(jurisdictionCount)}</strong><span>${t.kpis.countries}</span><small>${esc(t.kpis.countriesNote)}</small></div></article>`,
         `<article class="kpi-card"><div><strong>${fmt(docCount)}</strong><span>${t.kpis.docs}</span></div></article>`,
         `<article class="kpi-card"><div><strong>${fmt(codedClauses)}</strong><span>${t.kpis.clauses}</span></div></article>`,
         `<article class="kpi-card"><div><strong>${specificPct}%</strong><span>${t.kpis.specificity}</span></div><div class="kpi-split"><div class="split-row"><span>${t.kpis.specific}</span><b>${fmt(specificDocs)}</b></div><div class="split-row"><span>${t.kpis.general}</span><b>${fmt(Math.max(0, docCount - specificDocs))}</b></div></div></article>`,
