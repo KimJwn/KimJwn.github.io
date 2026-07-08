@@ -577,9 +577,9 @@
           ['Comparative view', 'The analysis emphasizes fragmentation, institutional pathways, and enforcement assumptions.']
         ],
         stats: [
-          ['14+', 'jurisdictions'],
-          ['5', 'policy dimensions'],
-          ['1,000+', 'coded rows']
+          ['15', 'jurisdictions'],
+          ['6', 'policy dimensions'],
+          ['10,647', 'coded rows']
         ],
         methods: [
           ['Country-level dashboard', 'Use this path when the question is jurisdictional: what rules exist, where the source documents are, and how the country is coded.'],
@@ -610,9 +610,9 @@
           ['Comparative view', '비교의 초점은 법 형식의 파편화, 제도 경로, 집행 전제의 차이에 있습니다.']
         ],
         stats: [
-          ['14+', '관할권'],
-          ['5', '정책 차원'],
-          ['1,000+', 'coded rows']
+          ['15', '관할권'],
+          ['6', '정책 차원'],
+          ['10,647', 'coded rows']
         ],
         methods: [
           ['국가별 대시보드', '국가별로 어떤 규칙이 있고, 원문 문서는 어디에 있으며, 해당 국가가 어떻게 코딩되는지 볼 때 사용합니다.'],
@@ -807,6 +807,34 @@
         </article>
       `).join('');
     }
+    async function refreshStatsFromData() {
+      try {
+        const [countriesRes, codingRes] = await Promise.all([
+          fetch('/api-static/countries.json?v=20260708-home-stats1'),
+          fetch('/api-static/coding-results.json?v=20260708-home-stats1')
+        ]);
+        if (!countriesRes.ok || !codingRes.ok) return;
+        const countriesPayload = await countriesRes.json();
+        const codingPayload = await codingRes.json();
+        const countryCount = Array.isArray(countriesPayload.countries) ? countriesPayload.countries.length : 0;
+        const dimensionPayload = codingPayload.summary && codingPayload.summary.by_primary_policy_dimension;
+        const dimensionCount = Array.isArray(dimensionPayload) ? dimensionPayload.length : Object.keys(dimensionPayload || {}).length;
+        const codedRows = Number(codingPayload.total_coded_rows || 0);
+        const locale = lang() === 'ko' ? 'ko-KR' : 'en-US';
+        const updated = t().stats.map((item, index) => {
+          if (index === 0 && countryCount) return [countryCount.toLocaleString(locale), item[1]];
+          if (index === 1 && dimensionCount) return [dimensionCount.toLocaleString(locale), item[1]];
+          if (index === 2 && codedRows) return [codedRows.toLocaleString(locale), item[1]];
+          return item;
+        });
+        els.stats.innerHTML = updated.map((item) => `
+          <div class="stat">
+            <strong>${escapeHtml(item[0])}</strong>
+            <span>${escapeHtml(item[1])}</span>
+          </div>
+        `).join('');
+      } catch (_) {}
+    }
     function renderQuote() {
       const list = visibleQuotes();
       const q = list[currentQuote % list.length];
@@ -846,6 +874,7 @@
     function renderAll() {
       saveLang();
       renderStaticText();
+      refreshStatsFromData();
       setQuote(Math.min(currentQuote, visibleQuotes().length - 1), false);
     }
 
