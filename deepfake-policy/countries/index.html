@@ -450,8 +450,7 @@
         continentAsia: '아시아',
         continentEurope: '유럽',
         continentMiddleEast: '중동',
-        continentNorthAmerica: '북미',
-        continentSouthAmerica: '남미',
+        continentAmericas: '미 대륙',
         continentOceania: '오세아니아',
         continentSupranational: '초국가',
         continentOther: '기타',
@@ -502,8 +501,7 @@
         continentAsia: 'Asia',
         continentEurope: 'Europe',
         continentMiddleEast: 'Middle East',
-        continentNorthAmerica: 'North America',
-        continentSouthAmerica: 'South America',
+        continentAmericas: 'Americas',
         continentOceania: 'Oceania',
         continentSupranational: 'Supranational',
         continentOther: 'Other',
@@ -536,8 +534,8 @@
     };
 
     const LABELS = {
-      ko: { '한국':'한국','영국':'영국','호주':'호주','EU':'EU','미국':'미국','중국':'중국','사우디':'사우디아라비아','독일':'독일','프랑스':'프랑스','인도':'인도','파키스탄':'파키스탄','아랍에미리에이트':'아랍에미리트','싱가폴':'싱가폴','아르헨티나':'아르헨티나' },
-      en: { '한국':'Korea','영국':'United Kingdom','호주':'Australia','EU':'EU','미국':'United States','중국':'China','사우디':'Saudi Arabia','독일':'Germany','프랑스':'France','인도':'India','파키스탄':'Pakistan','아랍에미리에이트':'United Arab Emirates','싱가폴':'Singapore','아르헨티나':'Argentina' },
+      ko: { '한국':'한국','영국':'영국','호주':'호주','EU':'EU','미국':'미국','브라질':'브라질','중국':'중국','사우디':'사우디아라비아','독일':'독일','프랑스':'프랑스','인도':'인도','파키스탄':'파키스탄','아랍에미리에이트':'아랍에미리트','싱가폴':'싱가폴','아르헨티나':'아르헨티나' },
+      en: { '한국':'Korea','영국':'United Kingdom','호주':'Australia','EU':'EU','미국':'United States','브라질':'Brazil','중국':'China','사우디':'Saudi Arabia','독일':'Germany','프랑스':'France','인도':'India','파키스탄':'Pakistan','아랍에미리에이트':'United Arab Emirates','싱가폴':'Singapore','아르헨티나':'Argentina' },
     };
 
     let countries = [];
@@ -555,12 +553,13 @@
       '프랑스': 'europe',
       '사우디': 'middle_east',
       '아랍에미리에이트': 'middle_east',
-      '미국': 'north_america',
-      '아르헨티나': 'south_america',
+      '미국': 'americas',
+      '브라질': 'americas',
+      '아르헨티나': 'americas',
       '호주': 'oceania',
       'EU': 'europe',
     };
-    const CONTINENT_ORDER = ['asia', 'europe', 'middle_east', 'north_america', 'south_america', 'oceania', 'supranational', 'other'];
+    const CONTINENT_ORDER = ['asia', 'europe', 'middle_east', 'americas', 'oceania', 'supranational', 'other'];
     const TIMELINE_END_YEAR = 2026;
 
     const LANG_STORAGE_KEY = 'deepfakePolicyLang';
@@ -677,8 +676,7 @@
       if (key === 'asia') return t.continentAsia;
       if (key === 'europe') return t.continentEurope;
       if (key === 'middle_east') return t.continentMiddleEast;
-      if (key === 'north_america') return t.continentNorthAmerica;
-      if (key === 'south_america') return t.continentSouthAmerica;
+      if (key === 'americas') return t.continentAmericas;
       if (key === 'oceania') return t.continentOceania;
       if (key === 'supranational') return t.continentSupranational;
       return t.continentOther;
@@ -687,6 +685,7 @@
     const COUNTRY_SLUGS = {
       '독일': 'germany',
       '미국': 'united-states',
+      '브라질': 'brazil',
       '사우디': 'saudi-arabia',
       '싱가폴': 'singapore',
       '아랍에미리에이트': 'united-arab-emirates',

@@ -634,6 +634,7 @@
     const LANG_KEY = 'deepfakePolicyLang';
     const countries = [
       { slug:'united-states', code:'US', en:'United States', ko:'미국', region:'Americas', x:18, y:39, status:'Federal / state mix', dims:'Election, NCII, platform', note:'A fragmented model with federal, state, election, and intimate-image pathways.' },
+      { slug:'brazil', code:'BR', en:'Brazil', ko:'브라질', region:'Americas', x:31, y:63, status:'Draft / proposed AI regulation', dims:'AI governance, platform, transparency', note:'Brazil is represented through draft AI governance materials and official legislative pages, showing an emerging Americas pathway.' },
       { slug:'argentina', code:'AR', en:'Argentina', ko:'아르헨티나', region:'Americas', x:28, y:72, status:'Proposed / partial', dims:'Election, privacy', note:'A South American reference case where deepfake harms are mostly read through layered older categories.' },
       { slug:'united-kingdom', code:'UK', en:'United Kingdom', ko:'영국', region:'Europe', x:46, y:33, status:'Online safety / criminal law', dims:'NCII, platform, fraud', note:'Regulation relies on online safety duties and targeted criminal-law reforms.' },
       { slug:'france', code:'FR', en:'France', ko:'프랑스', region:'Europe', x:48, y:38, status:'Criminal / platform', dims:'Disclosure, dignity', note:'The French pathway emphasizes image rights, dignity, and targeted transparency duties.' },
@@ -790,7 +791,7 @@
       const slug = String(row?.country_dir || row?.country_slug || '').toLowerCase();
       const label = String(row?.country_label || '').toLowerCase();
       if (/australia|china|india|korea|pakistan|singapore/.test(slug + ' ' + label)) return 'Pacific / Asia';
-      if (/united-states|argentina|states|america/.test(slug + ' ' + label)) return 'Americas';
+      if (/united-states|brazil|argentina|states|america/.test(slug + ' ' + label)) return 'Americas';
       if (/eu|france|germany|united-kingdom|kingdom|european/.test(slug + ' ' + label)) return 'Europe';
       if (/saudi|emirates|uae|arab/.test(slug + ' ' + label)) return 'Africa / Middle East';
       return 'Other';

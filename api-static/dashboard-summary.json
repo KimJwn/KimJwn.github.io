@@ -339,6 +339,29 @@
           "unknown": 0
         }
       }
+    },
+    "브라질": {
+      "stats": {
+        "total": 4,
+        "in_force": 0,
+        "proposed": 3,
+        "guidelines": 1,
+        "review": 0
+      },
+      "timeline": {
+        "2023": {
+          "in_force": 0,
+          "proposed": 2,
+          "guidelines": 0,
+          "unknown": 0
+        },
+        "2025": {
+          "in_force": 0,
+          "proposed": 1,
+          "guidelines": 0,
+          "unknown": 0
+        }
+      }
     }
   }
 }

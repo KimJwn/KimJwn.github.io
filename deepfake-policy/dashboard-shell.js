@@ -8,6 +8,7 @@
     { slug: 'pakistan', en: 'Pakistan', ko: '파키스탄', region: 'Pacific / Asia' },
     { slug: 'singapore', en: 'Singapore', ko: '싱가포르', region: 'Pacific / Asia' },
     { slug: 'united-states', en: 'United States', ko: '미국', region: 'Americas' },
+    { slug: 'brazil', en: 'Brazil', ko: '브라질', region: 'Americas' },
     { slug: 'argentina', en: 'Argentina', ko: '아르헨티나', region: 'Americas' },
     { slug: 'eu', en: 'European Union', ko: '유럽연합', region: 'Europe' },
     { slug: 'france', en: 'France', ko: '프랑스', region: 'Europe' },
