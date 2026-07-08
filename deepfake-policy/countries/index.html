@@ -330,7 +330,7 @@
       .timeline-country { grid-template-columns:1fr; }
     }
   </style>
-  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css?v=20260701-sidebar6" />
+  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css?v=20260708-brazil1" />
 </head>
 <body>
   <main class="wrap">
@@ -967,7 +967,7 @@
 
     async function fetchDocStats() {
       try {
-        const res = await fetch('/api-static/dashboard-summary.json');
+        const res = await fetch('/api-static/dashboard-summary.json?v=20260708-brazil1');
         if (!res.ok) throw new Error('failed');
         const json = await res.json();
         const summary = json.summary || {};
@@ -980,13 +980,13 @@
     }
 
     async function loadStatuses() {
-      const sRes = await fetch(`/api-static/statuses.${encodeURIComponent(lang())}.json`);
+      const sRes = await fetch(`/api-static/statuses.${encodeURIComponent(lang())}.json?v=20260708-brazil1`);
       statuses = sRes.ok ? (await sRes.json()).statuses || [] : [];
     }
 
     async function boot() {
       titleEl.textContent = text().loading;
-      const cRes = await fetch('/api-static/countries.json');
+      const cRes = await fetch('/api-static/countries.json?v=20260708-brazil1');
       countries = cRes.ok ? (await cRes.json()).countries || [] : [];
       await Promise.all([loadStatuses(), fetchDocStats()]);
       render();
@@ -997,6 +997,6 @@
     saveLang();
     boot();
   </script>
-  <script src="/deepfake-policy/dashboard-shell.js?v=20260701-sidebar6"></script>
+  <script src="/deepfake-policy/dashboard-shell.js?v=20260708-brazil1"></script>
 </body>
 </html>

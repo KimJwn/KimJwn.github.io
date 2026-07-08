@@ -534,7 +534,7 @@
       .wordcloud-tools { justify-content: flex-start; }
     }
   </style>
-  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css?v=20260701-sidebar6" />
+  <link rel="stylesheet" href="/deepfake-policy/dashboard-shell.css?v=20260708-brazil1" />
 </head>
 <body>
   <main class="wrap">
@@ -1063,9 +1063,9 @@
     async function loadData() {
       try {
         const [inventory, coding, wordcloud] = await Promise.all([
-          fetchJson('/api-static/document-inventory.json'),
-          fetchJson('/api-static/coding-results.json'),
-          fetchJson('/api-static/analysis-wordclouds.json')
+          fetchJson('/api-static/document-inventory.json?v=20260708-brazil1'),
+          fetchJson('/api-static/coding-results.json?v=20260708-brazil1'),
+          fetchJson('/api-static/analysis-wordclouds.json?v=20260708-brazil1')
         ]);
         data = { inventory, coding, wordcloud };
       } catch (err) {
@@ -1083,6 +1083,6 @@
     render();
     loadData();
   </script>
-  <script src="/deepfake-policy/dashboard-shell.js?v=20260701-sidebar6"></script>
+  <script src="/deepfake-policy/dashboard-shell.js?v=20260708-brazil1"></script>
 </body>
 </html>
