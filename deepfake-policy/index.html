@@ -275,6 +275,15 @@
       font-size: 11px;
       font-weight: 700;
     }
+    .stat small {
+      display: block;
+      max-width: 210px;
+      margin: 7px auto 0;
+      color: #94a3b8;
+      font-size: 9px;
+      font-weight: 600;
+      line-height: 1.35;
+    }
     .quote-panel {
       min-height: 430px;
       padding: 34px;
@@ -577,7 +586,7 @@
           ['Comparative view', 'The analysis emphasizes fragmentation, institutional pathways, and enforcement assumptions.']
         ],
         stats: [
-          ['15', 'jurisdictions'],
+          ['16', 'jurisdictions', '15 countries plus the EU; Japan is excluded due to insufficient current official-source coverage in the working corpus.'],
           ['6', 'policy dimensions'],
           ['10,647', 'coded rows']
         ],
@@ -610,7 +619,7 @@
           ['Comparative view', '비교의 초점은 법 형식의 파편화, 제도 경로, 집행 전제의 차이에 있습니다.']
         ],
         stats: [
-          ['15', '관할권'],
+          ['16', '관할권', '15개 국가와 EU를 포함합니다. 일본은 현재 working corpus의 공식 출처 coverage가 부족해 제외했습니다.'],
           ['6', '정책 차원'],
           ['10,647', 'coded rows']
         ],
@@ -798,6 +807,7 @@
         <div class="stat">
           <strong>${escapeHtml(item[0])}</strong>
           <span>${escapeHtml(item[1])}</span>
+          ${item[2] ? `<small>${escapeHtml(item[2])}</small>` : ''}
         </div>
       `).join('');
       els.methodGrid.innerHTML = x.methods.map((item) => `
@@ -816,13 +826,13 @@
         if (!countriesRes.ok || !codingRes.ok) return;
         const countriesPayload = await countriesRes.json();
         const codingPayload = await codingRes.json();
-        const countryCount = Array.isArray(countriesPayload.countries) ? countriesPayload.countries.length : 0;
+        const jurisdictionCount = 16;
         const dimensionPayload = codingPayload.summary && codingPayload.summary.by_primary_policy_dimension;
         const dimensionCount = Array.isArray(dimensionPayload) ? dimensionPayload.length : Object.keys(dimensionPayload || {}).length;
         const codedRows = Number(codingPayload.total_coded_rows || 0);
         const locale = lang() === 'ko' ? 'ko-KR' : 'en-US';
         const updated = t().stats.map((item, index) => {
-          if (index === 0 && countryCount) return [countryCount.toLocaleString(locale), item[1]];
+          if (index === 0) return [jurisdictionCount.toLocaleString(locale), item[1], item[2]];
           if (index === 1 && dimensionCount) return [dimensionCount.toLocaleString(locale), item[1]];
           if (index === 2 && codedRows) return [codedRows.toLocaleString(locale), item[1]];
           return item;
@@ -831,6 +841,7 @@
           <div class="stat">
             <strong>${escapeHtml(item[0])}</strong>
             <span>${escapeHtml(item[1])}</span>
+            ${item[2] ? `<small>${escapeHtml(item[2])}</small>` : ''}
           </div>
         `).join('');
       } catch (_) {}
