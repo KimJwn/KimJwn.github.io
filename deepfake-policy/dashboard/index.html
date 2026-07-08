@@ -11,6 +11,7 @@
   <meta property="og:url" content="https://kimjwn.github.io/deepfake-policy/dashboard/" />
   <title>Deepfake Policy Dashboard</title>
   <link rel="stylesheet" href="/assets/palette.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" />
   <style>
     * { box-sizing: border-box; }
     :root {
@@ -262,6 +263,60 @@
         radial-gradient(circle at 50% 35%, rgba(15,23,42,.09), transparent 0 13%, transparent 14%),
         radial-gradient(circle at 72% 47%, rgba(184,117,22,.13), transparent 0 11%, transparent 12%),
         linear-gradient(135deg, #eef2f7 0%, #fbfaf7 54%, #f2eadc 100%);
+    }
+    .policy-map {
+      position: absolute;
+      inset: 0;
+    }
+    .mapcn-badge {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      z-index: 2;
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: rgba(255,255,255,.86);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 900;
+      backdrop-filter: blur(12px);
+    }
+    .map-marker {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 2px solid rgba(255,255,255,.92);
+      border-radius: 999px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 950;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(15,23,42,.18);
+      transform: translateY(0);
+      transition: transform .18s ease, background .18s ease;
+    }
+    .map-marker:hover,
+    .map-marker.is-open {
+      background: var(--gold);
+      transform: translateY(-2px);
+    }
+    .maplibregl-popup-content {
+      border-radius: 16px;
+      border: 0;
+      padding: 10px 12px;
+      color: var(--navy);
+      font-family: "Poppins", "Noto Sans KR", "Segoe UI", sans-serif;
+      font-size: 12px;
+      font-weight: 850;
+      box-shadow: 0 14px 34px rgba(15,23,42,.14);
+    }
+    .maplibregl-ctrl-group {
+      border: 0 !important;
+      border-radius: 14px !important;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(15,23,42,.12) !important;
     }
     .map-grid {
       position: absolute;
@@ -584,11 +639,8 @@
           <span class="memo-count" id="memoCount"></span>
         </div>
         <div class="map-stage" id="mapStage">
-          <div class="map-grid" aria-hidden="true"></div>
-          <span class="continent-label" style="left:13%;top:32%;">Americas</span>
-          <span class="continent-label" style="left:43%;top:25%;">Europe</span>
-          <span class="continent-label" style="left:58%;top:45%;">Middle East</span>
-          <span class="continent-label" style="left:76%;top:37%;">Asia Pacific</span>
+          <div id="policyMap" class="policy-map" aria-label="Interactive policy map"></div>
+          <span class="mapcn-badge">MapLibre · mapcn style</span>
         </div>
       </article>
       <aside class="memo-panel" id="memoPanel"></aside>
@@ -638,24 +690,25 @@
       <div class="legend" id="timelineLegend"></div>
     </section>
   </main>
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
   <script>
     const LANG_KEY = 'deepfakePolicyLang';
     const countries = [
-      { slug:'united-states', code:'US', en:'United States', ko:'미국', region:'Americas', x:18, y:39, status:'Federal / state mix', dims:'Election, NCII, platform', note:'A fragmented model with federal, state, election, and intimate-image pathways.' },
-      { slug:'brazil', code:'BR', en:'Brazil', ko:'브라질', region:'Americas', x:31, y:63, status:'Draft / proposed AI regulation', dims:'AI governance, platform, transparency', note:'Brazil is represented through draft AI governance materials and official legislative pages, showing an emerging Americas pathway.' },
-      { slug:'argentina', code:'AR', en:'Argentina', ko:'아르헨티나', region:'Americas', x:28, y:72, status:'Proposed / partial', dims:'Election, privacy', note:'A South American reference case where deepfake harms are mostly read through layered older categories.' },
-      { slug:'united-kingdom', code:'UK', en:'United Kingdom', ko:'영국', region:'Europe', x:46, y:33, status:'Online safety / criminal law', dims:'NCII, platform, fraud', note:'Regulation relies on online safety duties and targeted criminal-law reforms.' },
-      { slug:'france', code:'FR', en:'France', ko:'프랑스', region:'Europe', x:48, y:38, status:'Criminal / platform', dims:'Disclosure, dignity', note:'The French pathway emphasizes image rights, dignity, and targeted transparency duties.' },
-      { slug:'germany', code:'DE', en:'Germany', ko:'독일', region:'Europe', x:51, y:35, status:'Criminal / media law', dims:'Personality rights, platform', note:'German treatment is tied to personality rights, media governance, and criminal-law categories.' },
-      { slug:'eu', code:'EU', en:'European Union', ko:'유럽연합', region:'Europe', x:53, y:40, status:'AI Act / platform', dims:'Transparency, risk, platform', note:'The EU creates a layered supranational approach through AI Act transparency and platform governance.' },
-      { slug:'saudi-arabia', code:'SA', en:'Saudi Arabia', ko:'사우디아라비아', region:'Africa / Middle East', x:59, y:52, status:'Cybercrime / platform', dims:'Cybercrime, public order', note:'Deepfake harms are mainly visible through cybercrime, fraud, and public-order controls.' },
-      { slug:'united-arab-emirates', code:'UAE', en:'United Arab Emirates', ko:'아랍에미리트', region:'Africa / Middle East', x:63, y:54, status:'Cybercrime / AI governance', dims:'Cybercrime, privacy, AI', note:'The UAE combines cybercrime provisions with AI governance and platform responsibility.' },
-      { slug:'india', code:'IN', en:'India', ko:'인도', region:'Pacific / Asia', x:69, y:55, status:'IT rules / advisories', dims:'Platform, NCII, disclosure', note:'India combines IT rules, platform advisories, and NCII/fraud enforcement pathways.' },
-      { slug:'pakistan', code:'PK', en:'Pakistan', ko:'파키스탄', region:'Pacific / Asia', x:66, y:50, status:'Cybercrime / draft', dims:'Cybercrime, dignity', note:'Pakistan is mainly mapped through cybercrime, dignity, and proposed AI-content rules.' },
-      { slug:'china', code:'CN', en:'China', ko:'중국', region:'Pacific / Asia', x:76, y:43, status:'Deep synthesis rules', dims:'Labeling, platform, security', note:'China has one of the clearest deep-synthesis governance paths with labeling and platform duties.' },
-      { slug:'korea', code:'KR', en:'Korea', ko:'한국', region:'Pacific / Asia', x:82, y:43, status:'Criminal / election / labeling', dims:'NCII, election, labeling', note:'Korea combines criminal law, election rules, platform obligations, and AI labeling debates.' },
-      { slug:'singapore', code:'SG', en:'Singapore', ko:'싱가포르', region:'Pacific / Asia', x:76, y:65, status:'Online falsehoods / elections', dims:'Election, correction, platform', note:'Singapore centers legal visibility around falsehood correction, elections, and online harms.' },
-      { slug:'australia', code:'AU', en:'Australia', ko:'호주', region:'Pacific / Asia', x:82, y:78, status:'Online safety / criminal law', dims:'NCII, platform, safety', note:'Australia uses online safety, NCII, criminal-law, and platform accountability pathways.' }
+      { slug:'united-states', code:'US', en:'United States', ko:'미국', region:'Americas', x:18, y:39, lng:-98.5795, lat:39.8283, status:'Federal / state mix', dims:'Election, NCII, platform', note:'A fragmented model with federal, state, election, and intimate-image pathways.' },
+      { slug:'brazil', code:'BR', en:'Brazil', ko:'브라질', region:'Americas', x:31, y:63, lng:-51.9253, lat:-14.2350, status:'Draft / proposed AI regulation', dims:'AI governance, platform, transparency', note:'Brazil is represented through draft AI governance materials and official legislative pages, showing an emerging Americas pathway.' },
+      { slug:'argentina', code:'AR', en:'Argentina', ko:'아르헨티나', region:'Americas', x:28, y:72, lng:-63.6167, lat:-38.4161, status:'Proposed / partial', dims:'Election, privacy', note:'A South American reference case where deepfake harms are mostly read through layered older categories.' },
+      { slug:'united-kingdom', code:'UK', en:'United Kingdom', ko:'영국', region:'Europe', x:46, y:33, lng:-3.4360, lat:55.3781, status:'Online safety / criminal law', dims:'NCII, platform, fraud', note:'Regulation relies on online safety duties and targeted criminal-law reforms.' },
+      { slug:'france', code:'FR', en:'France', ko:'프랑스', region:'Europe', x:48, y:38, lng:2.2137, lat:46.2276, status:'Criminal / platform', dims:'Disclosure, dignity', note:'The French pathway emphasizes image rights, dignity, and targeted transparency duties.' },
+      { slug:'germany', code:'DE', en:'Germany', ko:'독일', region:'Europe', x:51, y:35, lng:10.4515, lat:51.1657, status:'Criminal / media law', dims:'Personality rights, platform', note:'German treatment is tied to personality rights, media governance, and criminal-law categories.' },
+      { slug:'eu', code:'EU', en:'European Union', ko:'유럽연합', region:'Europe', x:53, y:40, lng:4.3517, lat:50.8503, status:'AI Act / platform', dims:'Transparency, risk, platform', note:'The EU creates a layered supranational approach through AI Act transparency and platform governance.' },
+      { slug:'saudi-arabia', code:'SA', en:'Saudi Arabia', ko:'사우디아라비아', region:'Africa / Middle East', x:59, y:52, lng:45.0792, lat:23.8859, status:'Cybercrime / platform', dims:'Cybercrime, public order', note:'Deepfake harms are mainly visible through cybercrime, fraud, and public-order controls.' },
+      { slug:'united-arab-emirates', code:'UAE', en:'United Arab Emirates', ko:'아랍에미리트', region:'Africa / Middle East', x:63, y:54, lng:53.8478, lat:23.4241, status:'Cybercrime / AI governance', dims:'Cybercrime, privacy, AI', note:'The UAE combines cybercrime provisions with AI governance and platform responsibility.' },
+      { slug:'india', code:'IN', en:'India', ko:'인도', region:'Pacific / Asia', x:69, y:55, lng:78.9629, lat:20.5937, status:'IT rules / advisories', dims:'Platform, NCII, disclosure', note:'India combines IT rules, platform advisories, and NCII/fraud enforcement pathways.' },
+      { slug:'pakistan', code:'PK', en:'Pakistan', ko:'파키스탄', region:'Pacific / Asia', x:66, y:50, lng:69.3451, lat:30.3753, status:'Cybercrime / draft', dims:'Cybercrime, dignity', note:'Pakistan is mainly mapped through cybercrime, dignity, and proposed AI-content rules.' },
+      { slug:'china', code:'CN', en:'China', ko:'중국', region:'Pacific / Asia', x:76, y:43, lng:104.1954, lat:35.8617, status:'Deep synthesis rules', dims:'Labeling, platform, security', note:'China has one of the clearest deep-synthesis governance paths with labeling and platform duties.' },
+      { slug:'korea', code:'KR', en:'Korea', ko:'한국', region:'Pacific / Asia', x:82, y:43, lng:127.7669, lat:35.9078, status:'Criminal / election / labeling', dims:'NCII, election, labeling', note:'Korea combines criminal law, election rules, platform obligations, and AI labeling debates.' },
+      { slug:'singapore', code:'SG', en:'Singapore', ko:'싱가포르', region:'Pacific / Asia', x:76, y:65, lng:103.8198, lat:1.3521, status:'Online falsehoods / elections', dims:'Election, correction, platform', note:'Singapore centers legal visibility around falsehood correction, elections, and online harms.' },
+      { slug:'australia', code:'AU', en:'Australia', ko:'호주', region:'Pacific / Asia', x:82, y:78, lng:133.7751, lat:-25.2744, status:'Online safety / criminal law', dims:'NCII, platform, safety', note:'Australia uses online safety, NCII, criminal-law, and platform accountability pathways.' }
     ];
     const STAGE_COLORS = {
       in_force: '#0f172a',
@@ -763,6 +816,8 @@
     let open = [];
     let data = { inventory:null, coding:null, wordcloud:null };
     let wordMode = 'en';
+    let policyMap = null;
+    let policyMapMarkers = new Map();
 
     function lang() {
       const q = new URLSearchParams(location.search).get('lang');
@@ -1003,6 +1058,68 @@
       }).join('');
       document.getElementById('timelineLegend').innerHTML = stages.map((key) => `<span><i style="--c:${STAGE_COLORS[key]}"></i>${esc(t.stage[key])}</span>`).join('');
     }
+    function renderFallbackPins(stage, l) {
+      stage.querySelectorAll('.pin').forEach((el) => el.remove());
+      countries.forEach((c) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'pin' + (open.includes(c.slug) ? ' is-open' : '');
+        btn.style.setProperty('--x', c.x + '%');
+        btn.style.setProperty('--y', c.y + '%');
+        btn.dataset.slug = c.slug;
+        btn.dataset.label = l === 'ko' ? c.ko : c.en;
+        btn.textContent = c.code;
+        btn.addEventListener('click', () => toggle(c.slug));
+        stage.appendChild(btn);
+      });
+    }
+    function ensurePolicyMap() {
+      const host = document.getElementById('policyMap');
+      if (!host || policyMap || !window.maplibregl) return;
+      policyMap = new maplibregl.Map({
+        container: host,
+        style: 'https://tiles.openfreemap.org/styles/bright',
+        center: [28, 22],
+        zoom: 1.15,
+        attributionControl: true
+      });
+      policyMap.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
+      policyMap.on('load', () => {
+        policyMap.fitBounds([[-130, -48], [154, 64]], { padding: 36, duration: 0 });
+        renderPolicyMapMarkers();
+      });
+    }
+    function renderPolicyMapMarkers() {
+      if (!policyMap || !window.maplibregl) return;
+      const l = lang();
+      countries.forEach((c) => {
+        let item = policyMapMarkers.get(c.slug);
+        if (!item) {
+          const el = document.createElement('button');
+          el.type = 'button';
+          el.className = 'map-marker';
+          el.textContent = c.code;
+          el.setAttribute('aria-label', l === 'ko' ? c.ko : c.en);
+          el.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            toggle(c.slug);
+          });
+          const popup = new maplibregl.Popup({ offset: 18, closeButton: false, closeOnClick: false })
+            .setHTML(`<strong>${esc(l === 'ko' ? c.ko : c.en)}</strong><br>${esc(c.region)}`);
+          const marker = new maplibregl.Marker({ element: el, anchor: 'center' })
+            .setLngLat([c.lng, c.lat])
+            .setPopup(popup)
+            .addTo(policyMap);
+          item = { el, marker, popup };
+          policyMapMarkers.set(c.slug, item);
+        }
+        item.el.classList.toggle('is-open', open.includes(c.slug));
+        item.el.setAttribute('aria-label', l === 'ko' ? c.ko : c.en);
+        item.popup.setHTML(`<strong>${esc(l === 'ko' ? c.ko : c.en)}</strong><br>${esc(c.region)}`);
+      });
+      if (policyMapMarkers.size) policyMap.resize();
+    }
     function renderAnalytics() {
       if (!data.inventory || !data.coding) {
         document.getElementById('kpiGrid').innerHTML = `<article class="kpi-card"><span>${T[lang()].loading}</span></article>`;
@@ -1025,19 +1142,13 @@
       document.getElementById('mapTitle').textContent = t.mapTitle;
       document.getElementById('mapNote').textContent = t.mapNote;
       const stage = document.getElementById('mapStage');
-      stage.querySelectorAll('.pin').forEach((el) => el.remove());
-      countries.forEach((c) => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'pin' + (open.includes(c.slug) ? ' is-open' : '');
-        btn.style.setProperty('--x', c.x + '%');
-        btn.style.setProperty('--y', c.y + '%');
-        btn.dataset.slug = c.slug;
-        btn.dataset.label = l === 'ko' ? c.ko : c.en;
-        btn.textContent = c.code;
-        btn.addEventListener('click', () => toggle(c.slug));
-        stage.appendChild(btn);
-      });
+      ensurePolicyMap();
+      if (policyMap) {
+        stage.querySelectorAll('.pin').forEach((el) => el.remove());
+        renderPolicyMapMarkers();
+      } else {
+        renderFallbackPins(stage, l);
+      }
       document.getElementById('memoCount').textContent = t.memoCount(open.length);
       const panel = document.getElementById('memoPanel');
       panel.innerHTML = open.length ? open.map((slug) => {
