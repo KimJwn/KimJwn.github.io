@@ -695,6 +695,7 @@
     const LANG_KEY = 'deepfakePolicyLang';
     const countries = [
       { slug:'united-states', code:'US', en:'United States', ko:'미국', region:'Americas', x:18, y:39, lng:-98.5795, lat:39.8283, status:'Federal / state mix', dims:'Election, NCII, platform', note:'A fragmented model with federal, state, election, and intimate-image pathways.' },
+      { slug:'mexico', code:'MX', en:'Mexico', ko:'멕시코', region:'Americas', x:20, y:50, lng:-102.5528, lat:23.6345, status:'Election / platform / criminal-law pathway', dims:'Election, platform, fraud', note:'Mexico is included as a North American reference point where synthetic-media harms are read through election integrity, platform governance, and adjacent criminal-law pathways.' },
       { slug:'brazil', code:'BR', en:'Brazil', ko:'브라질', region:'Americas', x:31, y:63, lng:-51.9253, lat:-14.2350, status:'Draft / proposed AI regulation', dims:'AI governance, platform, transparency', note:'Brazil is represented through draft AI governance materials and official legislative pages, showing an emerging Americas pathway.' },
       { slug:'argentina', code:'AR', en:'Argentina', ko:'아르헨티나', region:'Americas', x:28, y:72, lng:-63.6167, lat:-38.4161, status:'Proposed / partial', dims:'Election, privacy', note:'A South American reference case where deepfake harms are mostly read through layered older categories.' },
       { slug:'united-kingdom', code:'UK', en:'United Kingdom', ko:'영국', region:'Europe', x:46, y:33, lng:-3.4360, lat:55.3781, status:'Online safety / criminal law', dims:'NCII, platform, fraud', note:'Regulation relies on online safety duties and targeted criminal-law reforms.' },
@@ -706,8 +707,10 @@
       { slug:'india', code:'IN', en:'India', ko:'인도', region:'Pacific / Asia', x:69, y:55, lng:78.9629, lat:20.5937, status:'IT rules / advisories', dims:'Platform, NCII, disclosure', note:'India combines IT rules, platform advisories, and NCII/fraud enforcement pathways.' },
       { slug:'pakistan', code:'PK', en:'Pakistan', ko:'파키스탄', region:'Pacific / Asia', x:66, y:50, lng:69.3451, lat:30.3753, status:'Cybercrime / draft', dims:'Cybercrime, dignity', note:'Pakistan is mainly mapped through cybercrime, dignity, and proposed AI-content rules.' },
       { slug:'china', code:'CN', en:'China', ko:'중국', region:'Pacific / Asia', x:76, y:43, lng:104.1954, lat:35.8617, status:'Deep synthesis rules', dims:'Labeling, platform, security', note:'China has one of the clearest deep-synthesis governance paths with labeling and platform duties.' },
+      { slug:'japan', code:'JP', en:'Japan', ko:'일본', region:'Pacific / Asia', x:84, y:41, lng:138.2529, lat:36.2048, status:'AI governance / soft-law pathway', dims:'AI governance, transparency, platform', note:'Japan is included in the jurisdiction list as a major AI-governance reference point, with deepfake harms mainly routed through adjacent AI and platform governance materials.' },
       { slug:'korea', code:'KR', en:'Korea', ko:'한국', region:'Pacific / Asia', x:82, y:43, lng:127.7669, lat:35.9078, status:'Criminal / election / labeling', dims:'NCII, election, labeling', note:'Korea combines criminal law, election rules, platform obligations, and AI labeling debates.' },
       { slug:'singapore', code:'SG', en:'Singapore', ko:'싱가포르', region:'Pacific / Asia', x:76, y:65, lng:103.8198, lat:1.3521, status:'Online falsehoods / elections', dims:'Election, correction, platform', note:'Singapore centers legal visibility around falsehood correction, elections, and online harms.' },
+      { slug:'malaysia', code:'MY', en:'Malaysia', ko:'말레이시아', region:'Pacific / Asia', x:75, y:62, lng:101.9758, lat:4.2105, status:'Online harms / communications law', dims:'Platform, fraud, content governance', note:'Malaysia is included as an emerging Southeast Asian reference point for synthetic-media harms through communications, online harms, and platform governance pathways.' },
       { slug:'australia', code:'AU', en:'Australia', ko:'호주', region:'Pacific / Asia', x:82, y:78, lng:133.7751, lat:-25.2744, status:'Online safety / criminal law', dims:'NCII, platform, safety', note:'Australia uses online safety, NCII, criminal-law, and platform accountability pathways.' }
     ];
     const STAGE_COLORS = {
@@ -724,7 +727,7 @@
         lead:'A project-level overview of policy scale, legal pathways, geographic coverage, and clause-coding distributions. The map remains comparative, but the page now starts from measurable corpus indicators.',
         kpis: {
           countries:'jurisdictions analyzed',
-          countriesNote:'15 countries plus the EU; Japan is excluded due to insufficient current official-source coverage in the working corpus.',
+          countriesNote:'17 countries plus the EU.',
           docs:'official documents',
           clauses:'coded clauses',
           specificity:'regulatory specificity',
@@ -771,7 +774,7 @@
         lead:'정책 규모, 법적 경로, 지리적 범위, 조문 코딩 분포를 한 화면에서 보는 프로젝트 수준의 대시보드입니다. 지도는 비교용으로 유지하고, 상단에는 corpus 기반 지표를 먼저 배치했습니다.',
         kpis: {
           countries:'분석 국가 수',
-          countriesNote:'15개 국가와 EU를 포함합니다. 일본은 현재 working corpus의 공식 출처 coverage가 부족해 제외했습니다.',
+          countriesNote:'17개 국가와 EU를 포함합니다.',
           docs:'공식 문서 수',
           clauses:'coded clause 수',
           specificity:'규제 특정성',
@@ -855,8 +858,8 @@
     function regionFor(row) {
       const slug = String(row?.country_dir || row?.country_slug || '').toLowerCase();
       const label = String(row?.country_label || '').toLowerCase();
-      if (/australia|china|india|korea|pakistan|singapore/.test(slug + ' ' + label)) return 'Pacific / Asia';
-      if (/united-states|brazil|argentina|states|america/.test(slug + ' ' + label)) return 'Americas';
+      if (/australia|china|india|japan|korea|malaysia|pakistan|singapore/.test(slug + ' ' + label)) return 'Pacific / Asia';
+      if (/united-states|mexico|brazil|argentina|states|america/.test(slug + ' ' + label)) return 'Americas';
       if (/eu|france|germany|united-kingdom|kingdom|european/.test(slug + ' ' + label)) return 'Europe';
       if (/saudi|emirates|uae|arab/.test(slug + ' ' + label)) return 'Africa / Middle East';
       return 'Other';
@@ -934,7 +937,7 @@
       const inventoryRows = data.inventory?.rows || [];
       const coding = data.coding || {};
       const codingRows = coding.rows || [];
-      const jurisdictionCount = 16;
+      const jurisdictionCount = 18;
       const docCount = inventoryRows.length;
       const codedClauses = coding.total_coded_rows || codingRows.length;
       const specificDocs = countSpecificDocs(inventoryRows);

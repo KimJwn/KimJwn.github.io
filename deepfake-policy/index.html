@@ -586,7 +586,7 @@
           ['Comparative view', 'The analysis emphasizes fragmentation, institutional pathways, and enforcement assumptions.']
         ],
         stats: [
-          ['16', 'jurisdictions', '15 countries plus the EU; Japan is excluded due to insufficient current official-source coverage in the working corpus.'],
+          ['18', 'jurisdictions', '17 countries plus the EU.'],
           ['6', 'policy dimensions'],
           ['10,647', 'coded rows']
         ],
@@ -619,7 +619,7 @@
           ['Comparative view', '비교의 초점은 법 형식의 파편화, 제도 경로, 집행 전제의 차이에 있습니다.']
         ],
         stats: [
-          ['16', '관할권', '15개 국가와 EU를 포함합니다. 일본은 현재 working corpus의 공식 출처 coverage가 부족해 제외했습니다.'],
+          ['18', '관할권', '17개 국가와 EU를 포함합니다.'],
           ['6', '정책 차원'],
           ['10,647', 'coded rows']
         ],
@@ -826,7 +826,7 @@
         if (!countriesRes.ok || !codingRes.ok) return;
         const countriesPayload = await countriesRes.json();
         const codingPayload = await codingRes.json();
-        const jurisdictionCount = 16;
+        const jurisdictionCount = 18;
         const dimensionPayload = codingPayload.summary && codingPayload.summary.by_primary_policy_dimension;
         const dimensionCount = Array.isArray(dimensionPayload) ? dimensionPayload.length : Object.keys(dimensionPayload || {}).length;
         const codedRows = Number(codingPayload.total_coded_rows || 0);

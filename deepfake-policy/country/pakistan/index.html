@@ -1847,13 +1847,16 @@
     };
 
     const COUNTRY_LABELS = {
-      ko: { '한국': '한국', '영국': '영국', '호주': '호주', 'EU': 'EU', '미국': '미국', '브라질': '브라질', '중국': '중국', '사우디': '사우디아라비아', '독일': '독일', '프랑스': '프랑스', '인도': '인도', '파키스탄': '파키스탄', '아랍에미리에이트': '아랍에미리에이트', '싱가폴': '싱가폴', '아르헨티나': '아르헨티나' },
-      en: { '한국': 'Korea', '영국': 'United Kingdom', '호주': 'Australia', 'EU': 'EU', '미국': 'United States', '브라질': 'Brazil', '중국': 'China', '사우디': 'Saudi Arabia', '독일': 'Germany', '프랑스': 'France', '인도': 'India', '파키스탄': 'Pakistan', '아랍에미리에이트': 'United Arab Emirates', '싱가폴': 'Singapore', '아르헨티나': 'Argentina' }
+      ko: { '한국': '한국', '영국': '영국', '호주': '호주', '일본': '일본', '멕시코': '멕시코', '말레이시아': '말레이시아', 'EU': 'EU', '미국': '미국', '브라질': '브라질', '중국': '중국', '사우디': '사우디아라비아', '독일': '독일', '프랑스': '프랑스', '인도': '인도', '파키스탄': '파키스탄', '아랍에미리에이트': '아랍에미리에이트', '싱가폴': '싱가폴', '아르헨티나': '아르헨티나' },
+      en: { '한국': 'Korea', '영국': 'United Kingdom', '호주': 'Australia', '일본': 'Japan', '멕시코': 'Mexico', '말레이시아': 'Malaysia', 'EU': 'EU', '미국': 'United States', '브라질': 'Brazil', '중국': 'China', '사우디': 'Saudi Arabia', '독일': 'Germany', '프랑스': 'France', '인도': 'India', '파키스탄': 'Pakistan', '아랍에미리에이트': 'United Arab Emirates', '싱가폴': 'Singapore', '아르헨티나': 'Argentina' }
     };
     const WORDCLOUD_COUNTRY_KEYS = {
       '한국': 'South Korea',
       '영국': 'United Kingdom',
       '호주': 'Australia',
+      '일본': 'Japan',
+      '멕시코': 'Mexico',
+      '말레이시아': 'Malaysia',
       'EU': 'EU',
       '미국': 'United States',
       '브라질': 'Brazil',
@@ -1882,6 +1885,9 @@
       '프랑스': 'france',
       '한국': 'korea',
       '호주': 'australia',
+      '일본': 'japan',
+      '멕시코': 'mexico',
+      '말레이시아': 'malaysia',
       EU: 'eu',
     };
     const COUNTRY_BY_SLUG = Object.fromEntries(Object.entries(COUNTRY_SLUGS).map(([label, slug]) => [slug, label]));
@@ -1992,6 +1998,9 @@
       '브라질': 'known_non_en',
       '싱가폴': 'unknown',
       '인도': 'unknown',
+      '일본': 'unknown',
+      '멕시코': 'unknown',
+      '말레이시아': 'unknown',
       '파키스탄': 'unknown',
       'EU': 'english_primary'
     };
@@ -2232,6 +2241,9 @@
       if (c === '한국') return { code: 'KR', tw: '1f1f0-1f1f7' };
       if (c === '영국') return { code: 'UK', tw: '1f1ec-1f1e7' };
       if (c === '호주') return { code: 'AU', tw: '1f1e6-1f1fa' };
+      if (c === '일본') return { code: 'JP', tw: '1f1ef-1f1f5' };
+      if (c === '멕시코') return { code: 'MX', tw: '1f1f2-1f1fd' };
+      if (c === '말레이시아') return { code: 'MY', tw: '1f1f2-1f1fe' };
       if (c === 'EU') return { code: 'EU', tw: '1f1ea-1f1fa' };
       if (c === '미국') return { code: 'US', tw: '1f1fa-1f1f8' };
       if (c === '브라질') return { code: 'BR', tw: '1f1e7-1f1f7' };
@@ -2391,6 +2403,9 @@
       if (c === '한국') return 'KOR';
       if (c === '영국') return 'GBR';
       if (c === '호주') return 'AUS';
+      if (c === '일본') return 'JPN';
+      if (c === '멕시코') return 'MEX';
+      if (c === '말레이시아') return 'MYS';
       if (c === 'EU') return 'EUR';
       if (c === '미국') return 'USA';
       if (c === '중국') return 'CHN';
@@ -2917,6 +2932,9 @@
         france: `https://www.legifrance.gouv.fr/search/all?query=${q}`,
         germany: `https://www.gesetze-im-internet.de/cgi-bin/htsearch?config=Gesamt_bmjhome2005&method=or&words=${q}`,
         india: `https://www.indiacode.nic.in/search?keyword=${q}`,
+        japan: `https://elaws.e-gov.go.jp/search/elawsSearch/elaws_search/lsg0100/?keyword=${q}`,
+        mexico: `https://www.diputados.gob.mx/LeyesBiblio/buscar.htm`,
+        malaysia: `https://lom.agc.gov.my/search?keyword=${q}`,
         pakistan: 'https://na.gov.pk/en/bills.php',
         'saudi-arabia': `https://laws.boe.gov.sa/BoeLaws/Laws/Search?query=${q}`,
         singapore: `https://sso.agc.gov.sg/Search/Results?Phrase=${q}`,
