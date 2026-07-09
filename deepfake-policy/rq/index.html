@@ -1003,7 +1003,6 @@
             <a class="side-link" href="#methodSection">Method</a>
             <a class="side-link" href="#rqIntroSection">Questions</a>
             <a class="side-link" href="#landscapeSection">Landscapes</a>
-            <a class="side-link" href="#globalWordcloudSection">Word Cloud</a>
             <a class="side-link" href="#governanceReviewSection">Governance Types</a>
             <a class="side-link" href="#similaritySection">Similarity</a>
             <a class="side-link" href="#differenceSection">Factors</a>
@@ -1028,20 +1027,6 @@
       <section class="land-wrap" id="landscapeSection">
         <h2 id="landTitle" class="section-title"></h2>
         <div id="landHost" class="land-grid"></div>
-      </section>
-      <section class="wordcloud-wrap" id="globalWordcloudSection">
-        <div class="wordcloud-head">
-          <div>
-            <h2 id="globalWordcloudTitle" class="section-title"></h2>
-            <p id="globalWordcloudNote" class="wordcloud-note"></p>
-          </div>
-          <div class="wordcloud-switch" id="globalWordcloudSwitch">
-            <button type="button" class="wordcloud-btn active" data-wordcloud-view="kor" id="globalWordcloudKorBtn"></button>
-            <button type="button" class="wordcloud-btn" data-wordcloud-view="source" id="globalWordcloudSourceBtn"></button>
-            <button type="button" class="wordcloud-btn" data-wordcloud-view="context" id="globalWordcloudContextBtn"></button>
-          </div>
-        </div>
-        <div id="globalWordcloudTerms" class="wordcloud-terms"></div>
       </section>
       <section class="cmp-wrap" id="governanceReviewSection">
         <div class="gov-review-head">
@@ -1623,11 +1608,6 @@
       document.getElementById('subtitle').textContent = t.subtitle;
       document.getElementById('methodTitle').textContent = t.methodTitle;
       document.getElementById('landTitle').textContent = t.landTitle;
-      document.getElementById('globalWordcloudTitle').textContent = t.globalWordcloudTitle;
-      document.getElementById('globalWordcloudNote').textContent = t.globalWordcloudNote;
-      document.getElementById('globalWordcloudKorBtn').textContent = t.globalWordcloudKor;
-      document.getElementById('globalWordcloudSourceBtn').textContent = t.globalWordcloudSource;
-      document.getElementById('globalWordcloudContextBtn').textContent = t.globalWordcloudContext;
       document.getElementById('govReviewTitle').textContent = t.govReviewTitle;
       document.getElementById('govReviewNote').textContent = t.govReviewNote;
       document.getElementById('rq2QuestionChip').textContent = t.rq2QuestionChip;
@@ -2432,7 +2412,6 @@
       renderFrames();
       render();
       renderWorkbookOptions();
-      await loadWordclouds();
       await loadGovernanceScores();
       await loadWorkbook(workbookSelectedSheet);
       await renderEvidence();
@@ -2445,7 +2424,7 @@
       dimSimSelection = dimSimCountry.value;
       renderDimensionSimilarity();
     });
-    globalWordcloudSwitch.addEventListener('click', (ev) => {
+    if (globalWordcloudSwitch) globalWordcloudSwitch.addEventListener('click', (ev) => {
       const btn = ev.target.closest('button[data-wordcloud-view]');
       if (!btn) return;
       globalWordcloudView = btn.getAttribute('data-wordcloud-view') || 'kor';

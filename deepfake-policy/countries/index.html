@@ -385,13 +385,6 @@
 
       <div id="continentHost" class="continent-host"></div>
       <p id="empty" class="muted" style="display:none;"></p>
-      <section class="dim-wrap" id="dimSection">
-        <div class="dim-head">
-          <p class="dim-title" id="dimTitle"></p>
-          <p class="dim-note" id="dimNote"></p>
-        </div>
-        <div id="dimRows" class="dim-rows"></div>
-      </section>
 
       <details class="insights" id="insightsSection">
         <summary id="insightsTitle"></summary>
@@ -583,9 +576,6 @@
     const timelineAllListEl = document.getElementById('timelineAllList');
     const insightsTitleEl = document.getElementById('insightsTitle');
     const statsTitleEl = document.getElementById('statsTitle');
-    const dimTitleEl = document.getElementById('dimTitle');
-    const dimNoteEl = document.getElementById('dimNote');
-    const dimRowsEl = document.getElementById('dimRows');
     const legendForceEl = document.getElementById('legendForce');
     const legendProposedEl = document.getElementById('legendProposed');
     const legendGuideEl = document.getElementById('legendGuide');
@@ -900,8 +890,6 @@
       rq2El.textContent = t.rq2;
       rq3El.textContent = t.rq3;
       rq4El.textContent = t.rq4;
-      dimTitleEl.textContent = t.dimTitle;
-      dimNoteEl.textContent = t.dimNote;
       timelineAllTitleEl.textContent = t.timelineAllTitle;
       docActivityTitleEl.textContent = t.docActivityTitle;
       docActivityNoteEl.textContent = t.docActivityNote;
@@ -926,7 +914,6 @@
         return !keyword || l1.includes(keyword) || l2.includes(keyword);
       });
 
-      renderDimensionAverages();
       renderAllTimeline(filtered);
       renderStats(filtered);
 
