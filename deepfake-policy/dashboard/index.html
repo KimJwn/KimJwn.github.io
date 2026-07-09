@@ -437,47 +437,70 @@
     }
     .wordcloud-card {
       background:
-        radial-gradient(circle at 12% 14%, rgba(184,117,22,.12), transparent 28%),
-        var(--paper);
+        radial-gradient(circle at 12% 10%, rgba(11,110,105,0.12), transparent 28%),
+        radial-gradient(circle at 88% 20%, rgba(183,121,31,0.12), transparent 24%),
+        rgba(255,255,255,0.92);
     }
     .wordcloud-tools {
-      display: flex;
-      gap: 8px;
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      border: 1px solid #d9e3f2;
+      border-radius: 999px;
+      background: #fff;
       flex-wrap: wrap;
-      justify-content: flex-end;
     }
     .wordcloud-tools button {
       border: 0;
       border-radius: 999px;
-      padding: 9px 12px;
-      background: #eef2f7;
-      color: var(--navy);
-      font-size: 12px;
+      padding: 7px 10px;
+      background: transparent;
+      color: #475569;
+      font-size: 11px;
       font-weight: 900;
+      font-family: inherit;
       cursor: pointer;
     }
     .wordcloud-tools button.is-active {
       background: var(--navy);
       color: #fff;
+      box-shadow: 0 7px 18px rgba(18,53,91,0.18);
+    }
+    .wordcloud-explain {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      max-width: 74ch;
     }
     .wordcloud-cloud {
-      min-height: 270px;
+      min-height: 160px;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 10px 16px;
-      padding: 18px 4px 4px;
+      gap: 10px 14px;
+      padding: 18px 8px 10px;
     }
     .word-term {
       display: inline-flex;
       align-items: center;
-      color: var(--navy);
+      color: var(--term-color, var(--navy));
       font-weight: 900;
       line-height: 1;
-      letter-spacing: -.04em;
-      opacity: var(--alpha);
-      transform: rotate(var(--rot));
+      font-size: var(--term-size, 1rem);
+      letter-spacing: -.035em;
+      transform: rotate(var(--term-tilt, 0deg));
+      text-shadow: 0 1px 0 rgba(255,255,255,0.82);
+      white-space: nowrap;
+    }
+    .wordcloud-empty {
+      min-height: 130px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
     }
     .chart-grid {
       display: grid;
@@ -651,6 +674,7 @@
         <div>
           <h2 id="wordTitle"></h2>
           <p id="wordLead"></p>
+          <p class="wordcloud-explain" id="wordExplain"></p>
         </div>
         <div class="wordcloud-tools" id="wordTools"></div>
       </div>
@@ -757,7 +781,12 @@
         close:'Close',
         wordTitle:'Global Word Cloud',
         wordLead:'Frequent terms from official law text, shown as a quick lexical view of the corpus.',
-        wordButtons:{ en:'English corpus', ko:'Korean translation' },
+        wordButtons:{ source:'Source/English', kor:'Korean', context:'Context layer' },
+        wordExplain:{
+          source:'Source/English uses terms extracted from source-language official law text. English terms dominate because the cross-jurisdiction comparison normalizes many source texts into English.',
+          kor:'Korean uses Korean translations of official law/act segments, mainly for Korean reading and explanation.',
+          context:'Context layer uses adjacent AI governance, platform, safety, and policy context materials rather than core law/act clauses.'
+        },
         regionChartTitle:'Regional regulation type',
         policyChartTitle:'Policy dimension distribution',
         riskChartTitle:'Risk tag distribution',
@@ -804,7 +833,12 @@
         close:'닫기',
         wordTitle:'Global Word Cloud',
         wordLead:'공식 법률 텍스트에서 자주 등장하는 단어를 corpus의 빠른 어휘 지도로 보여줍니다.',
-        wordButtons:{ en:'영문 corpus', ko:'한국어 번역' },
+        wordButtons:{ source:'Source/English', kor:'Korean', context:'Context layer' },
+        wordExplain:{
+          source:'Source/English는 원문 공식 법률 텍스트에서 뽑은 단어입니다. 비교 분석을 위해 영어로 정규화된 원문/영문 텍스트가 많이 반영됩니다.',
+          kor:'Korean은 공식 법률/법안 조문을 한국어로 읽기 위해 번역한 텍스트에서 뽑은 단어입니다.',
+          context:'Context layer는 핵심 법률/법안 조문이 아니라 인공지능 거버넌스, 플랫폼, 안전, 정책 맥락 자료에서 뽑은 단어입니다.'
+        },
         regionChartTitle:'지역별 규제 유형',
         policyChartTitle:'Policy dimension 분포',
         riskChartTitle:'Risk tag 분포',
@@ -818,7 +852,7 @@
     };
     let open = [];
     let data = { inventory:null, coding:null, wordcloud:null };
-    let wordMode = 'en';
+    let wordMode = null;
     let policyMap = null;
     let policyMapMarkers = new Map();
 
@@ -831,6 +865,13 @@
       const url = new URL(path, location.origin);
       url.searchParams.set('lang', lang());
       return url.pathname + url.search;
+    }
+    function defaultWordMode() {
+      return lang() === 'ko' ? 'kor' : 'source';
+    }
+    function activeWordMode() {
+      if (!wordMode) wordMode = defaultWordMode();
+      return wordMode;
     }
     function esc(value) {
       return String(value ?? '').replace(/[&<>"']/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -976,27 +1017,44 @@
     }
     function renderWordcloud() {
       const t = T[lang()];
+      const mode = activeWordMode();
       document.getElementById('wordTitle').textContent = t.wordTitle;
       document.getElementById('wordLead').textContent = t.wordLead;
+      document.getElementById('wordExplain').textContent = t.wordExplain?.[mode] || '';
       document.getElementById('wordTools').innerHTML = `
-        <button type="button" data-word="en" class="${wordMode === 'en' ? 'is-active' : ''}">${t.wordButtons.en}</button>
-        <button type="button" data-word="ko" class="${wordMode === 'ko' ? 'is-active' : ''}">${t.wordButtons.ko}</button>
+        <button type="button" data-word="source" class="${mode === 'source' ? 'is-active' : ''}">${t.wordButtons.source}</button>
+        <button type="button" data-word="kor" class="${mode === 'kor' ? 'is-active' : ''}">${t.wordButtons.kor}</button>
+        <button type="button" data-word="context" class="${mode === 'context' ? 'is-active' : ''}">${t.wordButtons.context}</button>
       `;
       document.querySelectorAll('[data-word]').forEach((btn) => btn.addEventListener('click', () => {
         wordMode = btn.dataset.word;
         renderWordcloud();
       }));
       const global = data.wordcloud?.global || {};
-      const terms = wordMode === 'ko' ? (global.official_law_text_kor || []) : (global.official_law_text || []);
-      const top = terms.slice(0, 44);
+      const buckets = {
+        source: global.official_law_text || [],
+        kor: global.official_law_text_kor || global.official_law_text || [],
+        context: global.context_layer_text_kor || []
+      };
+      const top = (buckets[mode] || []).slice(0, 76);
+      const cloud = document.getElementById('wordCloud');
+      if (!top.length) {
+        cloud.className = 'wordcloud-empty';
+        cloud.textContent = t.loading;
+        return;
+      }
+      const palette = ['#12355b', '#0b6e69', '#b7791f', '#7c2d12', '#334155', '#1d4ed8', '#0f766e'];
       const max = Math.max(1, ...top.map((item) => Number(item.value || item.count || 0)));
-      document.getElementById('wordCloud').innerHTML = top.length ? top.map((item, index) => {
+      cloud.className = 'wordcloud-cloud';
+      cloud.innerHTML = top.map((item, index) => {
         const value = Number(item.value || item.count || 0);
-        const size = 15 + Math.round((value / max) * 34);
-        const alpha = .54 + (value / max) * .42;
-        const rot = [-3, 0, 2, -1, 4, 0][index % 6];
-        return `<span class="word-term" style="font-size:${size}px;--alpha:${alpha};--rot:${rot}deg;">${esc(item.text || item.word || item.term)}</span>`;
-      }).join('') : `<p class="loading">${t.loading}</p>`;
+        const weight = Math.sqrt(value / max);
+        const size = 0.78 + weight * 2.35;
+        const color = palette[index % palette.length];
+        const tilt = index % 8 === 0 ? -2 : (index % 7 === 0 ? 2 : 0);
+        const title = `${item.text || item.word || item.term || ''}: ${value}`;
+        return `<span class="word-term" title="${esc(title)}" style="--term-size:${size.toFixed(2)}rem;--term-color:${color};--term-tilt:${tilt}deg;">${esc(item.text || item.word || item.term)}</span>`;
+      }).join('');
     }
     function renderRegionChart() {
       const t = T[lang()];
