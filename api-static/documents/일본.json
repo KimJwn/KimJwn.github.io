@@ -1,0 +1,47 @@
+{
+  "country": "일본",
+  "documents": [
+    {
+      "resource_dir": "japan",
+      "name": "Act on Promotion of Research and Development, and Utilization of Artificial Intelligence-related Technology（Act No. 53 of 2025）.txt",
+      "absolute_path": "C:\\Users\\kimsh\\Downloads\\20251100-CSIRO-deepfake-policy\\sources\\official\\japan\\1_official-law-act\\Act on Promotion of Research and Development, and Utilization of Artificial Intelligence-related Technology（Act No. 53 of 2025）.txt",
+      "relative_path": "1_official-law-act/Act on Promotion of Research and Development, and Utilization of Artificial Intelligence-related Technology（Act No. 53 of 2025）.txt",
+      "legacy_relative_path": "Act on Promotion of Research and Development, and Utilization of Artificial Intelligence-related Technology（Act No. 53 of 2025）.txt",
+      "extension": ".txt",
+      "classification_code": 1,
+      "classification_folder": "1_official-law-act",
+      "classification_label": "Official Law / Act",
+      "context_layer": "core_legal",
+      "legal_force": "binding_in_force",
+      "core_evidence_allowed": true,
+      "document_type": "official_law_act",
+      "law_stage": "in_force",
+      "url": "/resource/japan/1_official-law-act/Act%20on%20Promotion%20of%20Research%20and%20Development%2C%20and%20Utilization%20of%20Artificial%20Intelligence-related%20Technology%EF%BC%88Act%20No.%2053%20of%202025%EF%BC%89.txt",
+      "event_date": "2025-01-01",
+      "event_year": 2025,
+      "event_stage": "in_force",
+      "timeline_source": "filename_guess"
+    },
+    {
+      "resource_dir": "japan",
+      "name": "Act on the Protection of Personal Information, APPI (Amended at April 2026).txt",
+      "absolute_path": "C:\\Users\\kimsh\\Downloads\\20251100-CSIRO-deepfake-policy\\sources\\official\\japan\\1_official-law-act\\Act on the Protection of Personal Information, APPI (Amended at April 2026).txt",
+      "relative_path": "1_official-law-act/Act on the Protection of Personal Information, APPI (Amended at April 2026).txt",
+      "legacy_relative_path": "Act on the Protection of Personal Information, APPI (Amended at April 2026).txt",
+      "extension": ".txt",
+      "classification_code": 1,
+      "classification_folder": "1_official-law-act",
+      "classification_label": "Official Law / Act",
+      "context_layer": "core_legal",
+      "legal_force": "binding_in_force",
+      "core_evidence_allowed": true,
+      "document_type": "official_law_act",
+      "law_stage": "in_force",
+      "url": "/resource/japan/1_official-law-act/Act%20on%20the%20Protection%20of%20Personal%20Information%2C%20APPI%20(Amended%20at%20April%202026).txt",
+      "event_date": "2026-01-01",
+      "event_year": 2026,
+      "event_stage": "in_force",
+      "timeline_source": "filename_guess"
+    }
+  ]
+}

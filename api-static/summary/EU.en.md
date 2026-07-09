@@ -1,4 +1,4 @@
-# EU Deepfake Law Summary
+﻿# EU Deepfake Law Summary
 
 ## Core Legal Framework
 - `EU AI Act`: the central EU regulation establishing transparency duties for AI-generated/manipulated content and broader AI governance architecture. (Ref1)

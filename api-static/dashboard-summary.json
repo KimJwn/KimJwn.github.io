@@ -17,6 +17,33 @@
         }
       }
     },
+    "말레이시아": {
+      "stats": {
+        "total": 0,
+        "in_force": 0,
+        "proposed": 0,
+        "guidelines": 0,
+        "review": 0
+      },
+      "timeline": {}
+    },
+    "멕시코": {
+      "stats": {
+        "total": 3,
+        "in_force": 1,
+        "proposed": 2,
+        "guidelines": 0,
+        "review": 0
+      },
+      "timeline": {
+        "2026": {
+          "in_force": 1,
+          "proposed": 2,
+          "guidelines": 0,
+          "unknown": 0
+        }
+      }
+    },
     "미국": {
       "stats": {
         "total": 20,
@@ -42,6 +69,29 @@
           "in_force": 1,
           "proposed": 0,
           "guidelines": 1,
+          "unknown": 0
+        }
+      }
+    },
+    "브라질": {
+      "stats": {
+        "total": 4,
+        "in_force": 0,
+        "proposed": 3,
+        "guidelines": 1,
+        "review": 0
+      },
+      "timeline": {
+        "2023": {
+          "in_force": 0,
+          "proposed": 2,
+          "guidelines": 0,
+          "unknown": 0
+        },
+        "2025": {
+          "in_force": 0,
+          "proposed": 1,
+          "guidelines": 0,
           "unknown": 0
         }
       }
@@ -190,6 +240,29 @@
         }
       }
     },
+    "일본": {
+      "stats": {
+        "total": 2,
+        "in_force": 2,
+        "proposed": 0,
+        "guidelines": 0,
+        "review": 0
+      },
+      "timeline": {
+        "2025": {
+          "in_force": 1,
+          "proposed": 0,
+          "guidelines": 0,
+          "unknown": 0
+        },
+        "2026": {
+          "in_force": 1,
+          "proposed": 0,
+          "guidelines": 0,
+          "unknown": 0
+        }
+      }
+    },
     "중국": {
       "stats": {
         "total": 4,
@@ -261,8 +334,8 @@
     },
     "한국": {
       "stats": {
-        "total": 12,
-        "in_force": 7,
+        "total": 13,
+        "in_force": 8,
         "proposed": 0,
         "guidelines": 5,
         "review": 0
@@ -281,7 +354,7 @@
           "unknown": 0
         },
         "2026": {
-          "in_force": 1,
+          "in_force": 2,
           "proposed": 0,
           "guidelines": 1,
           "unknown": 0
@@ -335,29 +408,6 @@
         "2025": {
           "in_force": 1,
           "proposed": 0,
-          "guidelines": 0,
-          "unknown": 0
-        }
-      }
-    },
-    "브라질": {
-      "stats": {
-        "total": 4,
-        "in_force": 0,
-        "proposed": 3,
-        "guidelines": 1,
-        "review": 0
-      },
-      "timeline": {
-        "2023": {
-          "in_force": 0,
-          "proposed": 2,
-          "guidelines": 0,
-          "unknown": 0
-        },
-        "2025": {
-          "in_force": 0,
-          "proposed": 1,
           "guidelines": 0,
           "unknown": 0
         }
