@@ -1,18 +1,6 @@
-# HTML Export
+﻿# Jiwon Kim
 
-This folder is a static copy of `app/public`.
+Personal CV and portfolio website served through GitHub Pages.
 
-## Purpose
-
-- Use this folder when you want to move the frontend files as plain HTML/CSS/JS.
-- It is suitable as a frontend snapshot for manual hosting or further static-site conversion work.
-
-## Important
-
-- The GitHub Pages build uses `api-static/` JSON and Markdown files instead of live `/api/...` endpoints.
-- GitHub Pages cannot run the Node server in this project.
-- That means this folder alone is not a fully working GitHub Pages deployment yet.
-
-## Source
-
-- Copied from `app/public`
+- Website: https://kimjwn.github.io/
+- Focus: Vision AI, security, deepfake generation and detection, biometrics, and biometric encryption.
