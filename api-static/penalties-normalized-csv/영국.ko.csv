@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-영국,UK_OSA_2023,uk_non_consensual_intimate_synthetic,비동의 친밀/성적 합성콘텐츠 위해,non_consensual,criminal,in_force,,,행위 맥락 및 피해 중대성에 따라 가중요소가 적용될 수 있습니다.,정확한 가중처벌 수치는 최신 공식 조문 대조 후 확정 필요.,Ref1,2026-03-10

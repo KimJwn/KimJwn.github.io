@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-EU,EU_AI_ACT_DSA,eu_transparency_platform_noncompliance,AI 투명성 및 플랫폼 의무 위반,platform_noncompliance,administrative,in_force,,,"위험 규모, 시스템 영향, 반복 위반 여부에 따라 제재 강도가 높아질 수 있습니다.",EU 집행 경로에서 강화된 행정조치/과징금이 적용될 수 있습니다.,Ref1|Ref2,2026-03-10

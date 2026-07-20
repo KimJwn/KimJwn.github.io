@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-독일,DE_BUNDESRAT_DEEPFAKE_DRAFT,de_personality_rights_deepfake_draft,딥페이크 인격권 침해 형사보호(입법안),non_consensual,criminal,proposed,,,최종 법제화 시 피해 중대성·유포 맥락에 따른 가중요소가 적용될 가능성이 있습니다.,"입법안 단계이며, 정확한 가중처벌 범위는 최종 제정 후 확정됩니다.",Ref1|Ref2,2026-03-10

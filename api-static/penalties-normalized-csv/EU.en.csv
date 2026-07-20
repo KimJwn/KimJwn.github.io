@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-EU,EU_AI_ACT_DSA,eu_transparency_platform_noncompliance,AI transparency and platform-duty noncompliance,platform_noncompliance,administrative,in_force,,,"Severity may increase based on risk scale, systemic impact, and repeated noncompliance.",Escalated administrative measures/fines may apply under EU enforcement pathways.,Ref1|Ref2,2026-03-10

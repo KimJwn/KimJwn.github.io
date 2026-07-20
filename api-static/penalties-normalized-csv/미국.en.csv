@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-미국,US_TAKE_IT_DOWN,us_non_consensual_intimate_distribution,Non-consensual intimate/synthetic content circulation offenses,non_consensual,criminal,in_force,,,"Aggravation may apply based on victim age, intent, repeat conduct, and distribution breadth.",Exact aggravated penalty values vary by jurisdiction and require state-level verification.,Ref1,2026-03-10

@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-호주,AU_C2024A00078,au_deepfake_sexual_material,Non-consensual deepfake sexual material offenses,non_consensual,criminal,in_force,,,"Aggravation may depend on distribution scale, victim impact, and offense context.",Exact aggravated ranges require current consolidated article-level verification.,Ref1,2026-03-10

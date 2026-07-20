@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-아랍에미리에이트,UAE_FDL_34_2021,uae_cybercrime_synthetic_harms,Cybercrime-law offenses applicable to synthetic/deepfake harms,non_consensual,criminal,in_force,,,"Aggravation may depend on victim impact, public-order harm, and dissemination context.",Exact aggravated ranges should be confirmed with latest official article-level text.,Ref1|Ref2,2026-03-10

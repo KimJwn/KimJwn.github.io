@@ -1,2 +1,0 @@
-country,law_id,offense_id,offense_label,deepfake_scope,sanction_channel,effective_status,fine_range,prison_range_months,aggravation,aggravated_penalty,refs,last_verified_at
-영국,UK_OSA_2023,uk_non_consensual_intimate_synthetic,Non-consensual intimate/sexual synthetic content harms,non_consensual,criminal,in_force,,,Aggravating factors may apply depending on offense context and harm severity.,Exact aggravated penalty values pending latest official article-level verification.,Ref1,2026-03-10
